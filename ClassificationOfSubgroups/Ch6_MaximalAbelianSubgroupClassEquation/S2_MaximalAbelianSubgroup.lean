@@ -591,7 +591,6 @@ lemma conj_ZS_eq_conj_Z_join_S {F : Type*} [Field F] (c : SL(2,F)):
     rw [mul_assoc c, mul_assoc t, ← mem_center_iff.mp hz c⁻¹]
     group
 
-#check Matrix.SpecialLinearGroup
 
 lemma Z_eq_Z_meet_G (F : Type*) [Field F] (G : Subgroup SL(2,F))
   (center_le_G : center SL(2,F) ≤ G) :
