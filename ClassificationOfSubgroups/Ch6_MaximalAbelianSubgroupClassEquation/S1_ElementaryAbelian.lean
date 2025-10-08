@@ -2,9 +2,6 @@ import Mathlib.Data.Nat.Factorization.PrimePow
 import Mathlib.GroupTheory.PGroup
 import Mathlib.Order.CompletePartialOrder
 
-
-set_option linter.style.longLine true
-set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option synthInstance.maxHeartbeats 0
 
@@ -105,5 +102,3 @@ lemma subgroupOf {G : Type*} [Group G]
     simp [← order_of_eq_p']
 
 end IsElementaryAbelian
-
-#min_imports

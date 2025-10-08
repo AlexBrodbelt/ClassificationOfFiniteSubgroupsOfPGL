@@ -1,12 +1,8 @@
 import ClassificationOfSubgroups.Ch5_PropertiesOfSLOverAlgClosedField.S3_JordanNormalFormOfSL
 
-
-set_option autoImplicit false
-set_option linter.style.longLine true
-
 open Matrix MatrixGroups Subgroup Pointwise
 
-open SpecialMatrices SpecialSubgroups
+open SpecialMatrices SpecialSubgroups MatrixShapes
 
 universe u
 
@@ -16,7 +12,7 @@ variable
   (R : Type u) [CommRing R]
   {G : Type u} [Group G]
 
-/- Proposition 1.6.ii C_L(± s σ) = T × Z where σ ≠ 0 -/
+/- Proposition 1.6.ii (positive part) C_L(s σ) = T × Z where σ ≠ 0 -/
 theorem centralizer_s_eq_SZ {σ : F} (hσ : σ ≠ 0) : centralizer { s σ } = SZ F := by
   ext x
   constructor
@@ -47,6 +43,13 @@ theorem centralizer_s_eq_SZ {σ : F} (hσ : σ ≠ 0) : centralizer { s σ } = S
     rw [hy]
     simp [add_comm]
 
+theorem centralizer_s_eq_neg_s {σ : F}:
+    centralizer { s σ } = centralizer { - s σ } := by
+  ext; constructor <;> simp [mem_centralizer_iff_commutator_eq_one]
+
+/-- Proposition 1.6.ii (negative part) C_L(- s σ) = T × Z where σ ≠ 0 -/
+theorem centralizer_s_eq_SZ_neg {σ : F} (hσ : σ ≠ 0) : centralizer { - s σ } = SZ F := by
+  rw [← centralizer_s_eq_neg_s, centralizer_s_eq_SZ hσ]
 
 lemma Field.self_eq_inv_iff (x : F) (x_ne_zero : x ≠ 0) : x = x⁻¹ ↔ x = 1 ∨ x = - 1 := by
   rw [← sq_eq_one_iff, sq, propext (mul_eq_one_iff_eq_inv₀ x_ne_zero)]
@@ -75,7 +78,7 @@ lemma centralizer_d_eq_D (δ : Fˣ) (δ_ne_one : δ ≠ 1) (δ_ne_neg_one : δ �
     rw [mul_comm, mul_eq_mul_left_iff] at hb hc
     replace hb := Or.resolve_left hb δ_ne_δ_inv
     replace hc := Or.resolve_left hc δ_ne_δ_inv.symm
-    rw [mem_D_iff, ← SpecialLinearGroup.fin_two_diagonal_iff]
+    rw [mem_D_iff, ← SpecialLinearGroup.fin_two_diagonal_iff, IsDiagonal]
     simp [hb, hc, ← hb', ← hc']
   · rintro ⟨δ', rfl⟩
     simp [mem_centralizer_iff, mul_comm]
@@ -173,5 +176,3 @@ lemma IsCommutative_centralizer_of_not_mem_center [IsAlgClosed F] [DecidableEq F
       simp at hx
     rw [← centralizer_S_eq,  ← centralizer_neg_eq_centralizer, centralizer_s_eq_SZ σ_ne_zero]
     exact map_isCommutative _ _
-
-#min_imports

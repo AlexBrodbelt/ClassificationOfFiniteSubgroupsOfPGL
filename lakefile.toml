@@ -5,6 +5,8 @@ defaultTargets = ["ClassificationOfSubgroups"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+autoImplicit = false
+linter.style.longLine = true
 
 [[require]]
 name = "mathlib"

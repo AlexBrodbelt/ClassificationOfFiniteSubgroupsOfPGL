@@ -1,34 +1,16 @@
 import ClassificationOfSubgroups.Ch5_PropertiesOfSLOverAlgClosedField.S3_JordanNormalFormOfSL
 
-
-
-set_option autoImplicit false
-set_option linter.style.longLine true
-
 open Matrix MatrixGroups Subgroup Pointwise
 
 open SpecialMatrices SpecialSubgroups MatrixShapes
 
 universe u
 
-
 variable
   {F : Type u} [Field F]
   (n : Type u) [Fintype n]
   (R : Type u) [CommRing R]
   {G : Type u} [Group G]
-
-
-
-/- Lemma 1.2.2.2 H ⧸ T = D -/
--- def quot_iso_subgroupGeneratedByD {F : Type* } [Field F] :
---   H F ⧸ T F ≃* D F := by sorry -- needs HasQuotient
-
-/- Lemma 1.3. Z(SL(2,F)) = ⟨ -I ⟩ .-/
--- def center_of_SL_2_F : center SL(2,F) ≃* rootsOfUnity 2 F  :=
---   Matrix.SpecialLinearGroup.center_equiv_rootsOfUnity' 2
-
-
 
 /-
 Proposition 1.6.i
@@ -123,11 +105,11 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
       absurd zero_ne_one det_eq_one
       trivial
     · apply Dw_leq_DW
-      rw [mem_D_w_iff, ← SpecialLinearGroup.fin_two_antidiagonal_iff]
+      rw [mem_D_w_iff, ← SpecialLinearGroup.fin_two_antidiagonal_iff, IsAntiDiagonal]
       simp_rw [← hα, ← hδ, α_eq_zero, δ_eq_zero]
       trivial
     · apply D_leq_DW
-      rw [mem_D_iff, ← SpecialLinearGroup.fin_two_diagonal_iff]
+      rw [mem_D_iff, ← SpecialLinearGroup.fin_two_diagonal_iff, IsDiagonal]
       simp_rw [← hβ, ← hγ, β_eq_zero, γ_eq_zero]
       trivial
     · have det_eq_zero : det (x : Matrix (Fin 2) (Fin 2) F) = 0 := by
@@ -189,5 +171,3 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
             d_mul_d_eq_d_mul, ← mul_assoc, mul_inv_cancel_comm] at conj_mem_D₀
         rw [← inv_d_eq_d_inv]
         exact Subgroup.inv_mem D₀ conj_mem_D₀
-
-#min_imports

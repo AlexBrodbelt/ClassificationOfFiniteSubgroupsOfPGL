@@ -1,11 +1,8 @@
 import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_MaximalAbelianSubgroup
 import Mathlib
 
-set_option linter.style.longLine true
-set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option synthInstance.maxHeartbeats 0
-
 
 universe u
 
@@ -716,7 +713,5 @@ lemma normalizer_Sylow_join_center_eq_normalizer_Sylow {F : Type*} [Field F] {p 
   normalizer (map G.subtype Q.toSubgroup ⊔ center SL(2,F)) =
     normalizer (map G.subtype Q.toSubgroup) := by
   sorry
-
-
 
 #min_imports

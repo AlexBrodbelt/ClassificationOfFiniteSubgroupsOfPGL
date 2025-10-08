@@ -74,7 +74,6 @@ lemma associated_of_dvd_mul_irreducibles {k : Type*} [Field k] {q p₁ p₂: k[X
       rw [q_eq, hk₁, hk₂, mul_assoc, ← mul_assoc k₁, mul_comm k₁, mul_assoc, ← mul_assoc,
       associated_mul_isUnit_right_iff (IsUnit.mul h₁ h₂)]
 
-
 lemma minpoly_eq_X_sub_C_implies_matrix_is_diagonal { n R : Type*} [Fintype n] [DecidableEq n]
      [ CommRing R ] [NoZeroDivisors R] {M : Matrix n n R} {a : R}
     (hM : minpoly R M = (X - C a)) : M = diagonal (fun _ ↦ a) := by
@@ -83,7 +82,6 @@ lemma minpoly_eq_X_sub_C_implies_matrix_is_diagonal { n R : Type*} [Fintype n] [
     simp [hM, algebraMap, sub_eq_zero] at M_eq_diagonal
     -- This shows M is diagonal
     exact M_eq_diagonal
-
 
 /-
 The product of the top left entry and the bottom right entry equals one
@@ -112,7 +110,7 @@ A 2x2 matrix of the special linear group is diagonal, and can be written as `d �
 if and only if the bottom left and top right entries are zero.
 -/
 lemma SpecialLinearGroup.fin_two_diagonal_iff (x : SL(2,F)) :
-  x 0 1 = 0 ∧ x 1 0 = 0 ↔ ∃ δ : Fˣ, d δ = x := by
+  IsDiagonal x.val ↔ ∃ δ : Fˣ, d δ = x := by
   constructor
   · rintro ⟨hβ, hγ⟩
     rcases get_entries x with ⟨α, β, γ, δ, hα, -, -, hδ, -⟩
@@ -133,7 +131,7 @@ A 2x2 matrix of the special linear group is antidiagonal, and can be written as
 `d δ * w` for some `δ ∈ Fˣ` if and only if the top left and bottom right entries are zero.
 -/
 lemma SpecialLinearGroup.fin_two_antidiagonal_iff (x : SL(2,F)) :
-  x 0 0 = 0 ∧ x 1 1 = 0 ↔ ∃ δ : Fˣ, (d δ) * w = x := by
+  IsAntiDiagonal x.val ↔ ∃ δ : Fˣ, (d δ) * w = x := by
   constructor
   · rintro ⟨hα, hδ⟩
     have det_eq_one : det (x : Matrix (Fin 2) (Fin 2) F) = 1 := by rw [SpecialLinearGroup.det_coe]
@@ -273,7 +271,7 @@ lemma det_eq_det_IsConj {n : ℕ} {M N : Matrix (Fin n) (Fin n) R} (h : IsConj N
 If the underlying matrices are the same then the matrices
 as subtypes of the special linear group are also the same
 -/
-lemma SpecialLinearGroup.eq_of {S L : SL(2,F) } (h : (S : Matrix (Fin 2) (Fin 2) F) = L) :
+lemma SpecialLinearGroup.eq_of {S L : SL(2,F)} (h : (S : Matrix (Fin 2) (Fin 2) F) = L) :
   S = L := by ext <;> simp [h]
 
 lemma IsConj_coe {M N : Matrix (Fin 2) (Fin 2) F} (hM : det M = 1) (hN : det N = 1)
@@ -282,7 +280,6 @@ lemma IsConj_coe {M N : Matrix (Fin 2) (Fin 2) F} (hM : det M = 1) (hN : det N =
   use C
   apply SpecialLinearGroup.eq_of
   rw [SpecialLinearGroup.coe_mul, SpecialLinearGroup.coe_mul, hC]
-
 
 /-
 Lemma 1.5.
@@ -369,6 +366,3 @@ theorem SL2_IsConj_d_or_IsConj_s_or_IsConj_neg_s_of_AlgClosed [DecidableEq F] [I
     simp only [SpecialMatrices.d, IsUnit.unit_spec]
     -- conjugation is transitive
     apply IsConj.trans isConj₂.symm isConj₁.symm
-
-
-#min_imports
