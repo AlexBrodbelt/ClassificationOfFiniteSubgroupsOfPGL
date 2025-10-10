@@ -13,12 +13,13 @@ universe u
 open Matrix MatrixGroups Subgroup MulAut MaximalAbelianSubgroup Pointwise SpecialSubgroups
 
 
-/- The non-central part of a subgroup -/
+/-- The non-central part of a subgroup as a set. -/
 def Subgroup.noncenter {G : Type*} [Group G] (H : Subgroup G) : Set G :=
   H.carrier \ center G
 
-
-
+theorem Subgroup.mem_noncenter {G : Type*} [Group G] {H : Subgroup G} {x : G} :
+  x ∈ H.noncenter ↔ x ∈ H ∧ x ∉ center G := by
+  simp [Subgroup.noncenter, Set.mem_diff, SetLike.mem_coe]
 
 /-
 Definition. The set $\mathcal{C}(A) = Cl(A) = \{x A x^{-1} \; | \; x ∈ G \}$
@@ -703,12 +704,57 @@ theorem card_noncenter_fin_subgroup_eq_sum_card_noncenter_mul_index_normalizer {
 
 #check MonoidHom
 
+-- todo: probably somewhere in mathlib, but I can't find it.
+lemma center_conj {G : Type*} [Group G] (x : G) (y: G) :
+  x ∈ center G ↔ y * x * y⁻¹ ∈ center G := by
+  simp only [mem_center_iff]
+  constructor <;> intro h z
+  · have := h (y⁻¹ * z * y)
+    calc z * (y * x * y⁻¹)
+        = y * (y⁻¹ * z * y * x) * y⁻¹ := by group
+      _ = y * (x * (y⁻¹ * z * y)) * y⁻¹ := by rw [this]
+      _ = y * x * y⁻¹ * z := by group
+  · have := h (y * z * y⁻¹)
+    calc z * x
+        = y⁻¹ * (y * z * y⁻¹ * (y * x * y⁻¹)) * y := by group
+      _ = y⁻¹ * ((y * x * y⁻¹) * (y * z * y⁻¹)) * y := by rw [this]
+      _ = x * z := by group
 
-
-/- Lemma 2.5 N_G(A) = N_G(A*)-/
-lemma normalizer_noncentral_eq {F : Type*} [Field F] (A G : Subgroup SL(2,F)) [Finite G]
-  (hA : A ∈ MaximalAbelianSubgroupsOf G) : normalizer (A.subgroupOf G) = setNormalizer (noncenter (A.subgroupOf G)) := by
-  sorry
+/-- Lemma 2.5 N_G(A) = N_G(A*)
+Oddly it doesn't need any assumption about A being maximal or abelian.
+-/
+lemma normalizer_noncentral_eq {F : Type*} [Field F] (A G : Subgroup SL(2,F)) [Finite G]:
+  normalizer (A.subgroupOf G) = setNormalizer (noncenter (A.subgroupOf G)) := by
+  ext x
+  constructor
+  . intro h
+    rw [mem_normalizer_iff] at h
+    simp [setNormalizer]
+    intro a ha
+    specialize h ⟨a, ha⟩
+    simp [Subgroup.mem_noncenter]
+    rw [h]
+    suffices ⟨a, ha⟩ ∈ center ↥G ↔ x * ⟨a, ha⟩ * x⁻¹ ∈ center ↥G by
+      apply not_iff_not.mpr at this
+      rw [this]
+    rw [← center_conj]
+  . intro h
+    rw [mem_normalizer_iff]
+    simp [setNormalizer] at h
+    intro a
+    specialize h a a.prop
+    simp [Subgroup.mem_noncenter] at h
+    by_cases hc: a ∈ center ↥G
+    . have : x * a * x⁻¹ = a := by
+        rw [mem_center_iff] at hc
+        specialize hc x
+        rw [hc]
+        group
+      rw [this]
+    . simp [hc] at h
+      rw [not_iff_not.mpr (center_conj a x)] at hc
+      simp [hc] at h
+      exact h
 
 /- Lemma Let `Q` be a `p`-Sylow subgroup of `G` then $N_G(Q \sqcup Z) = N_G(Q)$-/
 lemma normalizer_Sylow_join_center_eq_normalizer_Sylow {F : Type*} [Field F] {p : ℕ}
