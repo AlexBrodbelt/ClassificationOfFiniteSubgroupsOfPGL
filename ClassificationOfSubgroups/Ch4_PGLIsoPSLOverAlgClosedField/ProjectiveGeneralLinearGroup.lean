@@ -1,8 +1,6 @@
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 
-set_option linter.style.longLine true
-set_option autoImplicit false
 set_option maxHeartbeats 0
 
 universe u v w

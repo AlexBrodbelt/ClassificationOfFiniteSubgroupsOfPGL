@@ -182,5 +182,3 @@ lemma neg_d_mul_w (δ : Fˣ) : -(d δ * w) = d (-δ) * w := by rw [← neg_mul, 
 end Interactions
 
 end SpecialMatrices
-
-#min_imports

@@ -2,15 +2,10 @@ import Mathlib.Data.Nat.Factorization.PrimePow
 import Mathlib.GroupTheory.PGroup
 import Mathlib.Order.CompletePartialOrder
 
-
-set_option linter.style.longLine true
-set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option synthInstance.maxHeartbeats 0
 
 open Subgroup
-
-
 
 structure ElementaryAbelian (p : ℕ) (G : Type*) [Group G] extends Subgroup G where
   is_comm : IsMulCommutative toSubgroup
@@ -105,5 +100,3 @@ lemma subgroupOf {G : Type*} [Group G]
     simp [← order_of_eq_p']
 
 end IsElementaryAbelian
-
-#min_imports

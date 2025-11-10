@@ -1,10 +1,10 @@
 import ClassificationOfSubgroups.Ch5_PropertiesOfSLOverAlgClosedField.S4_PropertiesOfCentralizers
 import ClassificationOfSubgroups.Ch5_PropertiesOfSLOverAlgClosedField.S5_PropertiesOfNormalizers
 import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S1_ElementaryAbelian
-import Mathlib
+import Mathlib.Algebra.Order.Ring.Star
+import Mathlib.Data.Int.Star
+import Mathlib.FieldTheory.Finite.Basic
 
-set_option linter.style.longLine true
-set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option synthInstance.maxHeartbeats 0
 set_option linter.unusedTactic false
@@ -1813,5 +1813,3 @@ theorem K_mem_MaximalAbelianSubgroups_of_center_lt_card_K {F : Type*} [Field F] 
   sorry
 
 end MaximalAbelianSubgroup
-
-#min_imports

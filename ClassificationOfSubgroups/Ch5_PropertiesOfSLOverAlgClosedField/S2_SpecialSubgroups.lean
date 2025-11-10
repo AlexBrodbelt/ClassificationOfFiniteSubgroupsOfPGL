@@ -1,11 +1,8 @@
 import ClassificationOfSubgroups.Ch5_PropertiesOfSLOverAlgClosedField.S1_SpecialMatrices
 import Mathlib.Algebra.Category.Grp.Images
 import Mathlib.Analysis.Normed.Field.Lemmas
+import Mathlib.GroupTheory.PGroup
 import Mathlib.Order.CompletePartialOrder
-import Mathlib.GroupTheory.Sylow
-
-set_option linter.style.longLine true
-set_option maxHeartbeats 0
 
 open Matrix MatrixGroups Subgroup Pointwise SpecialMatrices
 
@@ -20,6 +17,7 @@ variable
 namespace MatrixShapes
 
 def IsDiagonal (x : Matrix (Fin 2) (Fin 2) F) : Prop := x 0 1 = 0 ∧ x 1 0 = 0
+def IsAntiDiagonal (x : Matrix (Fin 2) (Fin 2) F) : Prop := x 0 0 = 0 ∧ x 1 1 = 0
 def IsLowerTriangular (x : Matrix (Fin 2) (Fin 2) F) : Prop := x 0 1 = 0
 def IsUpperTriangular (x : Matrix (Fin 2) (Fin 2) F) : Prop := x 1 0 = 0
 
@@ -345,12 +343,6 @@ lemma D_join_S_eq_L (F : Type*) [Field F]: D F ⊔ S F = L F := by
     rfl
 
 
-
-
-
--- second isomorphism theorem!!!!
-#check QuotientGroup.quotientInfEquivProdNormalQuotient
-
 def D_subgroupOf_L_mulEquiv_D : (D F).subgroupOf (L F) ≃* D F := by
   refine subgroupOfEquivOfLe ?_
   rintro d ⟨δ, rfl⟩
@@ -383,57 +375,6 @@ lemma left_subgroupOf_join_right_subgroupOf_join_eq_join_subgroupOf_join {G : Ty
   rw [comap_sup_eq_of_le_range f hH hK]
   simp [f]
 
-lemma simplify₁ : ((D F).subgroupOf (D F ⊔ S F) ⊔ (S F).subgroupOf (D F ⊔ S F)) = ⊤ :=
-  left_subgroupOf_join_right_subgroupOf_join_eq_join_subgroupOf_join (D F) (S F)
-
-/- D and S have trivial interesection, so the following holds -/
-lemma simplify₂ : ((S F).subgroupOf (D F ⊔ S F)).subgroupOf ((D F).subgroupOf (D F ⊔ S F)) = ⊥ := by
-  simp
-  rw [disjoint_iff, ← comap_subtype, ← comap_subtype, ← comap_inf, inf_comm, D_meet_S_eq_bot]
-  simp
-
-/- The second isomorphism theorem -/
-noncomputable def D_join_S_quot_S_subgroupOf_D_join_S_mulEquiv_D_subgroupOf_D_join_S
-  (F : Type*) [Field F] :=
-  (QuotientGroup.quotientInfEquivProdNormalQuotient
-    (H := (D F).subgroupOf (D F ⊔ S F:)) (N := (S F).subgroupOf (D F ⊔ S F :))).symm
-
-#check D_join_S_quot_S_subgroupOf_D_join_S_mulEquiv_D_subgroupOf_D_join_S
-
-def LHS (F : Type*) [Field F] :=
-  @QuotientGroup.equivQuotientSubgroupOfOfEq
-
-
-
-#check QuotientGroup.quotientBot
-
-#check MulEquiv.trans
-
-#check QuotientGroup.equivQuotientSubgroupOfOfEq
-
-#check QuotientGroup.quotientMulEquivOfEq
-
-def RHS (F : Type*) [Field F] :=
-  @QuotientGroup.equivQuotientSubgroupOfOfEq ((D F).subgroupOf (D F ⊔ S F) :) _
-    (A' := ((S F).subgroupOf (D F ⊔ S F)).subgroupOf ((D F).subgroupOf (D F ⊔ S F)))
-    -- below were ⊤ : (D F).subgroupOf (D F ⊔ S F)
-    (A := ⊤)--((D F).subgroupOf (D F ⊔ S F)).subgroupOf ((D F).subgroupOf (D F ⊔ S F)))
-    (B' := ⊥)
-    (B := ⊤)--((D F).subgroupOf (D F ⊔ S F)).subgroupOf ((D F).subgroupOf (D F ⊔ S F)))
-    (hAN := normal_subgroupOf)
-    (hBN := normal_subgroupOf)
-    (h' := simplify₂)
-    (h := Eq.refl _)
-
-#check RHS
-
-
--- def RHS' (F : Type*) [Field F] :
---   ↥(⊤ : Subgroup ↥((D F).subgroupOf (D F ⊔ S F))) ⧸ (⊥ : Subgroup ((D F).subgroupOf (D F ⊔ S F))).subgroupOf (⊤ : Subgroup ↥((D F).subgroupOf (D F ⊔ S F)))
---   ≃*
---   ↥(⊤ : Subgroup ↥((D F).subgroupOf (D F ⊔ S F))) :=
---   @QuotientGroup.quotientBot (((D F).subgroupOf (D F ⊔ S F)) :) _
-
 -- Conclusion to reach is
 instance : ((S F).subgroupOf (L F)).Normal := normal_S_subgroupOf_L
 
@@ -441,28 +382,10 @@ noncomputable def L_quot_S_subgroupOf_L_mulEquiv_D_subgroupOf_L :=
     QuotientGroup.quotientInfEquivProdNormalQuotient
       (H := (L F).subgroupOf (L F)) (N := (S F).subgroupOf (L F :))
 
-
-#check L_quot_S_subgroupOf_L_mulEquiv_D_subgroupOf_L
-
--- lemma foo : ((S F).subgroupOf (L F)).subgroupOf ((L F).subgroupOf (L F)) = (S F).subgroupOf (L F) := by sorry
-
-#check D_join_S_quot_S_subgroupOf_D_join_S_mulEquiv_D_subgroupOf_D_join_S
-
-#check L_quot_S_subgroupOf_L_mulEquiv_D_subgroupOf_L
-
-#check ((S F).subgroupOf (L F)).subgroupOf ((L F).subgroupOf (L F) ⊔ (S F).subgroupOf (L F))
-
-  --@QuotientGroup.Quotient.group (L F) _ ((S F).subgroupOf (L F)) (normal_S_subgroupOf_L)
-
 def D_join_S_monoidHom_D : (D F × S F :) →* D F where
   toFun d_s := d_s.1
   map_one' := by simp
   map_mul' := by simp
-
-
-
-#check  QuotientGroup.quotientKerEquivRange
-
 
 def DW (F : Type*) [Field F] : Subgroup SL(2,F) where
   carrier := { d δ | δ : Fˣ} ∪ { d δ * w | δ : Fˣ}
@@ -495,8 +418,7 @@ lemma D_leq_DW : D F ≤ DW F := by
   left
   apply exists_apply_eq_apply
 
-
-lemma Dw_leq_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F :  Set SL(2,F)) := by
+lemma Dw_leq_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F : Set SL(2,F)) := by
   rintro x ⟨d', hd', w, hw, rfl⟩
   obtain ⟨δ, rfl⟩ := hd'
   rw [DW, coe_set_mk]
@@ -504,7 +426,6 @@ lemma Dw_leq_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F :  Set SL(
   use δ
   rw [Set.mem_singleton_iff] at hw
   rw [hw]
-
 section Center
 
 def Z (R : Type*) [CommRing R] : Subgroup SL(2,R) := closure {(-1 : SL(2,R))}
@@ -519,12 +440,10 @@ lemma get_entries (x : SL(2,F)) : ∃ α β γ δ,
 
 lemma neg_one_mem_Z : (-1 : SL(2,F)) ∈ Z F := by simp [Z]
 
-
 lemma Odd.neg_one_zpow {α : Type*} [Group α] [HasDistribNeg α] {n : ℤ} (h : Odd n) :
   (-1 : α) ^ n = -1 := by
   rw [← neg_eq_iff_eq_neg, ← neg_one_mul, Commute.neg_one_left, mul_zpow_self]
   exact Even.neg_one_zpow <| Odd.add_one h
-
 
 lemma closure_neg_one_eq : (closure {(-1 : SL(2,R))} : Set SL(2,R)) = {1, -1} := by
   ext x
@@ -548,7 +467,6 @@ lemma closure_neg_one_eq : (closure {(-1 : SL(2,R))} : Set SL(2,R)) = {1, -1} :=
     · rw [SetLike.mem_coe]
       exact mem_closure_singleton_self (-1)
 
-
 @[simp]
 lemma neg_one_neq_one_of_two_ne_zero [NeZero (2 : F)] : (1 : SL(2,F)) ≠ (-1 : SL(2,F)) := by
   intro h
@@ -566,13 +484,10 @@ lemma Field.one_eq_neg_one_of_two_eq_zero (two_eq_zero : (2 : F) = 0) : 1 = (-1 
   rw [← one_add_one_eq_two, add_eq_zero_iff_neg_eq'] at two_eq_zero
   exact two_eq_zero.symm
 
-
 lemma SpecialLinearGroup.neg_one_eq_one_of_two_eq_zero (two_eq_zero : (2 : F) = 0) :
   1 = (-1 : SL(2,F)) := by
   ext
   <;> simpa using Field.one_eq_neg_one_of_two_eq_zero two_eq_zero
-
-
 
 @[simp]
 lemma set_Z_eq : (Z R : Set SL(2,R)) = {1, -1} := by
@@ -592,7 +507,7 @@ instance : Finite (Z F) := by
   simp only [mem_Z_iff]
   exact Finite.Set.finite_insert 1 {-1}
 
-lemma center_SL2_eq_Z (R : Type*)  [CommRing R] [NoZeroDivisors R]: center SL(2,R) = Z R := by
+lemma center_SL2_eq_Z (R : Type*) [CommRing R] [NoZeroDivisors R]: center SL(2,R) = Z R := by
   ext x
   constructor
   · intro hx
@@ -610,7 +525,6 @@ lemma center_SL2_eq_Z (R : Type*)  [CommRing R] [NoZeroDivisors R]: center SL(2,
 instance : Finite (center SL(2,F)) := by
   rw [center_SL2_eq_Z F]
   infer_instance
-
 
 lemma card_Z_eq_two_of_two_ne_zero [NeZero (2 : F)]: Nat.card (Z F) = 2 := by
   rw [Nat.card_eq_two_iff]
@@ -696,9 +610,7 @@ instance IsCyclic_Z : IsCyclic (Z F) := by
 
 instance IsCommutative_Z : IsMulCommutative (Z F) := inferInstance
 
-
 namespace IsPGroup
-
 
 /- Lemma 2.1. If G is a finite group of order pm where p is prime and m > 0,
 then p divides |Z(G)|.-/
@@ -728,7 +640,6 @@ def SZ (F : Type*) [Field F] : Subgroup SL(2,F) where
   inv_mem' :=  by
     rintro x (⟨σ, rfl⟩ | ⟨σ, rfl⟩)
     repeat' simp
-
 
 def SZ' (F : Type*) [Field F] : Subgroup SL(2,F) where
   carrier := S F * Z F
@@ -801,7 +712,6 @@ lemma SZ_eq_SZ' {F : Type*} [Field F] : SZ' F = SZ F := by
       · simp
       · simp
 
-
 lemma S_mul_Z_subset_SZ :
   ((S F) : Set SL(2,F)) * ((Z F) : Set SL(2,F)) ⊆ ((SZ F) : Set SL(2,F)) := by
   rintro x ⟨t', ht', z, hz, hσ, h⟩
@@ -818,28 +728,15 @@ lemma S_mul_Z_subset_SZ :
   right
   use σ
   simp
-
--- ordering propositions so when proving it can be done more efficiently
-#check Set.mem_mul
-
-
 section CommutativeSubgroups
 
 lemma IsMulCommutative_iff {G : Type*} [Group G] {H : Subgroup G} :
   IsMulCommutative H ↔ ∀ x y : H, x * y = y * x := by
   constructor
-  · intro h x y
-    have := @mul_comm_of_mem_isMulCommutative G _ H h x y (by simp) (by simp)
-    exact SetLike.coe_eq_coe.mp this
-  · intro h
-    rw [← le_centralizer_iff_isMulCommutative]
-    intro y hy
-    rw [mem_centralizer_iff]
-    intro x hx
-    simp only [SetLike.mem_coe] at hx
-    specialize h ⟨x, hx⟩ ⟨y, hy⟩
-    simp only [MulMemClass.mk_mul_mk, Subtype.mk.injEq] at h
-    exact h
+  . intro h x y
+    exact mul_comm x y
+  . intro h
+    exact {is_comm := { comm := h }}
 
 instance IsMulCommutative_D : IsMulCommutative (D F) := by
   rw [IsMulCommutative_iff]
@@ -866,7 +763,6 @@ end CommutativeSubgroups
 theorem val_eq_neg_one {a : Fˣ} : (a : F) = -1 ↔ a = (-1 : Fˣ) := by
   rw [Units.ext_iff, Units.coe_neg_one];
 
-
 lemma ex_of_card_D_gt_two {D₀ : Subgroup SL(2,F) }(hD₀ : 2 < Nat.card D₀) (D₀_leq_D : D₀ ≤ D F) :
   ∃ δ : Fˣ, (δ : F) ≠ 1 ∧ (δ : F) ≠ -1 ∧ d δ ∈ D₀ := by
   by_contra! h
@@ -890,9 +786,7 @@ lemma ex_of_card_D_gt_two {D₀ : Subgroup SL(2,F) }(hD₀ : 2 < Nat.card D₀) 
     le_trans (Subgroup.card_le_of_le D₀_le_Z) card_Z_le_two
   linarith
 
-
 lemma mem_D_iff {x : SL(2,F)} : x ∈ D F ↔ ∃ δ : Fˣ, d δ = x := by rfl
-
 
 lemma mem_D_w_iff {x : SL(2,F)} : x ∈ (D F : Set SL(2,F)) * {w} ↔ ∃ δ : Fˣ, d δ * w = x := by
   constructor
@@ -927,7 +821,4 @@ lemma S_join_Z_eq_SZ : S F ⊔ Z F = SZ F := by
         simp
       apply Subgroup.subset_closure mem_Z_mul_T
 
-
 end SpecialSubgroups
-
-#min_imports

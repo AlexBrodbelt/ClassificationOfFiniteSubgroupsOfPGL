@@ -1,19 +1,19 @@
 import ClassificationOfSubgroups.Ch4_PGLIsoPSLOverAlgClosedField.ProjectiveGeneralLinearGroup
 import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_MaximalAbelianSubgroup
+import ClassificationOfSubgroups.Ch4_PGLIsoPSLOverAlgClosedField.ProjectiveGeneralLinearGroup
+import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_MaximalAbelianSubgroup
 import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.GroupTheory.PresentedGroup
 import Mathlib.GroupTheory.SpecificGroups.Alternating
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Card
+import Mathlib.GroupTheory.SpecificGroups.Dihedral
 
-set_option linter.style.longLine true
 set_option maxHeartbeats 0
 
 open Matrix Subgroup LinearMap
 
 open scoped MatrixGroups
 
+universe u v
 
 /- Lemma 3.1 -/
 lemma IsPGroup.not_le_normalizer {F : Type*} [Field F] {p : ℕ} [Fact (Nat.Prime p)]
@@ -39,12 +39,11 @@ def R (F : Type*) [Field F] (p : ℕ) [Fact (Nat.Prime p)] [CharP F p](k : ℕ+)
 instance field_R {F : Type*} [Field F] {p : ℕ} [Fact (Nat.Prime p)]
   [CharP F p] {k : ℕ+} : Field (R F p k) := by sorry
 
-/- Lemma 3.4 -/
-#check Matrix.card_GL_field
+/- Lemma 3.4 Matrix.card_GL_field -/
 
 -- abbrev SL := Matrix.SpecialLinearGroup
 
-lemma card_SL_field {𝔽 : Type u_1} [Field 𝔽] [Fintype 𝔽] (n : ℕ) :
+lemma card_SL_field {𝔽 : Type u} [Field 𝔽] [Fintype 𝔽] (n : ℕ) :
   Nat.card (SL (Fin n) 𝔽) = Nat.card (GL (Fin n) 𝔽) / (Fintype.card 𝔽 - 1) := by sorry
 
 /- Lemma 3.5. Correspondence theorem -/
@@ -212,8 +211,8 @@ instance five_prime : Fact (Nat.Prime 5) := { out := by decide }
 
 /- Theorem 3.6 -/
 theorem dicksons_classification_theorem_class_I {F : Type*} [Field F] [IsAlgClosed F]
-  {p : ℕ} [CharP F p] (hp : Prime p) (hp' : p = 0 ∨ Nat.Coprime (Nat.card G) p)
-  (G : Subgroup (SL(2,F)))  [Finite G] :
+  {p : ℕ} [CharP F p] (hp : Prime p) (G : Subgroup (SL(2,F))) [Finite G]
+   (hp' : p = 0 ∨ Nat.Coprime (Nat.card G) p) :
   IsCyclic G ∨
   Isomorphic G (DihedralGroup n)
   ∨
@@ -281,5 +280,3 @@ theorem FLT_classification_fin_subgroups_of_PGL2_over_AlgClosure_ZMod {p : ℕ} 
   ∨
   Isomorphic G (PGL (Fin 2) (𝕂)) := by
     sorry
-
-#min_imports

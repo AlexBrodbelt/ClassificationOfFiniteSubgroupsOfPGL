@@ -1,14 +1,7 @@
 import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_MaximalAbelianSubgroup
-import Mathlib
-
-set_option linter.style.longLine true
-set_option autoImplicit false
-set_option maxHeartbeats 0
-set_option synthInstance.maxHeartbeats 0
-
+import Mathlib.Data.Setoid.Partition
 
 universe u
-
 
 open Matrix MatrixGroups Subgroup MulAut MaximalAbelianSubgroup Pointwise SpecialSubgroups
 
@@ -79,8 +72,6 @@ def Partition_lift_noncenter_MaximalAbelianSubgroupsOf {F : Type*} [Field F] (G 
 #check Partition_lift_noncenter_MaximalAbelianSubgroupsOf
 
 #check Setoid.IsPartition.sUnion_eq_univ
-
-#check sUnion_memPartition
 
 #check Set
 /-
@@ -605,11 +596,6 @@ lemma card_noncenter_C_eq_noncenter_MaximalAbelianSubgroup_mul_noncenter_ConjCla
 
   sorry
 
-#check Group.nat_card_center_add_sum_card_noncenter_eq_card
-
-#check Group.card_center_add_sum_card_noncenter_eq_card
-
-
 -- lemma card_noncenter_C_eq_of_related {F : Type*} [Field F] (G : Subgroup SL(2,F)) [Finite G] :
 --   ∀ (A B : noncenter_MaximalAbelianSubgroupsOf G),
 --     A ≈ B → card_noncenter_C G A = card_noncenter_C G B := by
@@ -762,7 +748,3 @@ lemma normalizer_Sylow_join_center_eq_normalizer_Sylow {F : Type*} [Field F] {p 
   normalizer (map G.subtype Q.toSubgroup ⊔ center SL(2,F)) =
     normalizer (map G.subtype Q.toSubgroup) := by
   sorry
-
-
-
-#min_imports
