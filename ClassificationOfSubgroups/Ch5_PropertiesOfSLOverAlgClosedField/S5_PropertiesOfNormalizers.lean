@@ -122,11 +122,11 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
       rw [det_eq_zero] at det_eq_one
       absurd zero_ne_one det_eq_one
       trivial
-    · apply Dw_leq_DW
+    · apply Dw_le_DW
       rw [mem_D_w_iff, ← SpecialLinearGroup.fin_two_antidiagonal_iff]
       simp_rw [← hα, ← hδ, α_eq_zero, δ_eq_zero]
       trivial
-    · apply D_leq_DW
+    · apply D_le_DW
       rw [mem_D_iff, ← SpecialLinearGroup.fin_two_diagonal_iff]
       simp_rw [← hβ, ← hγ, β_eq_zero, γ_eq_zero]
       trivial
@@ -189,5 +189,7 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
             d_mul_d_eq_d_mul, ← mul_assoc, mul_inv_cancel_comm] at conj_mem_D₀
         rw [← inv_d_eq_d_inv]
         exact Subgroup.inv_mem D₀ conj_mem_D₀
+
+lemma normalizer_D_eq_DW {F : Type*} [Field F] : (D F).normalizer = DW F := by sorry
 
 #min_imports

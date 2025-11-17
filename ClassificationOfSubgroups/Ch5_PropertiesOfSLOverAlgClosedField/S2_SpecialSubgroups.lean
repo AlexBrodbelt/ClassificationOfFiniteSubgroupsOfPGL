@@ -489,14 +489,14 @@ def DW (F : Type*) [Field F] : Subgroup SL(2,F) where
     · simp
     · simp
 
-lemma D_leq_DW : D F ≤ DW F := by
+lemma D_le_DW : D F ≤ DW F := by
   rintro x ⟨δ, rfl⟩
   rw [DW, mem_mk]
   left
   apply exists_apply_eq_apply
 
 
-lemma Dw_leq_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F :  Set SL(2,F)) := by
+lemma Dw_le_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F :  Set SL(2,F)) := by
   rintro x ⟨d', hd', w, hw, rfl⟩
   obtain ⟨δ, rfl⟩ := hd'
   rw [DW, coe_set_mk]
@@ -504,6 +504,26 @@ lemma Dw_leq_DW : (D F : Set SL(2,F)) * ({w} : Set SL(2,F)) ⊆ (DW F :  Set SL(
   use δ
   rw [Set.mem_singleton_iff] at hw
   rw [hw]
+
+@[simp]
+lemma w_not_mem_D {F : Type*} [Field F] : w ∉ D F := by
+  intro contr
+  obtain ⟨δ, hδ⟩ := contr
+  simp [SpecialLinearGroup.fin_two_ext_iff, w, d] at hδ
+
+@[simp]
+lemma neg_mem_D_iff_mem_D {F : Type*} [Field F] {x : SL(2,F)} : -x ∈ D F  ↔ x ∈ D F  := by
+  constructor
+  · rintro ⟨δ, hδ⟩
+    rw [← neg_eq_iff_eq_neg] at hδ
+    subst hδ
+    simp
+  · rintro ⟨δ, rfl⟩
+    simp
+
+
+
+
 
 section Center
 
