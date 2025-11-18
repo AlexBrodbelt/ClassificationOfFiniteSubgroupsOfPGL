@@ -223,7 +223,7 @@ theorem Injective_PSL_monoidHom_PGL  (n F : Type*) [hn₁ : Fintype n] [Decidabl
   simp [GeneralLinearGroup.ext_iff, SpecialLinearGroup.toGL] at hω
   have S_eq_omega_smul_one : (S : Matrix n n F) = ω • 1 := Eq.symm (Matrix.ext hω)
   simp [S_eq_omega_smul_one] at ω_eq_root_of_unity
-  simp [← hS]
+  simp only [← hS, mem_bot, QuotientGroup.eq_one_iff]
   refine SpecialLinearGroup.mem_center_iff.mpr ?_
   use ω
   refine ⟨?ω_is_root_of_unity, ?S_is_scalar_matrix⟩

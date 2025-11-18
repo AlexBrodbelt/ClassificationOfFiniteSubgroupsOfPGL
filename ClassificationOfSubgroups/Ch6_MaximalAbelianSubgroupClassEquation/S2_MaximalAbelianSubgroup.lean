@@ -1770,17 +1770,42 @@ def quot_MonoidHom_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F)) (A'_
   QuotientGroup.lift
   ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer)
   ((monoidHom_quot A' G').comp (monoidHom A' G' A'_le_G' A'_le_D two_lt_card_A'))
-  (by sorry)
+  (
+    by
+    intro x hx
+    rw [MonoidHom.mem_ker]
+    dsimp [monoidHom_quot, monoidHom]
+    rw [QuotientGroup.eq_one_iff, mem_subgroupOf, mem_subgroupOf]
+    rw [mem_subgroupOf, mem_subgroupOf] at hx
+    norm_cast
+    exact A'_le_D hx
+  )
 
 noncomputable def quot_MulEquiv_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F))
-  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A') :
+  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A') (A'_eq_G'_inf_D : A' = G' ⊓ D F):
   (A'.subgroupOf G').normalizer ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer
         ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
         ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
           ((A'.normalizer ⊓ G').subgroupOf (D F).normalizer) :=
   MulEquiv.ofBijective
   (quot_MonoidHom_quot_of A' G' A'_le_G' A'_le_D two_lt_card_A')
-  (by sorry)
+  (
+  by
+  refine ⟨?Injective, ?Surjective⟩
+  · rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]
+    dsimp [quot_MonoidHom_quot_of, monoidHom_quot, monoidHom]
+    intro x hx
+    rw [MonoidHom.mem_ker] at hx
+    obtain ⟨x', rfl⟩ := Quotient.exists_rep x
+    simp [mem_subgroupOf] at hx
+    simp only [mem_bot, QuotientGroup.eq_one_iff, mem_subgroupOf]
+    suffices (x' : SL(2,F)) ∈ G' by
+      simp_rw [A'_eq_G'_inf_D, mem_inf]
+      exact ⟨this, hx⟩
+    simp only [SetLike.coe_mem]
+  · -- quotient of surjective is surjective
+    sorry
+  )
 
 -- Need to split into smaller lemmas
 /- Theorem 2.3 (iv a) If A ∈ M and |A| is relatively prime to p, then we have [N_G (A) : A] ≤ 2. -/
