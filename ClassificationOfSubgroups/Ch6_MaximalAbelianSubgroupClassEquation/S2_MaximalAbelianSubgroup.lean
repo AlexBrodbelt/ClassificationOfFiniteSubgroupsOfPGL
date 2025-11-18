@@ -1501,6 +1501,38 @@ def A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj
     intro g₁ g₂
     simp
 
+theorem A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
+  {F : Type*} [Field F] {A A' G G' : Subgroup SL(2,F)} {c : SL(2,F)}
+  (A_eq_conj_A' : conj c⁻¹ • A = A') (G_eq_conj_G' : conj c⁻¹ • G = G') :
+    Subgroup.map (A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj A_eq_conj_A' G_eq_conj_G')
+      ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer) =
+      (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer := by
+  unfold A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj
+  ext x
+  simp
+  constructor
+  . intro h
+    obtain ⟨g, hg, hg1, hg2, hg3⟩ := h
+    rw [← hg3]
+    simp [mem_subgroupOf]
+    rw [← A_eq_conj_A', mem_pointwise_smul_iff_inv_smul_mem]
+    simp [MulAut.smul_def]
+    group
+    exact hg2
+  . intro h
+    simp [mem_subgroupOf] at h
+    use (conj c • G'.subtype x)
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · rw [MonoidHom.map_inv, inv_smul_eq_iff] at G_eq_conj_G'
+      rw [G_eq_conj_G']
+      simp [mem_pointwise_smul_iff_inv_smul_mem, MulAut.smul_def]
+      group
+      exact x.val.prop
+    · sorry
+    · sorry
+    · simp only [subtype_apply, MulAut.smul_def, conj_apply]
+      group
+
 lemma conj_eq_iff_eq_conj_inv {F : Type*} [Field F] {c : SL(2,F)} {A A' : Subgroup SL(2,F)} :
   conj c • A = A' ↔ A = conj c⁻¹ • A' := by
   rw [smul_eq_iff_eq_inv_smul, MonoidHom.map_inv]
@@ -1822,25 +1854,21 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
       have hA' : A' ∈ MaximalAbelianSubgroupsOf G' := by
         rw [iff_conj_MaximalAbelianSubgroupsOf_conj A' G' c, ← A_eq_conj_A', ← G_eq_conj_G']
         exact hA
-      -- factor out this lemma
-      have normalizer_eq : conj c⁻¹ • map G.subtype (A.subgroupOf G).normalizer
-        = map G'.subtype (A'.subgroupOf G').normalizer := by
-        sorry
+
       have index_eq : ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer).index =
         ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer).index := by
         rw [index_eq_card, index_eq_card]
 
         rw [← inv_smul_eq_iff, ← MonoidHom.map_inv] at A_eq_conj_A' G_eq_conj_G'
+
         let φ : (A.subgroupOf G).normalizer ≃* (A'.subgroupOf G').normalizer :=
           A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj A_eq_conj_A' G_eq_conj_G'
-        -- factor out this lemma
-        have : Subgroup.map φ ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer)
-          = (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer := by
-          sorry
+
         let ϕ := QuotientGroup.congr
           ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer)
-          ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer) φ this
-
+          ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer) φ
+          (A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
+             A_eq_conj_A' G_eq_conj_G')
 
         refine Nat.card_congr ϕ.symm
       have two_lt_card_A' : 2 < Nat.card A' := by rwa [card_conj_eq_card A_eq_conj_A']
