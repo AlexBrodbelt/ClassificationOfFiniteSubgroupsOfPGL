@@ -1782,11 +1782,12 @@ def quot_MonoidHom_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F)) (A'_
   )
 
 noncomputable def quot_MulEquiv_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F))
-  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A') (A'_eq_G'_inf_D : A' = G' ⊓ D F):
-  (A'.subgroupOf G').normalizer ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer
-        ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
-        ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
-          ((A'.normalizer ⊓ G').subgroupOf (D F).normalizer) :=
+  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A')
+  (A'_eq_G'_inf_D : A' = G' ⊓ D F) :
+    (A'.subgroupOf G').normalizer ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer
+    ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
+    ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
+      ((A'.normalizer ⊓ G').subgroupOf (D F).normalizer) :=
   MulEquiv.ofBijective
   (quot_MonoidHom_quot_of A' G' A'_le_G' A'_le_D two_lt_card_A')
   (
@@ -1890,7 +1891,7 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
         ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
           ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
             ((A'.normalizer ⊓ G').subgroupOf (D F).normalizer) :=
-        quot_MulEquiv_quot_of A' G' A'_le_D hA'.right two_lt_card_A'
+        quot_MulEquiv_quot_of A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
 
       let φ₂ := QuotientGroup.quotientInfEquivProdNormalQuotient
         (H := (((A'.normalizer ⊓ G')).subgroupOf ((D F).normalizer)))
