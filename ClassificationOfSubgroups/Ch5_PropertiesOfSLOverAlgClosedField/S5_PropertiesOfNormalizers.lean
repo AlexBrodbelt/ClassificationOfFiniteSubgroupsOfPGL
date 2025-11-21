@@ -101,9 +101,8 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
     replace bottom_left := bottom_left_eq ▸ bottom_left
     have det_eq_one : det (x : Matrix (Fin 2) (Fin 2) F) = 1 := SpecialLinearGroup.det_coe _
     have δ_sub_δ_inv_ne_zero : (δ' : F)⁻¹ - δ' ≠ 0 := by
-      have δ'_ne_zero : (δ' : F) ≠ 0 := by sorry
       intro h
-      field_simp [δ'_ne_zero] at h
+      field_simp at h
       rw [mul_zero, sub_eq_zero] at h
       symm at h
       rw [sq_eq_one_iff] at h
