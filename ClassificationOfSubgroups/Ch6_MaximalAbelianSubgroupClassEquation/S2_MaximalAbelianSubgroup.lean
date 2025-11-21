@@ -1771,6 +1771,7 @@ noncomputable def quot_MulEquiv_quot_of {F : Type*} [Field F] (A' G' : Subgroup 
     simp_rw [hy''₂, hy'₂]
   )
 
+
 -- Need to split into smaller lemmas
 /- Theorem 2.3 (iv a) If A ∈ M and |A| is relatively prime to p, then we have [N_G (A) : A] ≤ 2. -/
 theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
@@ -1811,7 +1812,7 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
       have hA' : A' ∈ MaximalAbelianSubgroupsOf G' := by
         rw [iff_conj_MaximalAbelianSubgroupsOf_conj A' G' c, ← A_eq_conj_A', ← G_eq_conj_G']
         exact hA
-
+      -- factor out lemma for lemma 2.3 iv b)
       have index_eq : ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer).index =
         ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer).index := by
         rw [index_eq_card, index_eq_card]
@@ -1946,7 +1947,7 @@ then there is an element y of NG (A)\A such that, yxy⁻¹ = x⁻¹  for all x �
  -/
 theorem of_index_normalizer_eq_two {F : Type*} [Field F] {p : ℕ }(A G : Subgroup SL(2,F))
   (hA : A ∈ MaximalAbelianSubgroupsOf G) (hA' : Nat.Coprime (Nat.card A) p)
-  (hNA : A.normalizer.index = 2) (x : A) :
+  (hNA : relIndex (A.subgroupOf G) (A.subgroupOf G).normalizer = 2) (x : A) :
   ∃ y ∈ A.normalizer.carrier \ A, y * x * y⁻¹ = x⁻¹ := by sorry
 
 /-
