@@ -1533,11 +1533,17 @@ theorem A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
       · intro hy
         simp [mem_subgroupOf] at hy ⊢
         rw [← A_eq_conj_A'] at h
-        sorry
+        rcases h with ⟨b, hb, bx⟩
+        simpa [mul_assoc, ← bx] using
+          (A.mul_mem_cancel_left hb).mpr
+            ((A.mul_mem_cancel_right (A.inv_mem hb)).mpr hy)
       · intro hy
         simp [mem_subgroupOf] at hy ⊢
         rw [← A_eq_conj_A'] at h
-        sorry
+        rcases h with ⟨b, hb, bx⟩
+        simp [mul_assoc, ← bx] at hy
+        apply (A.mul_mem_cancel_left hb).mp at hy
+        exact (A.mul_mem_cancel_right (A.inv_mem hb)).mp hy
     · simp only [subtype_apply, mem_subgroupOf]
       rwa [← mem_inv_pointwise_smul_iff, ← MonoidHom.map_inv, A_eq_conj_A']
     · simp only [subtype_apply, MulAut.smul_def, conj_apply]
