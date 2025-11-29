@@ -1636,7 +1636,7 @@ noncomputable def MulEquiv_ZMod_prime_of_card_prime {G : Type*} [Group G] {p : �
   [Fact (Nat.Prime p)] (hG : Nat.card G = p) :
   G ≃* Multiplicative (ZMod p) := (hG ▸ zmodCyclicMulEquiv (isCyclic_of_prime_card hG)).symm
 
-lemma card_normalizer_D_quot_D_eq_two {F : Type*} [Field F] :
+lemma card_normalizer_D_quot_D_eq_two (F : Type*) [Field F] :
   Nat.card ((D F).normalizer ⧸ (D F).subgroupOf ((D F).normalizer)) = 2 := by
   rw [Nat.card_eq_two_iff]
   use QuotientGroup.mk' ((D F).subgroupOf ((D F).normalizer))
@@ -1739,9 +1739,9 @@ def quot_MonoidHom_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F)) (A'_
     exact A'_le_D hx
   )
 
-noncomputable def quot_MulEquiv_quot_of {F : Type*} [Field F] (A' G' : Subgroup SL(2,F))
-  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A')
-  (A'_eq_G'_inf_D : A' = G' ⊓ D F) :
+noncomputable def normalizer_A'_inf_G'_quot_A'_MulEquiv_quot_of {F : Type*} [Field F]
+  (A' G' : Subgroup SL(2,F)) (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G')
+  (two_lt_card_A' : 2 < Nat.card A')   (A'_eq_G'_inf_D : A' = G' ⊓ D F) :
     (A'.subgroupOf G').normalizer ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer
     ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
     ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
@@ -1777,6 +1777,135 @@ noncomputable def quot_MulEquiv_quot_of {F : Type*} [Field F] (A' G' : Subgroup 
     simp_rw [hy''₂, hy'₂]
   )
 
+def monoidHom_normalizer_D_quot_D {F : Type*} [Field F] (A' G' : Subgroup SL(2,F)) :
+  ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer)
+    ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
+      ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer)
+    →* ↥(D F).normalizer ⧸ (D F).subgroupOf (D F).normalizer :=
+  QuotientGroup.lift _
+    ((QuotientGroup.mk' ((D F).subgroupOf ((D F).normalizer))).comp
+      ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer).subtype)
+    (
+    by
+    intro x hx
+    rw [mem_subgroupOf] at hx
+    simpa [MonoidHom.mem_ker, QuotientGroup.eq_one_iff] using hx
+    )
+
+
+noncomputable def A_subgroupOf_G_MonoidHom_ZMod_two {F : Type*} [Field F] (A' G' : Subgroup SL(2,F))
+  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A')
+  (A'_eq_G'_inf_D : A' = G' ⊓ D F) :
+  ↥(A'.subgroupOf G').normalizer
+    ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer →* Multiplicative (ZMod 2) :=
+  let ϕ₁ := normalizer_A'_inf_G'_quot_A'_MulEquiv_quot_of A' G' A'_le_D A'_le_G'
+    two_lt_card_A' A'_eq_G'_inf_D
+
+  let ϕ₂ := QuotientGroup.quotientInfEquivProdNormalQuotient
+        (H := (((A'.normalizer ⊓ G')).subgroupOf ((D F).normalizer)))
+        (N := (D F).subgroupOf ((D F).normalizer))
+
+  let φ₃ := (MulEquiv.subgroupCongr
+    (G := (D F).normalizer)
+    (H := (A'.normalizer ⊓ G').subgroupOf (D F).normalizer ⊔ (D F).subgroupOf (D F).normalizer)
+    (K := (A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer)
+    (by rw [← subgroupOf_sup _ _ _
+    (by rw [normalizer_D_eq_DW, normalizer_subgroup_D_eq_DW two_lt_card_A' A'_le_D]
+        exact inf_le_left)
+    (le_normalizer)])).symm
+
+  let ϕ₃ := QuotientGroup.congr _ _ φ₃
+    (show Subgroup.map φ₃.toMonoidHom (((D F).subgroupOf (D F).normalizer).subgroupOf
+       ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer))
+    = ((D F).subgroupOf (D F).normalizer).subgroupOf
+        ((A'.normalizer ⊓ G').subgroupOf
+          (D F).normalizer ⊔ (D F).subgroupOf (D F).normalizer) by
+    sorry)
+
+  let ϕ₄ := monoidHom_normalizer_D_quot_D A' G'
+
+  let ϕ₅ := (MulEquiv_ZMod_prime_of_card_prime (card_normalizer_D_quot_D_eq_two F))
+
+  ϕ₅.toMonoidHom.comp (ϕ₄.comp (ϕ₃.symm.toMonoidHom.comp (ϕ₂.toMonoidHom.comp ϕ₁.toMonoidHom)))
+
+
+
+lemma injective_A_subgroupOf_G_MonoidHom_ZMod_two {F : Type*} [Field F] (A' G' : Subgroup SL(2,F))
+  (A'_le_D : A' ≤ D F) (A'_le_G' : A' ≤ G') (two_lt_card_A' : 2 < Nat.card A')
+  (A'_eq_G'_inf_D : A' = G' ⊓ D F) :
+    Injective
+      (A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D A'_le_G' two_lt_card_A' A'_eq_G'_inf_D) := by
+  dsimp [A_subgroupOf_G_MonoidHom_ZMod_two]
+  apply Injective.comp
+  · exact MulEquiv.injective _
+  apply Injective.comp
+  · dsimp [monoidHom_normalizer_D_quot_D]
+    rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]
+    intro x hx
+    obtain ⟨x', hx'⟩ := Quotient.exists_rep x
+    simp [MonoidHom.mem_ker, ← hx', QuotientGroup.eq_one_iff] at hx
+    simpa [mem_bot, ← hx', mem_subgroupOf]
+  apply Injective.comp
+  · exact MulEquiv.injective _
+  apply Injective.comp
+  · exact MulEquiv.injective _
+  exact MulEquiv.injective _
+
+#check MonoidHom.comp
+
+#check Equiv.ofInjective
+
+#check Equiv.mulEquiv
+
+lemma relIndex_MaximalAbelianSubgroupOf_normalizer_eq_relIndex_conj_MaxAbelianSubgroupOf
+  {F : Type*} [Field F] {A A' G G' : Subgroup SL(2,F)} {c : SL(2,F)}
+  (A_eq_conj_A' : A = conj c • A') (G_eq_conj_G': G = conj c • G') :
+    ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer).index
+      = ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer).index := by
+  rw [index_eq_card, index_eq_card]
+  rw [← inv_smul_eq_iff, ← MonoidHom.map_inv] at A_eq_conj_A' G_eq_conj_G'
+  let φ : (A.subgroupOf G).normalizer ≃* (A'.subgroupOf G').normalizer :=
+    A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj A_eq_conj_A' G_eq_conj_G'
+  let ϕ := QuotientGroup.congr
+    ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer)
+    ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer) φ
+    (A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
+       A_eq_conj_A' G_eq_conj_G')
+  refine Nat.card_congr ϕ.symm
+
+
+lemma card_normalizer_inf_G_eq_one_of_card_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
+  {F : Type*} [Field F] [IsAlgClosed F] [DecidableEq F] [CharP F p] (p_ne_two : p ≠ 2)
+  (A G : Subgroup SL(2,F)) (center_le_G : center SL(2,F) ≤ G)
+  (hA : A ∈ MaximalAbelianSubgroupsOf G) [hG : Finite G]
+  (card_A_le_two : Nat.card A ≤ 2) :
+    relIndex (A.subgroupOf G) (A.subgroupOf G).normalizer = 1 := by
+  have key := eq_center_of_card_le_two p_ne_two A G center_le_G hA card_A_le_two
+  rw [key]
+  have center_is_normal : Normal ((center SL(2,F)).subgroupOf G) := normal_subgroupOf
+  rw [relIndex, normalizer_eq_top_iff.mpr center_is_normal, ← comap_subtype, ← subgroupOf_self,
+    index_comap, Subgroup.range_subtype, Subgroup.relIndex_subgroupOf fun ⦃x⦄ a ↦ a]
+  have G_eq_center : G = center SL(2,F) := by
+    rw [key] at hA
+    contrapose! hA
+    exact center_not_mem_of_center_ne hA.symm
+  rw [relIndex_eq_one]
+  exact le_of_eq_of_le G_eq_center fun ⦃x⦄ a ↦ a
+
+
+lemma G_ne_center_of_two_lt_card {p : ℕ} [hp : Fact (Nat.Prime p)]
+  {F : Type*} [Field F] [IsAlgClosed F] [DecidableEq F] [CharP F p]
+  (A G : Subgroup SL(2,F)) (hA : A ∈ MaximalAbelianSubgroupsOf G)
+  (two_lt_card_A : 2 < Nat.card A) :
+    G ≠ center SL(2,F) := by
+  intro G_eq_center
+  have A_eq_center : A = center SL(2,F) := by
+    rw [← Set.mem_singleton_iff, ← singleton_of_center_eq_G G G_eq_center]
+    exact hA
+  have card_le_two : Nat.card A ≤ 2 := by
+    rw [A_eq_center, center_SL2_eq_Z]
+    exact card_Z_le_two
+  linarith
 
 -- Need to split into smaller lemmas
 /- Theorem 2.3 (iv a) If A ∈ M and |A| is relatively prime to p, then we have [N_G (A) : A] ≤ 2. -/
@@ -1786,34 +1915,15 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
   (hA : A ∈ MaximalAbelianSubgroupsOf G) [hG : Finite G]
   (hA' : Nat.Coprime (Nat.card A) p) :
   relIndex (A.subgroupOf G) (A.subgroupOf G).normalizer ≤ 2 := by
-  rw [relIndex]
   by_cases h : Nat.card A ≤ 2
-  · have key := eq_center_of_card_le_two p_ne_two A G center_le_G hA h
-    rw [key]
-    have center_is_normal : Normal ((center SL(2,F)).subgroupOf G) := normal_subgroupOf
-    rw [normalizer_eq_top_iff.mpr center_is_normal, ← comap_subtype, ← subgroupOf_self, index_comap,
-      Subgroup.range_subtype, Subgroup.relIndex_subgroupOf fun ⦃x⦄ a ↦ a]
-    have G_eq_center : G = center SL(2,F) := by
-      rw [key] at hA
-      contrapose! hA
-      exact center_not_mem_of_center_ne hA.symm
-    suffices (center SL(2, F)).relIndex G = 1 by linarith
-    rw [relIndex_eq_one]
-    exact le_of_eq_of_le G_eq_center fun ⦃x⦄ a ↦ a
-  · simp only [not_le] at h
-    have G_ne_center : G ≠ center SL(2,F) := by
-      intro G_eq_center
-      have A_eq_center : A = center SL(2,F) := by
-        rw [← Set.mem_singleton_iff, ← singleton_of_center_eq_G G G_eq_center]
-        exact hA
-      have card_le_two : Nat.card A ≤ 2 := by
-        rw [A_eq_center, center_SL2_eq_Z]
-        exact card_Z_le_two
-      linarith
+  · rw [card_normalizer_inf_G_eq_one_of_card_le_two p_ne_two A G center_le_G hA h]
+    norm_num
+  · rw [relIndex]
+    simp only [not_le] at h
+    have G_ne_center : G ≠ center SL(2,F) := G_ne_center_of_two_lt_card A G hA h
     rcases IsCyclic_and_card_coprime_CharP_or_eq_Q_join_Z_of_center_ne p G A hA
-      center_le_G G_ne_center with (⟨A_cyclic, -⟩ | h)
-    · obtain ⟨c, A', Finite_A', A'_le_D, A_eq_conj_A'⟩ := A_cyclic
-      let G' := conj c⁻¹ • G
+      center_le_G G_ne_center with (⟨⟨c, A', Finite_A', A'_le_D, A_eq_conj_A'⟩, -⟩ | h)
+    · let G' := conj c⁻¹ • G
       have G_eq_conj_G' : G = conj c • G' := by simp [G']
       have hA' : A' ∈ MaximalAbelianSubgroupsOf G' := by
         rw [iff_conj_MaximalAbelianSubgroupsOf_conj A' G' c, ← A_eq_conj_A', ← G_eq_conj_G']
@@ -1821,20 +1931,8 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
       -- factor out lemma for lemma 2.3 iv b)
       have index_eq : ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer).index =
         ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer).index := by
-        rw [index_eq_card, index_eq_card]
-
-        rw [← inv_smul_eq_iff, ← MonoidHom.map_inv] at A_eq_conj_A' G_eq_conj_G'
-
-        let φ : (A.subgroupOf G).normalizer ≃* (A'.subgroupOf G').normalizer :=
-          A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj A_eq_conj_A' G_eq_conj_G'
-
-        let ϕ := QuotientGroup.congr
-          ((A.subgroupOf G).subgroupOf (A.subgroupOf G).normalizer)
-          ((A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer) φ
-          (A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
-             A_eq_conj_A' G_eq_conj_G')
-
-        refine Nat.card_congr ϕ.symm
+        rw [relIndex_MaximalAbelianSubgroupOf_normalizer_eq_relIndex_conj_MaxAbelianSubgroupOf
+          A_eq_conj_A' G_eq_conj_G']
       have two_lt_card_A' : 2 < Nat.card A' := by rwa [card_conj_eq_card A_eq_conj_A']
       have normalizer_A'_le_DW := normalizer_subgroup_D_eq_DW two_lt_card_A' A'_le_D
 
@@ -1852,65 +1950,9 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
           apply inf_le_inf_right
           exact map_subtype_le (A'.subgroupOf G').normalizer
 
-      let φ₁ : (A'.subgroupOf G').normalizer
-        ⧸ (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer
-        ≃* ↥((A'.normalizer ⊓ G').subgroupOf (D F).normalizer)
-          ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
-            ((A'.normalizer ⊓ G').subgroupOf (D F).normalizer) :=
-        quot_MulEquiv_quot_of A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
-
-      let φ₂ := QuotientGroup.quotientInfEquivProdNormalQuotient
-        (H := (((A'.normalizer ⊓ G')).subgroupOf ((D F).normalizer)))
-        (N := (D F).subgroupOf ((D F).normalizer))
-
-      conv at φ₂ in (_ ≃* _) =>
-        rw [← subgroupOf_sup _ _ _
-          (by
-            rw [normalizer_D_eq_DW, normalizer_subgroup_D_eq_DW two_lt_card_A' A'_le_D]
-            exact inf_le_left)
-          (le_normalizer)]
-
-      have A'_normalizer_inf_G_eq : A'.normalizer ⊓ G'
-        = map G'.subtype (A'.subgroupOf G').normalizer :=
-        normalizer_inf_le_eq_normalizer_subgroupOf hA'.right
-
-      -- will be need to show inclusion is injective
-      have le_normalizer_D : A'.normalizer ⊓ G' ⊔ D F ≤ (D F).normalizer := by
-        simpa [normalizer_subgroup_D_eq_DW two_lt_card_A' A'_le_D, normalizer_D_eq_DW] using D_le_DW
-
-      let φ₃ : ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer)
-        ⧸ ((D F).subgroupOf (D F).normalizer).subgroupOf
-          ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer)
-        →* ((D F).normalizer ⧸ (D F).subgroupOf ((D F).normalizer)) :=
-        QuotientGroup.lift _
-        ((QuotientGroup.mk' ((D F).subgroupOf ((D F).normalizer))).comp
-          ((A'.normalizer ⊓ G' ⊔ D F).subgroupOf (D F).normalizer).subtype)
-        (
-        by
-        intro x hx
-        rw [mem_subgroupOf] at hx
-        simpa [MonoidHom.mem_ker, QuotientGroup.eq_one_iff] using hx
-        )
-
-      -- prove that φ₃ is injective
-      have injective_φ₃ : Injective φ₃ := by
-        rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]
-        intro x hx
-        obtain ⟨x', hx'⟩ := Quotient.exists_rep x
-        simp [MonoidHom.mem_ker, ← hx',
-          φ₃, QuotientGroup.eq_one_iff] at hx
-        simpa [mem_bot, ← hx', mem_subgroupOf]
-
-      have card_normalizer_D_quot_D_eq_two : Nat.card ((D F).normalizer
-        ⧸ (D F).subgroupOf ((D F).normalizer)) = 2 :=
-        card_normalizer_D_quot_D_eq_two
-
-      let φ₄ : (D F).normalizer ⧸ (D F).subgroupOf ((D F).normalizer)
-        ≃* Multiplicative (ZMod 2) :=
-        MulEquiv_ZMod_prime_of_card_prime card_normalizer_D_quot_D_eq_two
-
-
       rw [← index_eq, index]
+      -- set_option trace.profiler true in
+
       suffices ∃ f : ((A'.subgroupOf G').normalizer ⧸
         (A'.subgroupOf G').subgroupOf (A'.subgroupOf G').normalizer :)
         →* (Multiplicative (ZMod 2) :), Injective f by
@@ -1922,15 +1964,9 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
         exact Nat.card_le_card_of_injective f hf
 
 
-      use φ₄.toMonoidHom.comp <| φ₃.comp <| φ₂.toMonoidHom.comp φ₁.toMonoidHom
-      dsimp
-      apply Injective.comp
-      · exact MulEquiv.injective φ₄
-      apply Injective.comp
-      · exact injective_φ₃
-      apply Injective.comp
-      · exact MulEquiv.injective φ₂
-      · exact MulEquiv.injective φ₁
+      use A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
+      exact injective_A_subgroupOf_G_MonoidHom_ZMod_two
+        A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
 
     -- Contradiction since the cardinality of A is coprime to p and
     -- should A = Q ⊔ Z where Q is p elementary abelian, then p ∣ |A|
@@ -1951,10 +1987,59 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
 Theorem 2.3 (iv b) Furthermore, if [NG (A) : A] = 2,
 then there is an element y of NG (A)\A such that, yxy⁻¹ = x⁻¹  for all x ∈ A.
  -/
-theorem of_index_normalizer_eq_two {F : Type*} [Field F] {p : ℕ }(A G : Subgroup SL(2,F))
-  (hA : A ∈ MaximalAbelianSubgroupsOf G) (hA' : Nat.Coprime (Nat.card A) p)
+theorem of_index_normalizer_eq_two {F : Type*} [Field F] [IsAlgClosed F] [DecidableEq F]
+  {p : ℕ} [Fact (Nat.Prime p)] [CharP F p] (p_ne_two : p ≠ 2) (A G : Subgroup SL(2,F))
+  [Finite G] (hA : A ∈ MaximalAbelianSubgroupsOf G) (center_le_G : center SL(2,F) ≤ G)
+  (hA' : Nat.Coprime (Nat.card A) p)
   (hNA : relIndex (A.subgroupOf G) (A.subgroupOf G).normalizer = 2) (x : A) :
-  ∃ y ∈ A.normalizer.carrier \ A, y * x * y⁻¹ = x⁻¹ := by sorry
+    ∃ y ∈ A.normalizer.carrier \ A, y * x * y⁻¹ = x⁻¹ := by
+  have two_lt_card_A : 2 < Nat.card A := by
+    have key := card_normalizer_inf_G_eq_one_of_card_le_two p_ne_two A G center_le_G hA
+    contrapose! key
+    constructor
+    · exact key
+    · rw [hNA]
+      norm_num
+  have G_ne_center : G ≠ center SL(2,F) := G_ne_center_of_two_lt_card A G hA two_lt_card_A
+
+  rcases IsCyclic_and_card_coprime_CharP_or_eq_Q_join_Z_of_center_ne p G A hA
+      center_le_G G_ne_center with (⟨⟨c, A', Finite_A', A'_le_D, A_eq_conj_A'⟩, -⟩ | h)
+  · let G' := conj c⁻¹ • G
+    have G_eq_conj_G' : G = conj c • G' := by simp [G']
+    have hA' : A' ∈ MaximalAbelianSubgroupsOf G' := by
+      rw [iff_conj_MaximalAbelianSubgroupsOf_conj A' G' c, ← A_eq_conj_A', ← G_eq_conj_G']
+      exact hA
+
+    rw [relIndex,
+      ← relIndex_MaximalAbelianSubgroupOf_normalizer_eq_relIndex_conj_MaxAbelianSubgroupOf
+      A_eq_conj_A' G_eq_conj_G'] at hNA
+    have two_lt_card_A' : 2 < Nat.card A' := by rwa [card_conj_eq_card A_eq_conj_A']
+    have A'_eq_G'_inf_D : A' = G' ⊓ D F := A_eq_G_inf_D A' G' A'_le_D hA'
+
+    let f := A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
+    have Injective_f : Injective f := injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
+    -- let := Equiv.ofInjective
+    --   (A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
+    --   (injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
+
+    have card_multiplicative_ZMod_two_eq_two : Nat.card (Multiplicative (ZMod 2)) = 2 := by
+      rw [Nat.card_eq_fintype_card, Fintype.card_multiplicative]; rfl
+    -- let := Equiv.mulEquiv (Equiv.ofInjective
+    --   (A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
+    --   (injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D))
+
+    rw [index] at hNA
+    have key := ((Nat.bijective_iff_injective_and_card f).mpr
+      ⟨Injective_f, by rwa [card_multiplicative_ZMod_two_eq_two]⟩).2
+
+    dsimp [f, A_subgroupOf_G_MonoidHom_ZMod_two] at key
+    rw [← comp_assoc] at key
+    -- want surjectivity of the second map on the left in the composition
+
+
+    sorry
+
+  sorry
 
 /-
 Theorem 2.3 (v a) Let Q be a Sylow p-subgroup of G.
@@ -1977,5 +2062,6 @@ theorem K_mem_MaximalAbelianSubgroups_of_center_lt_card_K {F : Type*} [Field F] 
   sorry
 
 end MaximalAbelianSubgroup
+
 
 #min_imports

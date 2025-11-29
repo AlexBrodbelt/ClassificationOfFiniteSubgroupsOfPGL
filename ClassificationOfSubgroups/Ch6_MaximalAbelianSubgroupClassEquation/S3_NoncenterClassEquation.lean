@@ -217,8 +217,7 @@ lemma card_noncenter_eq_of_related {F : Type*} [Field F] (G : Subgroup SL(2,F))
     A ≈ B → card_noncenter G A =
       card_noncenter G B := by
   rintro ⟨A_star, A, A_in_MaxAbSub, hA⟩ ⟨B_star, B, B_in_MaxAbSub, hB⟩ ⟨x, x_in_G, rfl⟩
-  simp only [card_noncenter, center_toSubmonoid,
-    Submonoid.center_toSubsemigroup, pointwise_smul_toSubmonoid, Set.Nat.card_coe_set_eq]
+  simp only [card_noncenter, Nat.card_coe_set_eq]
   let center_finite : Finite (center SL(2, F)) := by
     rw [center_SL2_eq_Z]
     infer_instance
@@ -436,7 +435,7 @@ lemma union_noncenter_C_eq_G_diff_center {F : Type*} [Field F] [IsAlgClosed F] [
       · apply conj_smul_le_of_le A_subs_G ⟨c, c_mem_G⟩
         apply x_mem_G
       · have conj_center_eq_center : conj c • (center SL(2, F)) = (center SL(2,F)) := by
-          exact smul_normal c (center SL(2, F))
+          exact Normal.conj_smul_eq_self c (center SL(2, F))
         have : conj c • (center SL(2,F)).carrier = (conj c • (center SL(2, F))).carrier := by rfl
         rw [(by rfl : conj c • (center SL(2,F)).carrier = (conj c • (center SL(2, F))).carrier),
           conj_center_eq_center] at x_not_mem_center
@@ -446,7 +445,7 @@ lemma union_noncenter_C_eq_G_diff_center {F : Type*} [Field F] [IsAlgClosed F] [
 --   (G : Subgroup SL(2,F)) [hG : Finite G]  : ⋃ A_star : noncenter_MaximalAbelianSubgroupsOf G,
 --       union_conj_noncenter_MaximalAbelianSubgroupsOf G A_star =
 
-
+#check LocalSubring.isMax_iff
 /-
 Theorem 2.4 i a)
 The union of elements of the `Quotient` on the `Setoid`,
