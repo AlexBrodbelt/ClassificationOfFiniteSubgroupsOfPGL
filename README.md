@@ -29,6 +29,11 @@ I would also like to thank Prof. Kevin Buzzard for his support and patience.
 
 Finally, I would like to thank the many members of the Lean Zulip community who have provided insightful ideas and comments that have helped me progress much faster than otherwise.
 
+## Contributing
+
+Contributions are welcome! If you would like to contribute, I recommend looking through the reference below and contacting me via zulip so I can find you a suitable task. 
+At the time of writing, I am formalising lemma 2.3 iv) b); and hope to be soon formalising the inequality on page 35, which will lead to the case split on the classification of the arbitrary finite group.
+
 ## Source reference
 
 `CB` : [ChristopherButlerExpositionOfDicksonsClassificationTheorem](https://lup.lub.lu.se/student-papers/record/8998907/file/8998908.pdf)
