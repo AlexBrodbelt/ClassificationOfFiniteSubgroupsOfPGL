@@ -561,8 +561,8 @@ lemma eq_centralizer_meet_of_center_lt {F : Type*} [Field F] [IsAlgClosed F] [De
 
 
 
-
 open MulAut
+
 
 lemma conj_ZS_eq_conj_Z_join_S {F : Type*} [Field F] (c : SL(2,F)):
   conj c • SZ F = conj c • S F ⊔ Z F := by
@@ -1305,8 +1305,8 @@ theorem IsCyclic_and_card_coprime_CharP_or_eq_Q_join_Z {F : Type*}
 
 -- could probably generalise to any map with some structure or maybe none at all
 lemma iff_conj_MaximalAbelianSubgroupsOf_conj {G : Type* } [Group G]
-  (A H : Subgroup G) (c : G) :
-  A ∈ MaximalAbelianSubgroupsOf H ↔ conj c • A ∈ MaximalAbelianSubgroupsOf (conj c • H) := by
+  (A H : Subgroup G) (c : G) : A ∈ MaximalAbelianSubgroupsOf H
+    ↔ conj c • A ∈ MaximalAbelianSubgroupsOf (conj c • H) := by
   constructor
   · intro ⟨⟨hA₁, hA₂⟩, A_le_H⟩
     split_ands
@@ -1549,7 +1549,13 @@ theorem A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
     · simp only [subtype_apply, MulAut.smul_def, conj_apply]
       group
 
-lemma conj_eq_iff_eq_conj_inv {F : Type*} [Field F] {c : SL(2,F)} {A A' : Subgroup SL(2,F)} :
+lemma conj_A_subgroupOf_G_eq_A'_subgroupOf_G {F : Type*} [Field F] {A A' G G' : Subgroup SL(2,F)} {c : SL(2,F)}
+  (A_eq_conj_A' : A = conj c • A') (G_eq_conj_G' : G = conj c • G') :
+    conj c • Subgroup.map G.subtype (A.subgroupOf G).normalizer = Subgroup.map G'.subtype (A'.subgroupOf G').normalizer := by
+  -- apply?
+  sorry
+
+lemma conj_eq_iff_eq_conj_inv {F : Type*} [Field F] {c : SL(2,F)} (A A' : Subgroup SL(2,F)) :
   conj c • A = A' ↔ A = conj c⁻¹ • A' := by
   rw [smul_eq_iff_eq_inv_smul, MonoidHom.map_inv]
 
@@ -1962,12 +1968,9 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
         conv_rhs =>
           rw [← card_ZMod_two_eq_two]
         exact Nat.card_le_card_of_injective f hf
-
-
       use A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
       exact injective_A_subgroupOf_G_MonoidHom_ZMod_two
         A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
-
     -- Contradiction since the cardinality of A is coprime to p and
     -- should A = Q ⊔ Z where Q is p elementary abelian, then p ∣ |A|
     · obtain ⟨Q, hQ, Q_Finite, Q_le_G, A_eq_Q_join_Z, Q_isElementaryAbelian, -⟩ := h
@@ -1982,86 +1985,4 @@ theorem index_normalizer_le_two {p : ℕ} [hp : Fact (Nat.Prime p)]
       apply Subgroup.card_dvd_of_le
       exact le_sup_left
 
-
-/-
-Theorem 2.3 (iv b) Furthermore, if [NG (A) : A] = 2,
-then there is an element y of NG (A)\A such that, yxy⁻¹ = x⁻¹  for all x ∈ A.
- -/
-theorem of_index_normalizer_eq_two {F : Type*} [Field F] [IsAlgClosed F] [DecidableEq F]
-  {p : ℕ} [Fact (Nat.Prime p)] [CharP F p] (p_ne_two : p ≠ 2) (A G : Subgroup SL(2,F))
-  [Finite G] (hA : A ∈ MaximalAbelianSubgroupsOf G) (center_le_G : center SL(2,F) ≤ G)
-  (hA' : Nat.Coprime (Nat.card A) p)
-  (hNA : relIndex (A.subgroupOf G) (A.subgroupOf G).normalizer = 2) (x : A) :
-    ∃ y ∈ A.normalizer.carrier \ A, y * x * y⁻¹ = x⁻¹ := by
-  have two_lt_card_A : 2 < Nat.card A := by
-    have key := card_normalizer_inf_G_eq_one_of_card_le_two p_ne_two A G center_le_G hA
-    contrapose! key
-    constructor
-    · exact key
-    · rw [hNA]
-      norm_num
-  have G_ne_center : G ≠ center SL(2,F) := G_ne_center_of_two_lt_card A G hA two_lt_card_A
-
-  rcases IsCyclic_and_card_coprime_CharP_or_eq_Q_join_Z_of_center_ne p G A hA
-      center_le_G G_ne_center with (⟨⟨c, A', Finite_A', A'_le_D, A_eq_conj_A'⟩, -⟩ | h)
-  · let G' := conj c⁻¹ • G
-    have G_eq_conj_G' : G = conj c • G' := by simp [G']
-    have hA' : A' ∈ MaximalAbelianSubgroupsOf G' := by
-      rw [iff_conj_MaximalAbelianSubgroupsOf_conj A' G' c, ← A_eq_conj_A', ← G_eq_conj_G']
-      exact hA
-
-    rw [relIndex,
-      ← relIndex_MaximalAbelianSubgroupOf_normalizer_eq_relIndex_conj_MaxAbelianSubgroupOf
-      A_eq_conj_A' G_eq_conj_G'] at hNA
-    have two_lt_card_A' : 2 < Nat.card A' := by rwa [card_conj_eq_card A_eq_conj_A']
-    have A'_eq_G'_inf_D : A' = G' ⊓ D F := A_eq_G_inf_D A' G' A'_le_D hA'
-
-    let f := A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
-    have Injective_f : Injective f := injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D
-    -- let := Equiv.ofInjective
-    --   (A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
-    --   (injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
-
-    have card_multiplicative_ZMod_two_eq_two : Nat.card (Multiplicative (ZMod 2)) = 2 := by
-      rw [Nat.card_eq_fintype_card, Fintype.card_multiplicative]; rfl
-    -- let := Equiv.mulEquiv (Equiv.ofInjective
-    --   (A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D)
-    --   (injective_A_subgroupOf_G_MonoidHom_ZMod_two A' G' A'_le_D hA'.right two_lt_card_A' A'_eq_G'_inf_D))
-
-    rw [index] at hNA
-    have key := ((Nat.bijective_iff_injective_and_card f).mpr
-      ⟨Injective_f, by rwa [card_multiplicative_ZMod_two_eq_two]⟩).2
-
-    dsimp [f, A_subgroupOf_G_MonoidHom_ZMod_two] at key
-    rw [← comp_assoc] at key
-    -- want surjectivity of the second map on the left in the composition
-
-
-    sorry
-
-  sorry
-
-/-
-Theorem 2.3 (v a) Let Q be a Sylow p-subgroup of G.
-If Q = { I_G }, then there is a cyclic subgroup K of G such that N_G (Q) = Q K.
--/
-theorem exists_IsCyclic_K_normalizer_eq_Q_join_K {F : Type*} [Field F] { p : ℕ }
-  (hp : Nat.Prime p)
-  (G : Subgroup SL(2,F))
-  (Q : Sylow p G)
-  (h : Q.toSubgroup ≠ ⊥) :
-  ∃ K : Subgroup G, IsCyclic K ∧ normalizer Q.toSubgroup = Q.toSubgroup ⊔ K := by sorry
-
-/-
-Theorem 2.3 (v b)If |K| > |Z|, then K ∈ M.
--/
-theorem K_mem_MaximalAbelianSubgroups_of_center_lt_card_K {F : Type*} [Field F] { p : ℕ } [hp' : Fact (Nat.Prime p)] (G : Subgroup SL(2,F))
-  (Q : Sylow p G) (h : Q.toSubgroup ≠ ⊥) (K : Subgroup G)(hK : IsCyclic K)
-  (hNG : normalizer Q.toSubgroup = Q.toSubgroup ⊔ K) (h : Nat.card K > Nat.card (center SL(2,F))) :
-  map G.subtype K ∈ MaximalAbelianSubgroupsOf G := by
-  sorry
-
 end MaximalAbelianSubgroup
-
-
-#min_imports

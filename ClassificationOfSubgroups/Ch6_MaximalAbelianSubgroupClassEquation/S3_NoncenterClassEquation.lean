@@ -1,4 +1,6 @@
-import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_MaximalAbelianSubgroup
+import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_A_MaximalAbelianSubgroup
+import ClassificationOfSubgroups.Ch6_MaximalAbelianSubgroupClassEquation.S2_B_MaximalAbelianSubgroup
+
 import Mathlib
 
 set_option linter.style.longLine true
@@ -74,7 +76,8 @@ instance lift_noncenter_MaximalAbelianSubgroupsOf {F : Type*} [Field F] (G : Sub
       exact ⟨Subgroup.mul_mem G y_in_G x_in_G, rfl⟩
   }
 
-def Partition_lift_noncenter_MaximalAbelianSubgroupsOf {F : Type*} [Field F] (G : Subgroup SL(2,F)) := (lift_noncenter_MaximalAbelianSubgroupsOf G).classes
+def Partition_lift_noncenter_MaximalAbelianSubgroupsOf {F : Type*} [Field F] (G : Subgroup SL(2,F)) :=
+  (lift_noncenter_MaximalAbelianSubgroupsOf G).classes
 
 #check Partition_lift_noncenter_MaximalAbelianSubgroupsOf
 
@@ -445,7 +448,6 @@ lemma union_noncenter_C_eq_G_diff_center {F : Type*} [Field F] [IsAlgClosed F] [
 --   (G : Subgroup SL(2,F)) [hG : Finite G]  : ⋃ A_star : noncenter_MaximalAbelianSubgroupsOf G,
 --       union_conj_noncenter_MaximalAbelianSubgroupsOf G A_star =
 
-#check LocalSubring.isMax_iff
 /-
 Theorem 2.4 i a)
 The union of elements of the `Quotient` on the `Setoid`,
