@@ -139,7 +139,7 @@ def w : SL(2, F) :=
   ⟨!![0,1;-1,0], by norm_num⟩
 
 @[simp]
-lemma w_inv {F : Type*} [Field F] :
+lemma inv_w_eq_neg_w {F : Type*} [Field F] :
   (w : SL(2,F))⁻¹  = - w := by ext <;> simp [w]
 
 lemma w_mul_w_eq_neg_one : w * w = (-1 : SL(2, F)) := by ext <;> simp [w]

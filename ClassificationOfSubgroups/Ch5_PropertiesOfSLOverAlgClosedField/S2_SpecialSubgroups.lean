@@ -459,11 +459,6 @@ def D_join_S_monoidHom_D : (D F × S F :) →* D F where
   map_one' := by simp
   map_mul' := by simp
 
-
-
-#check  QuotientGroup.quotientKerEquivRange
-
-
 def DW (F : Type*) [Field F] : Subgroup SL(2,F) where
   carrier := { d δ | δ : Fˣ} ∪ { d δ * w | δ : Fˣ}
   mul_mem' := by
@@ -521,8 +516,17 @@ lemma neg_mem_D_iff_mem_D {F : Type*} [Field F] {x : SL(2,F)} : -x ∈ D F  ↔ 
   · rintro ⟨δ, rfl⟩
     simp
 
-
-
+lemma D_sup_closure_w_eq_DW {F : Type*} [Field F] : DW F = (D F) ⊔ Subgroup.closure {w} := by
+  apply le_antisymm
+  · rintro x (⟨δ, rfl⟩ | ⟨δ, hδ⟩)
+    · rw [sup_eq_closure_mul, mem_closure]
+      intro K hK
+      have d_mem_mul : d δ ∈ (D F).carrier * (Subgroup.closure {w}).carrier := by
+        rw [Set.mem_mul]
+        sorry
+      sorry
+    · sorry
+  · sorry
 
 
 section Center

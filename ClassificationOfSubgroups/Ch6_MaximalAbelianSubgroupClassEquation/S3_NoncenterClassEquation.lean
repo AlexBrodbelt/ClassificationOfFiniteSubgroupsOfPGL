@@ -494,8 +494,6 @@ when sent through `lift_noncenter_C`.
 -/
 
 
-
-
 section Subsets
 
 def subsets_MaximalAbelianSubgroups {L : Type*} [Group L] (G : Subgroup L) :=
@@ -599,11 +597,6 @@ lemma card_noncenter_C_eq_noncenter_MaximalAbelianSubgroup_mul_noncenter_ConjCla
   (A : noncenter_MaximalAbelianSubgroupsOf G) :
   Nat.card (union_conj_noncenter_MaximalAbelianSubgroupsOf G A) =
     Nat.card A * card_noncenter_ConjClassOfSet G A := by
-
-
-
-
-
   sorry
 
 #check Group.nat_card_center_add_sum_card_noncenter_eq_card
@@ -647,7 +640,6 @@ lemma card_noncenter_C_eq_card_A_mul_card_noncenter_ConjClass {F : Type*} [Field
   (G : Subgroup SL(2,F)) [Finite G]  (A : noncenter_MaximalAbelianSubgroupsOf G) :
   Nat.card (union_conj_noncenter_MaximalAbelianSubgroupsOf G A) =
     Nat.card A * card_noncenter_ConjClassOfSet G A := by
-
   sorry
 
 /- $G \setminus Z(\textrm{SL}_2(F)) = \bigcup_{A \in \mathcal{M}} (C A)^*$ -/
@@ -655,16 +647,20 @@ lemma subgroup_sdiff_center_eq_union_noncenter_C {F : Type*} [Field F] (G : Subg
   [Finite G] : G.carrier \ center (SL(2,F)) =
     ⋃ A : noncenter_MaximalAbelianSubgroupsOf G, union_conj_noncenter_MaximalAbelianSubgroupsOf G A := by sorry
 
+
+
 /-
 Theorem 2.4 ii)
 $|\mathcal{C}_i| = |\mathcal{C}_i^*|$
 -/
 lemma card_noncenter_ConjClassOfSet_eq_card_ConjClassOfSet {F : Type*} [Field F] (G : Subgroup SL(2,F))
   (A : MaximalAbelianSubgroupsOf G) :
-  Nat.card (ConjClassOfSet G A) =
+    Nat.card (ConjClassOfSet G A) =
     Nat.card (noncenter_ConjClassOfSet G (
       ⟨noncenter A, noncenter_mem_noncenter_MaximalAbelianSubgroupsOf G A⟩
-    )) := by sorry
+    )) := by
+  apply Nat.card_eq_of_bijective sorry
+  sorry
 
 /-
 Theorem 2.4 iii)

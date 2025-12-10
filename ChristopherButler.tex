@@ -1,0 +1,2313 @@
+\documentclass[a4paper , 11pt]{book}
+
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{amsbsy}
+\usepackage{array}
+\usepackage{tabu}
+\usepackage[nottoc]{tocbibind}
+\usepackage[toc,page]{appendix}
+\usepackage{lipsum,appendix}
+\usepackage{tikz}
+\usepackage[margin=1.5in]{geometry}
+
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem*{theorem-non}{Theorem}
+
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{definition-non}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newtheorem{notation}{Notation}
+\newtheorem*{notation-non}{Notation}
+
+\newtheorem*{lagrange}{\emph{\textbf{Lagrange's Theorem}}}
+\newtheorem*{cauchy}{\emph{\textbf{Cauchy's Theorem}}}
+\newtheorem*{1stiso}{\emph{\textbf{First Isomorphism Theorem}}}
+\newtheorem*{2ndiso}{\emph{\textbf{Second Isomorphism Theorem}}}
+\newtheorem*{3rdiso}{\emph{\textbf{Third Isomorphism Theorem}}}
+\newtheorem*{1stsylow}{\emph{\textbf{First Sylow Theorem}}}
+\newtheorem*{2ndsylow}{\emph{\textbf{Second Sylow Theorem}}}
+\newtheorem*{3rdsylow}{\emph{\textbf{Third Sylow Theorem}}}
+\newtheorem*{4thsylow}{\emph{\textbf{Fourth Sylow Theorem}}}
+\newtheorem*{orbstab}{\emph{\textbf{Orbit-Stabiliser Theorem}}}
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\inv}{^{\raisebox{.2ex}{$\scriptscriptstyle-1$}}}
+
+\begin{document}
+
+\frontmatter
+\title{Dickson's Classification of Finite Subgroups of the Two-dimensional Special Linear Group over an Algebraically Closed Field}
+\author{Christopher Butler}
+\date{\today}
+\maketitle
+
+\cleardoublepage
+\begin{center}
+       \Large \textbf{Popular Science Summary}
+\end{center}
+
+In order to explain what this paper is about, it is necessary to first define a few of the mathematical concepts which it concerns. A \textit{group} is a set of objects, called \textit{elements}, together with a rule, called an \textit{operation}, which tells us how two elements combine with each other to make a third. Furthermore, to be considered a group it must also satisfy 4 conditions, called \textit{axioms}. One of which is that the group must be \textit{closed} under it's operation. This means that whenever any two elements in the group are combined, the resulting element is also part of the group. The remaining axioms require that the group must also be \textit{associative}, have an \textit{identity} element and each element must have an \textit{inverse}. The way in which the elements in a group act with each other is called the group's \textit{structure}. If 2 groups have the same number of elements and share the same structure, then they are regarded as being \textit{isomorphic} to each other, which essentially means that they equivalent. Many everyday things can be regarded as groups, such as the symmetries of geometrical objects, or the number systems we use. \\
+\\
+The set of 2 x 2 matrices whose \textit{determinant} is equal to 1, together with the operation of ordinary matrix multiplication, forms a group called the \textit{special linear group}. This is a group because the product of 2 matrices has a determinant equal to the product of the determinants of the 2 matrices, so since 1 x 1 = 1, this new element also belongs to the group, hence the axiom of being closed is satisfied. Furthermore, it is crucial that the entries in the matrices are taken from a specified \textit{ring} or \textit{field}. Rings and fields are, like groups, abstract mathematical objects, albeit they satisy even more axioms than groups do. Crucially, rings and fields have both an additive and a multiplicative identity. \\
+\\
+This paper focuses on $SL(2,F)$, which is the two-dimensional special linear group whose entries are taken from an \textit{algebraically closed} field. Algebraically closed fields are infinite in size, which means that the resulting special linear group is also infinite. A \textit{subgroup} of a group is simply a group with the added requirement that each of it's elements must also belong to the original group. Thus a finite subgroup of $SL(2,F)$ is any finite set of elements belonging to this infinite group $SL(2,F)$, which satisfy the 4 axioms of being a group. \\
+\\
+This paper classifies all the possible structures which a finite subgroup of $SL(2,F)$ could have. The result has implications within the study of finite \textit{simple} groups. This classification was first done by American mathematician Leonard Eugene Dickson in 1901. The purpose of this reformulation is to make it accessible to a wider audience by providing a more detailed explanation at the various stages of the proof.
+
+\cleardoublepage
+\begin{center}
+       \Large \textbf{Abstract}
+\end{center}
+
+This paper is a reformulation of Leonard Dickson's complete classification of the finite subgroups of the two-dimensional special linear group over an arbitrary algebraically closed field, $SL(2,F)$. The approach is to construct a class equation of the conjugacy classes of maximal abelian subgroups of an arbitrary finite subgroup of $SL(2,F)$. In turn, this leads to only 10 possible classes of structures of this subgroup up to isomorphism.
+
+\cleardoublepage
+\begin{center}
+       \Large \textbf{Acknowledgements}
+\end{center}
+
+I would like to take this opportunity to thank my advisor Arne Meurman. This paper would not have been possible without the guidance and insight he gave during our weekly discussions.
+
+\cleardoublepage
+
+\tableofcontents
+
+\newpage\phantom{blabla}
+\thispagestyle{plain}
+\mainmatter
+
+\setcounter{chapter}{-1}
+
+\newpage
+\thispagestyle{plain}
+\begin{center}
+       \Large \textbf{Introduction}
+\end{center}
+\addcontentsline{toc}{section}{Introduction}
+
+The general linear group of degree $n$ is the group formed by the set of $n$ x $n$ invertible matrices, together with the operation of ordinary matrix multiplication, with the entries of each matrix coming from a specific ring or field. The special linear group is a subgroup of the general linear group, namely those matrices with a deteminant equal to 1. In this work, we focus on the two-dimensional case, with entries coming from an algebraically closed field, $F$. This is denoted by $GL(2,F)$ for the general linear group and $SL(2,F)$ for the special linear group. Recall that an algebraically closed field is a field which contains the roots to any non-constant polynomial in $F[x]$, with coefficients in $F$. They are infinite in size and two such examples are the field of complex numbers and the field of algebraic numbers. \\
+\vspace{-0.2mm}
+\\
+In 1901, Leonard Eugene Dickson published his book \textit{Linear Groups, with an Exposition of the Galois Field Theory} \cite{dickson}. In this work, he obtains a complete classification of the finite subgroups of $SL(2,F)$. This paper is a reformulation of Dickson's classification theorem and loosely follows Chapter 3, $\mathsection$6 in Michio Suzuki’s book \textit{Group Theory I} \cite{suzuki}. This classification theorem is of particular interest in the study of finite simple groups and Suzuki himself describes it as \textit{one of the indispensable tools in studying the basic properties of linear groups which underlie the concept of $p$-stability} \cite[p.392]{suzuki}. \\
+\vspace{-0.2mm}
+\\
+The paper begins with a brief overview of some preliminary requirements which are necessary to the understanding of the proof. They are standard group theory results which may or may not have been covered in a first course given on group theory, the majority of which are cited without proof. A more advanced reader may choose to skip over this chapter. \\
+\vspace{-0.2mm}
+\\
+The main body of work begins in Chapter 1 and focuses on the infinite group $SL(2,F)$. We make some important observations about the conjugacy of the elements in this group and the centre of the group. Some important elements and subgroups of $SL(2,F)$ are defined and their centralisers and normalisers determined. We show that the action of $SL(2,F)$ on the projective line is triply transitive, which is a vital tool used several times throughout the paper in determining group structure. \\
+\vspace{-0.2mm}
+\\
+In Chapter 2 we consider an arbitrary finite subgroup $G$ of $SL(2,F)$. The notion of a \textit{maximal abelian subgroup} is introduced and utilised to construct a class equation, whereby $G$ is partitioned into the conjugacy classes of it's maximal abelian subgroups. This plays a crucial role in determining the possible structures of $G$. We find that the number and type of these conjugacy classes are restricted to just 6 different cases. \\
+\vspace{-0.2mm}
+\\
+The final chapter examines these 6 cases individually. In each case we determine the possible structures that $G$ could have. The 10 possible structures of $G$ are finally consolidated into the classification theorem.
+
+
+\newpage\phantom{blabla}
+\thispagestyle{plain}
+
+\chapter[Preliminaries]{Preliminaries}
+\chaptermark{Preliminaries}
+
+This section briefly outlines some standard group theory results which perhaps may not have been covered in a first course in Group Theory. Since they are not the main focus of this paper, most of the proofs have been omitted. A more advanced reader may choose to skip this first chapter, using it only for reference purposes as and when the results are subsequently cited.  
+
+\section{Some Elementary Theorems}
+
+The following theorems are all well-known fundamental results in group theory. If the reader is interested in the proofs, they can be found in Hungerford \cite{hungerford}.
+
+\begin{lagrange}\label{lagrange} \textit{Let $G$ be a finite group. Then the order of any subgroup of $G$ divides the order of $G$.} \\
+\end{lagrange} 
+
+\begin{1stiso}\label{1stiso} \textit{Let $\phi  :G \rightarrow G'$ be a homomorphism of groups. Then, $$G/Ker \; \phi \cong Im \; \phi.$$ Hence, in particular, if $\phi$ is surjective then, $$G/Ker \; \phi \cong G'.$$} \\
+\end{1stiso} 
+
+\vspace{-10mm}
+
+\begin{2ndiso}\label{2ndiso} \textit{Let $H$ and $N$ be subgroups of $G$, and $N \vartriangleleft G$. Then, $$H/H \cap N \cong HN/N.$$} \\
+\end{2ndiso} 
+
+\vspace{-10mm}
+
+\begin{3rdiso}\label{3rdiso} \textit{Let $H$ and $K$ be normal subgroups of $G$ and $K \subset H$. Then $H/K$ is a normal subgroup of $G/K$ and, $$(G/K)/(H/K) \cong G/H.$$} \\
+\end{3rdiso} 
+
+\vspace{-10mm}
+
+\begin{cauchy}\label{cauchy} \textit{If the order of a finite group $G$ is divisible by a prime number $p$, then $G$ has an element of order $p$.} \\
+\end{cauchy} 
+
+\section{Sylow Theory}
+
+In 1872, Norweigian mathematician Peter Ludwig Sylow published his theorems regarding the number of subgroups of a fixed order that a given finite group contains. Today these are collectively known as the Sylow Theorems and play a vital role in determining the structure of finite groups. I will use the results of these theorems several times throughout this paper and I state them here without proof. If the reader would like to read further, the proofs can be found in most introductory texts on group theory, such as Bhattacharya \cite{bhattacharya}, except Corollary \ref{5thsylow} which can be found in Alperin and Bell \cite[p.64]{alperin} . \\
+
+\begin{definition-non} Let $G$ be a finite group and $p$ a prime, a \textbf{Sylow $\pmb{p}$-subgroup} of $G$ is a subgroup of order $p^r$, where $p^{r+1}$ does not divide the order of $G$. \\
+\\
+Let $p$ be a prime. A group $G$ is called a \textbf{$\pmb{p}$-group} if the order of each of it's elements is a power of $p$. Similarly, a subgroup $H$ of $G$ is called a \textbf{$\pmb{p}$-subgroup} if the order of each of it's elements is a power of $p$.
+\end{definition-non}
+
+In each of the following results, $G$ is a finite group of order $p^r m$, where $p$ is a prime which does not divide $m$. \\
+\\
+\makebox[\textwidth][s]{\textbf{First Sylow Theorem.} \textit{If $p^k$ divides $|G|$, then $G$ has a subgroup of order $p^k$.}} \\
+
+\begin{2ndsylow} \textit{All Sylow $p$-subgroups of G are conjugate.} \\
+\end{2ndsylow}
+
+\begin{3rdsylow} \textit{The number of Sylow $p$-subgroups $n_p$ divides $m$ and satisfies $n_p \equiv 1 ($mod $p)$.} \\
+\end{3rdsylow}
+
+\begin{corollary}\label{4thsylow} \textit{A Sylow $p$-subgroup of $G$ is unique if and only if it is normal.} \\
+\end{corollary}
+
+\begin{corollary}\label{5thsylow} \textit{Any $p$-subgroup of $G$ is contained in a Sylow $p$-subgroup.} \\
+\end{corollary}
+
+\section{Group Action}
+
+\begin{definition-non} Let $G$ be a group and $X$ be a set. Then $G$ is said to \textbf{act} on $X$ if there is a map $\phi : G \times X \rightarrow X$, with $\phi(a,x)$ denoted by $a^*x$, such that for $a,b \in G$ and $x \in X$, the following 2 properties hold:
+\begin{align*} &(i) \quad a\,^*(b\,^*x) = (ab)^*x,
+\\  &(ii) \quad I_G\,^*x = x.
+\end{align*}
+
+The map $\phi$ is called the \textbf{group action} of $G$ on $X$.
+\end{definition-non}
+
+\begin{definition-non} Let $G$ be a group acting on a set $X$ and let $x \in X$. Then the set,
+\begin{align*} Stab(x) = \{ g \in G  :  gx = x \},
+\end{align*}
+is called the \textbf{stabiliser} of $x$ in $G$. Each $g$ in $S_G(x)$ is said to \textbf{fix} $x$, whilst $x$ is said to be a \textbf{fixed point} of each $g$ in $S_G(x)$. Also, the set,
+\begin{align*} \text{Orb}(x) = \{ gx : g \in G \},
+\end{align*}
+is called the \textbf{orbit} of $x$ in $G$.  
+\end{definition-non} 
+
+The orbit and the stabiliser of an element are closely related. The following theorem is a consequence of this relationship and it will be useful throughout this paper. \\
+
+\begin{orbstab} \textit{Let $G$ be a finite group acting on a set $X$. Then for each $x \in X$}, $$|G| = |\text{Orb}(x)| |\text{Stab}(x)|.$$ \\
+\end{orbstab}
+
+The following standard theorem will all play a vital roll later on.
+
+\begin{theorem}\label{symhomoker} Let $G$ be a group and $H$ a subgroup of $G$ of finite index $n$. Then there is a homomorphism $\phi : G \longrightarrow S_n$ such that,
+\begin{align*} ker(\phi) = \bigcap\limits_{x \in G} x H x^{-1}.
+\end{align*}
+\end{theorem}
+
+\begin{proof} See \cite[p.110]{bhattacharya} for proof.
+\end{proof}
+
+\section{Conjugation}
+
+\begin{definition-non}
+Let $G$ be a group and $a$ an element of $G$. An element $b \in G$ is said to be \textbf{conjugate} to $a$ if $b=xax^{-1}$ for some $x \in G$. \\
+\\
+Let $H_1$ be a proper subgroup of $G$ and fix $x \in G \setminus H_1$. The set $H_2 = \{g \in G : g= xh_1x^{-1}$, $\forall h_1 \in H_1\}$ is said to be a \textbf{conjugate subgroup} of $H_1$. We write $H_2 = xH_1x^{-1}$. It is trivial to show that $H_2$ is a subgroup of $G$.
+\end{definition-non}
+
+Conjugation plays an important roll thoughout the paper, in particularly the following properties about conjugate elements and subgroups.
+
+\begin{proposition}\label{conjugateprop} Let $a$, $b$ be conjugate elements of a group $G$ and $A$, $B$ be conjugate subgroups of $G$. Then the following properites hold: \vspace{3mm} \\
+(i) If either $a$ or $b$ has finite order, then both $a$ and $b$ have the same order. \vspace{3mm} \\
+(ii) $A \cong B$. \\
+\end{proposition}
+
+\begin{proof}
+(i) Since $a$ and $b$ are conjugate elements in $G$, $b = xax^{-1}$ for some $x \in G$. Suppose that $b$ has finite order and $b^k = I_G$ for some $k \in \mathbb{Z}^+$,
+\begin{equation*} I_G = b^k = (xax^{-1})^k = xa^{k}x^{-1} \Rightarrow a^k = I_G.
+\end{equation*}
+Alternatively suppose that $a$ has finite order and $a^k = I_G$ for some $k \in \mathbb{Z}^+$,
+\begin{equation*} a^k = I_G \Rightarrow I_G = xa^{k}x^{-1} = (xax^{-1})^k = b^k.
+\end{equation*}
+Thus $a^k = I_G \iff b^k = I_G$. Thus $a$ and $b$ have the same order. \\
+\\
+(ii) Since $A$ and $B$ are conjugate, there exists some $x \in G$ such that $B=xAx^{-1}$. Define the map $\phi$ by,
+\begin{align*}
+\phi:A &\longrightarrow xAx^{-1}, \\
+a_1 &\longmapsto xa_1x^{-1} \tag{$\forall \; a_1 \in A$}. \end{align*}
+
+We show that $\phi$ is a homomorphism between $A$ and $B=xAx^{-1}$.
+
+\begin{equation*}
+\phi(a_1a_2) = xa_1a_2x^{-1} = ( xa_1x^{-1})( xa_2x^{-1}) = \phi(a_1) \phi(a_2).
+\end{equation*}
+\\
+Now consider an arbitrary $k \in ker(\phi)$.
+
+\begin{equation*}
+k \in ker(\phi) \iff \phi(k) = I_G \iff  xkx^{-1} = I_G \iff k = I_G.
+\end{equation*}
+\\
+So $ker(\phi) = \{ I_G \}$ which means $\phi$ is injective. Now let $b_1 \in B = xAx^{-1}$. Thus $b_1 = xa_1x^{-1}$ for some $a_1 \in A$. Since $a_1 \in A$, $\phi(a_1) = xa_1x^{-1} = b_1$ and so $\phi$ is surjective. Thus $\phi$ is an isomorphism and $A$ and $B$ are isomorphic.
+
+\end{proof}
+
+The final part of this proposition is an important result which shows that since conjugate subgroups are isomorphic, conjugation preserves group structure and properties. In particular, conjugate subgroups have the same cardinality and if one is abelian or cyclic, then so is the other.
+
+\section{Automorphism}
+
+\begin{definition-non} An \textbf{automorphism} of a group $G$ is a isomorphism from $G$ onto itself. The set of all automorphisms of $G$ forms a group under composition and is denoted by $Aut(G)$.\\
+\\
+An \textbf{inner automorphism} is an automorphism whereby $G$ acts on itself by conjugation. That is, each $g \in G$ induces a map, $i_g : G \rightarrow G$, where $i_g(x) = g x g^{-1}$ for each $x \in G$. The set of all inner automorphisms is denoted by $Inn(G)$ and is a normal subgroup of $Aut(G)$ (For proof of this see \cite[p.104]{bhattacharya}.
+\end{definition-non}
+
+\section{Direct Product}
+
+\begin{definition-non} If $G_1, G_2,...,G_n$ are groups, we define a coordinate operation on the Cartesian product $G_1 \times G_2 \times...\times G_n$ as follows:
+\begin{align*} (a_1, a_2, ..., a_n) (b_1, b_2, ..., b_n) = (a_1 b_1, a_2 b_2, ..., a_n b_n),
+\end{align*}
+where $a_i, b_i \in G_i$. It is easy to verify that $G_1 \times G_2 \times...\times G_n$ is a group under this operation. This group is called the \textbf{direct product} of $G_1, G_2,...,G_n$.
+\end{definition-non}
+
+\begin{lemma} \label{directproductN} Let $A$ and $B$ be normal subgroups of $G$ with $A \cap B = \{ I_G \}$. Then $AB \cong A \times B$.
+\end{lemma}
+
+\begin{proof}
+
+First note that the elements of $A$ commute with the elements of $B$, since $\forall \; a \in A$ and $b \in B$,
+\begin{align*} aba^{-1}b^{-1} &=  a(ba^{-1}b^{-1}) \in A, \tag{since $A \vartriangleleft G$}
+\\ aba^{-1}b^{-1} &=  (aba^{-1})b^{-1} \in B. \tag{since $B \vartriangleleft G$}
+\end{align*}
+
+Therefore $aba^{-1}b^{-1} \in A \cap B = \{ I_G \}$, and $ab = ba$. \\
+\\
+Define the operation $*$ on $A \times B$ by $(a_1 , b_1)*(a_2 , b_2) = (a_1 a_2 , b_1 b_2)$. Now define the map $\phi$ by,
+\begin{align*}
+\phi:A \times B &\longrightarrow AB, \\
+(a,b) &\longmapsto ab \tag{$\forall \; a \in A, \; b\in B$}. \end{align*}
+
+We show that $\phi$ is a homomorphism between $A \times B$ and $AB$.
+\vspace{-0.5mm}
+\begin{align*}
+\phi((a_1,  b_1)*(a_2, b_2)) &= \phi (a_1 a_2 , b_1 b_2) \\
+&=  a_1 a_2  b_1 b_2 \\
+&=  a_1 b_1 a_2 b_2  \\
+&= \phi(a_1 , b_1) \phi(a_2 , b_2). \end{align*}
+
+Thus $\phi$ is a homomorphism and clearly surjective. It remains to show that it is injective. 
+\vspace{-0.5mm}
+\begin{align*} \phi(a_1 , b_1) &= \phi(a_2 , b_2), \\
+a_1 b_1 &= a_2 b_2, \\
+a_1 b_1 b_2^{-1} &= a_2, \\
+b_1 b_2^{-1} &= a_1^{-1} a_2 \in A \cap B.
+\end{align*}
+
+Since $A \cap B = \{ I_G \}$, we have $b_1 b_2^{-1} = I_G = a_1^{-1} a_2$ and so $b_1 = b_2$, $a_1 = a_2$ and $\phi$ is injective. So $\phi$ is an isomorphism and $AB \cong A \times B$.
+\\
+\end{proof}
+
+\begin{corollary} \label{directproductZ} Let $A$ and $B$ be subgroups of $G$. If $A \cap B = \{ I_G \}$ and $ab = ba$ $\forall a \in A$, $b \in B$. Then $AB \cong A \times B$.
+\end{corollary}
+
+\begin{proof} Since $A$ and $B$ commute, the argument outlined in Lemma \ref{directproductN} also holds here.
+\end{proof}
+
+\newpage
+
+\chapter[Properties of $\pmb{SL(2,F)}$ over an Algebraically Closed Field]{Properties of $\pmb{SL(2,F)}$ over an Algebraically Closed Field}
+\chaptermark{Algebraically Closed Field}
+
+\section{General Notation}
+
+Throughout this paper, $F$ will denote an arbitrary algebraically closed field. For convenince we let $L$ denote the infinite group $SL(2,F)$. The letter $p$ will be used to denote the characteristic of $F$. Recall that the characteristic of a field is the smallest number of times which the multilplicative identity of the field, say 1, needs to be summed to reach the additive identity of the field, say 0. If there is no such number, then we regard $p$ as being zero, otherwise it is always a prime. \\
+\\
+Unless otherwise stated, the letters $\alpha, \beta, \gamma, \delta, \lambda, \mu$, and $\sigma$ will denote elements of $F$ and $\omega$ and $\rho$ elements of $F^*$, where $F^*$  are the non-zero elements of $F$.
+
+\section[Subsets of $L$]{Subsets of $\pmb{L}$}
+
+In this chapter we make some useful observations about specific elements and subgroups of $L$. We define the following elements of $L$ as follows.
+
+\begin{align*} d_\omega = \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix}, \qquad t_\lambda = \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix}, \qquad w = \begin{bmatrix} 0 & 1 \\ \minus 1 & 0 \end{bmatrix}  \tag{$\omega \in F^*$ and $\lambda \in F$}.
+\end{align*}
+
+We also define the following subsets of $L$.
+\begin{align*} D= \{d_\omega\}, \qquad T= \{t_\lambda\}, \qquad H=DT.
+\end{align*}
+
+Observe that $H$ is the set of all lower triangular matrices in $L$ whilst $Dw$ is the set of all anti-diagonal matrices.
+
+\begin{equation} \label{Hlowertri} H = DT =  \{d_\omega t_\lambda\} = \left\{ \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \right\} = \left\{ \begin{bmatrix} \omega & 0 \\ \lambda \omega^{-1} & \omega^{-1} \end{bmatrix}  \right\}. \end{equation}
+
+\begin{equation} \label{antidiag} Dw = \{ d_\omega w \} =  \left\{  \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \right\} = \left\{ \begin{bmatrix} 0 & \omega \\ \minus\omega^{-1} & 0 \end{bmatrix}  \right\}. \end{equation}
+
+These elements and subgroups are fundamental to this paper and this notation will be used throughout.
+
+\begin{lemma}\label{6.1}
+For any $\omega, \rho \in F^*$ and $\lambda, \mu \in F$ we have:
+\begin{align*} d_\omega d_{\rho}= d_{\omega\rho}, \quad t_\lambda t_\mu = t_{\lambda + \mu}, \quad d_\omega t_\lambda d^{-1}_\omega = t_\sigma \quad \! \! (\sigma=\lambda \omega^{-2}), \quad w d_\omega w^{-1} = d^{-1}_\omega.
+\end{align*} 
+\end{lemma}
+\vspace{0mm}
+
+\begin{proof} 
+These identities are all easily shown by matrix multiplication:
+\begin{align*} d_\omega d_\rho = \begin{bmatrix} \omega & 0 \\ 0 & \omega\inv \end{bmatrix} \begin{bmatrix} \rho & 0 \\ 0 & \rho\inv \end{bmatrix} &= \begin{bmatrix} \omega \rho & 0 \\ 0 & \omega\inv \rho\inv \end{bmatrix} = d_{\omega \rho}.
+\\[1.5ex]
+t_\lambda t_\mu = \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ \mu & 1 \end{bmatrix} &= \begin{bmatrix} 1 & 0 \\ \lambda + \mu & 1 \end{bmatrix} = t_{\lambda + \mu}.
+\\[1.5ex]
+ d_\omega t_\lambda d^{-1}_\omega = \! \begin{bmatrix} \omega & 0 \\ 0 & \omega\inv \end{bmatrix} \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} \omega\inv & 0 \\ 0 & \omega \end{bmatrix} &= \begin{bmatrix} \omega & 0 \\ 0 & \omega\inv \end{bmatrix} \! \begin{bmatrix} \omega\inv & 0 \\ \lambda \omega\inv & \omega \end{bmatrix} \! = \! \begin{bmatrix} 1 & 0 \\ \lambda \omega^{-2} & 1 \end{bmatrix} \! = t_\sigma.
+\\[1.5ex]
+w d_\omega w\inv = \begin{bmatrix} 0 & 1 \\ \minus 1 & 0 \end{bmatrix} \begin{bmatrix} \omega & 0 \\ 0 & \omega\inv \end{bmatrix} \begin{bmatrix} 0 & \minus 1 \\ 1 & 0 \end{bmatrix} &=  \begin{bmatrix} 0 & 1 \\ \minus 1 & 0 \end{bmatrix} \begin{bmatrix} 0 & \minus \omega \\ \omega\inv & 0 \end{bmatrix} \! = \! \begin{bmatrix} \omega\inv & 0 \\ 0 & \omega \end{bmatrix} \!= d^{-1}_\omega. \end{align*}
+ 
+\end{proof}
+
+\begin{lemma}\label{6.1b}
+(i) The sets $D$ and $T$ are subgroups of $L$ and
+\begin{equation*} D\cong F^*, \qquad T \cong F. \end{equation*}
+(ii) $T$ is a normal subgroup of $H$ and $H / T \cong D$.
+\end{lemma}
+\vspace{0mm}
+
+\begin{proof} 
+(i) The function $\psi: F^* \rightarrow D$ defined by $\psi(\omega) = d_\omega$ is a homomorphism between the group $F^*$ under normal multiplication and $D$ under normal matrix multiplication:
+\begin{align*} \psi(\omega \rho) = d_{\omega \rho} =  d_\omega d_\rho = \psi(\omega) \psi(\rho). \tag{by Lemma \ref{6.1}}
+\end{align*}
+Observe that $\psi$ is trivially injective and surjective and thus an isomorphism. So $D\cong F^*$ and $D$ is a subgroup of $L$.\\
+\\
+ The function $\phi: F \rightarrow T$ defined by $\phi(\lambda) = t_\lambda$ is a homomorphism between the group $F$ under addition and $T$ under normal matrix multiplication:
+\begin{align*} \phi(\lambda + \mu) = t_{\lambda + \mu} = t_\lambda t_\mu = \phi(\lambda) \phi(\mu). \tag{by Lemma \ref{6.1}}
+\end{align*}
+It's clear that $\phi$ is injective and surjective and thus an isomorphism. So $ T \cong F$ and $T$ is a subgroup of $L$. \\
+\\
+(ii) Let $t_\mu$ and $d_\omega t_\lambda$ be arbitrary elements of $T$ and $H$ respectively. Conjugating $t_\mu$ by $d_\omega t_\lambda$ gives,
+\begin{align*} (d_\omega t_\lambda) t_\mu (d_\omega t_\lambda)^{-1} &= (d_\omega t_\lambda) t_\mu (t^{-1}_\lambda d^{-1}_\omega) \\[1.5ex]
+&=
+d_\omega (t_\lambda t_\mu t_{-\lambda}) d^{-1}_\omega \qquad \tag{since $t^{-1}_\lambda=t_{-\lambda}$} \\[1.5ex] 
+&=
+d_\omega t_\mu d^{-1}_\omega \tag{by Lemma \ref{6.1}} \\[1.5ex] 
+&= t_\sigma \in T. \tag{where $\sigma = \mu \omega^{-2}$ by Lemma \ref{6.1}}
+\end{align*}
+
+Since $t_\mu$ was chosen arbitrarily from $T$ we have ($d_\omega t_\lambda) T (d_\omega t_\lambda)^{-1} = T$ and since $d_\omega t_\lambda$ was chosen arbitrarily from $H$, we have that $T \vartriangleleft H$. \\
+\\
+The function $\pi: H \rightarrow D$ defined by $\pi(d_\omega t_\lambda) = d_\omega$ is a homomorphism between $H$ under normal matrix multiplication and $D$ under normal matrix multiplication:
+\begin{align*} \pi(d_\omega t_\lambda d_\rho t_\mu) &= \pi(d_\omega d_\rho t_\sigma t_\mu) \tag{where $\sigma = \lambda \rho^{2}$ by Lemma \ref{6.1}}
+\\ &= d_\omega d_\rho
+\\ &= \pi(d_\omega t_\lambda)\pi(d_\rho t_\mu).
+\end{align*}
+
+We see that $\pi$ is trivially surjective and has kernel
+\begin{align*}  ker(\pi) &= \{ d_\omega t_\lambda \in H : \pi(d_\omega t_\lambda) = I_L \} = T.
+\end{align*}
+Thus by the First Isomorphism Theorem,
+\begin{align*} H / ker(\pi) &\cong \text{Im}(\pi), \\
+H / T &\cong D.
+\end{align*}
+
+\end{proof}
+
+\section[The Centre of $L$]{The Centre of $\pmb{L}$}
+
+\begin{definition-non}
+The \textbf{centre} $Z(G)$ of a group $G$ is the set of elements of  $G$ that commute with every element of $G$.
+\begin {equation*} Z(G) = \{ z \in G : \forall g \in G, \hspace{6pt} gz=zg \}. \end{equation*}
+It is an immediate observation that $Z(G)$ is a normal subgroup of $G$, since for each $z \in Z$, $gzg^{-1} = gg^{-1}z = z$, $\forall g \in G$. It's also clear that a group is abelian if and only if $Z(G)=G$.
+
+\end{definition-non}
+
+For ease of notation, $Z(L)$ will be denoted simply by $Z$ throughout the rest of this paper.
+
+\begin{lemma}\label{6.2}
+$Z = \langle \minus I_L \rangle$.
+\end{lemma}
+
+\begin{proof} Take an arbitrary element $x=\begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \in L$ and  an arbitrary element $z = \begin{bmatrix} z_1 & z_2 \\ z_3 & z_4 \end{bmatrix} \in Z$ and consider their product:
+
+\begin{align}\label{myeq1} zx = \begin{bmatrix} z_1 & z_2 \\ z_3 & z_4 \end{bmatrix} \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} &= \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} z_1 & z_2 \\ z_3 & z_4 \end{bmatrix} = xz, \nonumber \\[1.5ex]
+\begin{bmatrix} z_1 \alpha + z_2 \gamma & z_1 \beta + z_2 \delta \\ z_3 \alpha + z_4 \gamma & z_3 \beta + z_4 \delta \end{bmatrix} &= \begin{bmatrix} z_1 \alpha + z_3 \beta & z_2 \alpha + z_4 \beta \\ z_1 \gamma + z_3 \delta & z_2 \gamma + z_4 \delta \end{bmatrix}.
+\end{align}
+
+\noindent Equating either the top left or bottom right entries, we see that $z_2 \gamma = z_3 \beta$. Since $\beta$ and $\gamma$ can take any values in $F$, for equality to always hold we must have $z_2 = 0 = z_3$. Hence equation (\ref{myeq1}) simplifies to
+
+\begin{equation*} \begin{bmatrix} z_1 \alpha & z_1 \beta \\ z_4 \gamma & z_4 \delta \end{bmatrix} = \begin{bmatrix} z_1 \alpha & z_4 \beta \\ z_1 \gamma & z_4 \delta \end{bmatrix}. \end{equation*}
+
+\noindent Thus \begin{equation*} z_1 = z_4 \qquad  \text{and} \qquad z =  \begin{bmatrix} z_1 & 0 \\ 0 & z_1 \end{bmatrix}. \end{equation*}
+\noindent Since we are working in the special linear group, det$(z)=1$, thus $z_1 = \pm 1$ and $Z = \langle \minus I_L \rangle$ as required. Observe that this is a cyclic group of order 2 except in the case of $p=2$ where $\minus I_L = I_L$. \\
+\end{proof}
+
+\begin{lemma} \label{6.2b} If $p\neq 2$, then $L$ contains a unique element of order 2. \\
+\end{lemma}
+
+\begin{proof} Consider an arbitrary element $x \in L$ with order 2. That is $x^2 = I_L$, $x \neq I_L$ and thus $x=x^{-1}$.
+\begin{equation*} x = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix}^{-1} = \begin{bmatrix} \delta & \minus \beta \\ \minus \gamma & \alpha \end{bmatrix}.
+\end{equation*}
+\noindent Thus $\alpha = \delta$, $\beta = \minus \beta \Rightarrow 2\beta = 0$ and $\gamma = \minus \gamma \Rightarrow 2\gamma = 0$. In the case of $p \neq 2$ this gives $\beta = 0 = \gamma$. So
+\begin{equation*} x = \begin{bmatrix} \alpha & 0 \\ 0 & \alpha \end{bmatrix}.
+\end{equation*}
+\noindent Also $\alpha ^2 = 1$ since $x \in$ $SL(2,F)$, so $\alpha = \pm 1$. For $x$ to have order 2, we must have $\alpha = \minus 1$. Hence there is a unique element of order 2, namely $\minus I_L$.
+\\
+\end{proof}
+
+\section[Conjugacy of the Elements of $L$]{Conjugacy of the Elements of $\pmb{L}$}
+
+\begin{proposition}\label{6.3} Each element of $L$ is conjugate to either $d_\omega$ for some $\omega \in F^*$, or to $\pm t_\lambda$ for some $\lambda \in F$.
+\end{proposition}
+
+\begin{proof} Since $F$ is algebraically closed, any element $x \in L$ can be regarded as a linear transformation in the 2 dimensional vector space over $F$, with the eigenvalues $\pi_1$ and $\pi_2$. \\
+\\
+\textbullet \space If $\pi_1$ and $\pi_2$ are distinct, then $x$ is thus diagonalisable. That is, there exists an invertible matrix $a \in GL(2, F)$ such that $y = axa^{-1}$ is a diagonal matrix. Furthermore, we can multiply $a$ by a suitable scalar to find an element in $L$ which conjugates $x$ and $y$:
+
+\begin{align*} \text{Set } \; b = \frac{a}{\sqrt {\text{det}(a)}}, \quad \text{thus } \; bxb^{-1} =\frac{a}{\sqrt {\text{det}(a)}} \; x \; (\sqrt{\text{det}(a)} \; )\,a^{-1} = axa^{-1} = y.
+\end{align*}
+
+Observe that det$(b)=1$, hence $x$ and $y$ are conjugate in $L$. Furthermore, since $y$ is a diagonal matrix it must belong to the set $D$, showing that $x$ is conjugate to $d_\omega$ for some $\omega \in F^*$. \\
+\\
+\textbullet \space If $\pi_1 = \pi_2$ then $x$ has just one repeated eigenvalue. Suppose that $x$ is diagonalisable. Then there exists an element $c \in GL(2, F)$ and a diagonal matrix $\pi_1 I_G$ such that $x = c(\pi_1 I_G)c^{-1} = \pi_1 I_G$. Thus $x = \pm I_G$, which trivially belongs to both $D$ and $T \times Z$. \\
+\\
+Now assume that $x$ is not diagonalisable. Chapter 7 of \cite{matrix} shows that there exists an element $d \in GL(2, F)$, such that $x= djd^{-1}$, where, $$j = \begin{bmatrix} \pi_1 & 1 \\ 0 & \pi_1 \end{bmatrix}$$ is the Jordan Normal Form of $x$. By the method described above, we can multiply $d$ by a suitable scalar to show that $x$ is conjugate to $j$ in $L$. Now we conjugate $j$ by an element of $L$ whose top left entry is 0.
+
+\begin{align*} \begin{bmatrix} 0 & -\gamma^{-1} \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \pi_1 & 1 \\ 0 & \pi_1 \end{bmatrix} \begin{bmatrix} \delta & \gamma^{-1} \\ -\gamma & 0 \end{bmatrix} = \begin{bmatrix} 0 & -\gamma^{-1} \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \pi_1 \delta - \gamma & \pi_1 \gamma^{-1} \\ -\pi_1 \gamma & 0 \end{bmatrix} = \begin{bmatrix} \pi_1 & 0 \\ -\gamma^{2} & \pi_1 \end{bmatrix}
+\end{align*}
+\\
+Now clearly the determinant of $x$ is equal to the determinant of $j$, namely 1, which means that $\pi_1 = \pm 1$. This shows that $j$ is conjugate in $L$ to some element in $T \times Z$ as well as $x$. Furthermore, since conjugation is transitive, $x$ is conjugate to $\pm t_\lambda$ for some $\lambda \in F$.
+
+\end{proof}
+
+\section{Centralisers \& Normalisers}
+
+\begin{definition-non}
+The \textbf{centraliser} $C_G(H)$ of a subset $H$ of a group $G$ is the set of elements of $G$ which commute with each element of $H$.
+\begin{equation*} C_G(H) = \{ g \in G  : gh=hg, \quad \forall h\in H \}. \end{equation*} 
+\end{definition-non}
+
+\begin{definition-non}
+The \textbf{normaliser} $N_G(H)$ of a subset $H$ of a group $G$ is the set of elements of $G$ which stabilise $H$ under conjugation.
+\begin{equation*} N_G(H) = \{ g \in G : gHg^{-1}=H\}. \end{equation*}
+\end{definition-non}
+
+Both the centraliser and normaliser of a subset $H$ are subgroups of $G$. Note also that the centraliser is a stronger condition than the normaliser and any element in the centraliser of $H$ is also in its normaliser. If $H$ is a singleton then it's clear that its centraliser and normaliser are equal.\\
+
+\begin{proposition}\label{6.4i}
+(i) $N_L(T_1) \subset H$, where $T_1$ is any subgroup of $T$ with order greater than 1. \\
+\\
+(ii) $C_L(\pm t_\lambda) = T \times Z$ where $\lambda \neq 0$.
+\end{proposition}
+
+\begin{proof} (i) Let $t_\lambda$ be an arbitary element of $T_1$ with $\lambda \neq 0$. To determine the normaliser of $T_1$ in $L$ we consider which $x \in L$ satisfy $x t_\lambda x^{-1} \in T_1$.
+\begin{align*} x t_\lambda x^{-1} &= \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} \delta & \minus \beta \\ \minus \gamma & \alpha \end{bmatrix}
+\\[1.5ex] &= \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \delta & \minus \beta \\ \delta \lambda - \gamma & \alpha - \beta \lambda \end{bmatrix}
+\\[1.5ex] &= \begin{bmatrix} \alpha \delta - \beta \gamma + \beta \delta \lambda & \minus \beta^2  \lambda \\ \delta^2 \lambda & \alpha \delta - \beta \gamma - \beta \delta \lambda \end{bmatrix}.
+\end{align*}
+
+Since $x t_\lambda x^{-1} \in T_1$ we have $\minus \beta^2  \lambda = 0$ and since $\lambda \neq 0$, we have $\beta = 0$. Since $t_\lambda$ was chosen arbitrarily, any element which normalises $T_1$ is a lower diagonal matrix and is therefore in $H$ by (\ref{Hlowertri}). Thus $N_L(T_1) \subset H$ as required. \\
+\\
+(ii) To determine the centraliser of $t_\lambda$ in $L$, we consider which $y \in L$ satisfy $y t_\lambda = t_\lambda y$ for an arbitrarily chosen $t_\lambda$, with $\lambda \neq 0$. \\
+\vspace{-0.5mm}
+\begin{align}\label{6.3proof2} y t_\lambda &= t_\lambda y, \nonumber \\[1.5ex]
+\begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} &= \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix}, \nonumber \\[1.5ex]
+\begin{bmatrix} \alpha + \beta \lambda & \beta \\ \gamma + \delta \lambda & \delta \end{bmatrix} &= \begin{bmatrix} \alpha & \beta \\ \gamma +  \alpha \lambda & \delta + \beta \lambda \end{bmatrix}.
+\end{align}
+\vspace{.5mm}
+
+Equating the top left entries of (\ref{6.3proof2}) gives $\alpha + \beta \lambda = \alpha$ which means $\beta = 0$ since $\lambda \neq 0$ by assumption. Equating the bottom left entries gives that $\alpha = \delta$. Finally, since det$(y) = 1$, we have $\alpha \delta = 1$ so $\alpha = \pm 1$. Thus a $y \in C_L(t_\lambda)$ is
+
+\begin{align*} y &= \begin{bmatrix} \alpha & 0 \\ \gamma & \alpha \end{bmatrix}. \tag{where $\alpha = \pm 1$}
+\end{align*}
+
+So $y = \pm t_\sigma$ for some $\sigma \in F$, and $TZ = \{ \pm t_\sigma \} \subset C_L(t_\lambda)$. Now take an arbitrary $t_\mu z \in TZ$.
+\begin{align*} (t_\mu z) t_\lambda &= t_\lambda (t_\mu z),
+\\ t_\mu t_\lambda z &= t_\lambda t_\mu z, \tag{since $z \in Z$}
+\\ t_{\mu + \lambda} &= t_{\mu + \lambda}.
+\end{align*}
+
+Thus $t_\mu z$ and indeed the whole of $TZ$ is contained in $ C_L(t_\lambda)$, so $C_L(t_\lambda) = TZ$. \\
+\\
+Since $T$ commutes elementwise with $Z$ and $T \cap Z = \{ I_G \}$, we can apply Corollary \ref{directproductZ} and assert that $C_L(t_\lambda) = TZ \cong T \times Z$ as required. The centraliser of $\minus t_\lambda$ is also $T \times Z$, since an element $x$ commutes with $\minus t_\lambda$ if and only if it commutes with $t_\lambda$:
+\begin{align*} xt_\lambda = t_\lambda x \iff   \minus(x t_\lambda) = \minus (t_\lambda x) \iff x(\minus t_\lambda) = (\minus t_\lambda)x.
+\end{align*}
+
+Note that in case of $\lambda = 0$, $\pm t_\lambda \in Z$ and thus it's centraliser is the whole of $L$.
+
+\end{proof}
+
+\begin{proposition}\label{6.4ii}
+(i) $N_L(D_1) = \langle D , w \rangle$, where  $D_1$ is any subgroup of $D$ with order greater than 2. \\
+\\
+(ii) $C_L(d_\omega)= D$ where $\omega \neq \pm 1$.
+\end{proposition}
+
+\begin{proof} (i) Since $|D_1| > 3$, we can choose a $d_\omega \in D_1 \! \setminus \! Z$, that is where $\omega \neq 1$. To determine the normaliser of $D_1$ in $L$ we consider which $x \in L$ satisfy $x d_\omega x^{-1} \in D_1$.
+\begin{align}\label{6.3proof3} xd_\omega x^{-1} &= \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} \delta & \minus \beta \\ \minus \gamma & \alpha \end{bmatrix} \nonumber \\[1.5ex]
+&= \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \delta \omega & \minus \beta \omega \\ \minus \gamma \omega^{-1} & \alpha \omega^{-1} \end{bmatrix} \nonumber \\[1.5ex]
+&= \begin{bmatrix} \alpha \delta \omega - \beta \gamma \omega^{-1} & \alpha \beta (\omega^{-1} - \omega) \\ \gamma \delta (\omega - \omega^{-1}) & \alpha \delta \omega^{-1} - \beta \gamma \omega \end{bmatrix} \in D_1.
+\end{align}
+
+Since (\ref{6.3proof3}) is in $D_1$, the top right and bottom left entries must be 0. Since  $\omega \neq \pm 1$, we have $\omega \neq \omega^{-1}$ and so $\alpha \beta = 0 = \gamma \delta$. \\
+\\
+\textbullet \space If $\alpha = 0$, then $\beta$ and $\gamma$ are non-zero since det$(x) = 1$, thus $\delta = 0$. So det$(x) = \minus \gamma \beta = 1$  and $\minus \gamma = \beta^{-1}$. (\ref{6.3proof3}) becomes $$\begin{bmatrix} \omega^{-1} & 0 \\ 0 & \omega \end{bmatrix} = d^{-1}_\omega.$$Since $D_1$ is a group, it contains the inverse of each of it's elements, so $d^{-1}_\omega \in D_1$ as required. In this case we have $x \in wD$. \\
+\\
+\textbullet \space If $\alpha \neq 0$, then similarly $\beta = 0$, $\delta = \alpha^{-1}$ and $\gamma = 0$. (\ref{6.3proof3}) now becomes $$\begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} = d_\omega \in D_1.$$This time we have $x \in D$. So $x \in D \cup wD = \langle D , w \rangle$ and any element which normalises $D_1$ is in $\langle D , w \rangle$, thus $N_L(D_1) \subset \langle D , w \rangle$. \\
+\\
+Now take an arbitrary $y \in \langle D , w \rangle = D \cup wD$. If $y \in D$ then $y = d_{\rho 1}$, for some $\rho 1 \in F^*$.
+\begin{align*} d_{\rho 1} d_\omega d^{-1}_{\rho 1} = d_\omega \in D_1. \tag{by Lemma \ref{6.1}}
+\end{align*}
+
+If $y \in wD$ then $y = w d_{\rho 2}$, for some $ d_{\rho 2} \in F^*$.
+\begin{align*} (w d_{\rho 2}) d_\omega (w d_{\rho 2})^{-1} &= w d_{\rho 2} d_\omega d^{-1}_{\rho 2} w^{-1}
+\\ &= w d_\omega w^{-1}
+\\ &= d^{-1}_\omega \in D_1 \tag{by Lemma \ref{6.1}}.
+\end{align*}
+
+Thus $y$ indeed who whole of $\langle D , w \rangle$ is contained in $N_L(D_1)$. This inclusion gives the desired result, $N_L(D_1) = \langle D , w \rangle$. \\
+\\
+(ii) Now we consider which $y \in L$ satisfy $y d_\omega = d_\omega y$ for an arbitrarily chosen $d_\omega$, with $\omega \neq \pm 1$.
+\begin{align}\label{6.3proof4} y d_ \omega &= d_\lambda y, \nonumber \\[1.5ex]
+\begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} &= \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix}, \nonumber \\[1.5ex]
+\begin{bmatrix} \alpha \omega & \beta \omega^{-1} \\ \gamma \omega & \delta \omega^{-1} \end{bmatrix} &= \begin{bmatrix} \alpha \omega & \beta \omega \\ \gamma \omega^{-1} & \delta \omega^{-1} \end{bmatrix}.
+\end{align}
+
+Equating the top right and bottom left entries of (\ref{6.3proof4}) gives that $\beta = 0 = \gamma$ since Since $\omega \neq \omega^{-1}$. Thus $\delta = \alpha^{-1}$ and 
+\begin{align*} x = \begin{bmatrix} \alpha & 0 \\ 0 & \alpha^{-1} \end{bmatrix} \in D. 
+\end{align*}
+
+Thus $x$ and indeed the whole of $C_L(d_\omega)$ is contained in $D$. Now take an arbitrary $d_\rho \in D$.
+\begin{align*} d_\rho d_\omega = d_{\rho \omega} = d_\omega d_\rho.
+\end{align*}
+So clearly $D \subset C_L(d_\omega)$ and thus $C_L(d_\omega) = D$ as required.
+\end{proof}
+
+\begin{proposition} \label{conjcent} Let $a$ and $b$ be conjugate elements in a group $G$. Then $\exists \, x \in G$ such that $xC_G(a)x^{-1} = C_G(b)$. \vspace{3mm}
+\end{proposition}
+
+\begin{proof}
+This proposition essentially claims that conjugate elements have conjugate centralisers. Since $a$ and $b$ are conjugate there exists an $x \! \in \! G$ such that $b = xax^{-1}$. Let $g$ be an arbitrary element of $C_G(a)$. Then,
+
+\begin{align*} (xgx^{-1})(xax^{-1}) &= xgax^{-1} \\
+&= xagx^{-1} \tag{since $g \in C_G(a)$} \\
+&= (xax^{-1})(xgx^{-1}). \end{align*}
+
+Thus $xgx^{-1} \in C_G(xax^{-1})$. Since $g$ was chosen arbitrarily, $$xC_G(a)x^{-1} \subset C_G(xax^{-1}) = C_G(b).$$ 
+
+Conversely, let $h$ be an arbitary element of $C_G(xax^{-1})$. Then,
+
+\begin{align*} (x^{-1}hx)a &= x^{-1}h(xax^{-1})x \\
+&= x^{-1}(xax^{-1})hx \tag{since $h \in C_G(xax^{-1})$} \\
+&= a(x^{-1}hx). \end{align*}
+
+So $x^{-1}hx \in C_G(a)$ and since $h$ was arbitrarily chosen from $C_G(xax^{-1})$, \linebreak $x^{-1}C_G(xax^{-1})x \subset C_G(a)$. Multiplication on the left by $x$ and on the right by $x^{-1}$ gives $C_G(b) =  C_G(xax^{-1}) \subset xC_G(a)x^{-1}$. Since we have shown that each set contains the other, $xC_G(a)x^{-1} = C_G(b)$ as required. \\
+\end{proof}
+
+\begin{corollary}\label{6.5}
+The centraliser of an element $x$ in $L$ is abelian unless $x$ belongs to the centre of $L$. \vspace{3mm}
+\end{corollary}
+
+\begin{proof} This is almost an immediate consequence of the preceding results. Propositions \ref{6.4i} and \ref{6.4ii} show that an element of the form $\pm t_\lambda$ which does not lie in the centre of $L$ has centraliser $T \times Z$, whilst a non-central element of the form $d_\omega$ has centraliser $D$. Both $T$ and $D$ are abelian since they are isomoprhic to $F$ and $F^*$ respectively. Let $t_\lambda z_1$ and $t_\mu z_2$  be arbitrary elements of $T \times Z$.
+
+\vspace{-.5mm}
+\begin{align*} (t_\lambda z_1)(t_\mu z_2)  &= t_\lambda t_\mu z_2 z_1  \tag{since  $z_1 \in Z$}
+\\ &= t_\mu t_\lambda z_2 z_1  \tag{since  $T$ is abelian}
+\\ &= (t_\mu z_2)(t_\lambda z_1).   \tag{since  $z_2 \in Z$}
+\end {align*} 
+
+Thus $T \times Z$ is also abelian. Since every element of $L$ is conjugate to $d_\omega$ or $\pm t_\lambda$ by Proposition \ref{6.3} and conjugate elements have conjugate centralisers by Proposition \ref{conjcent}, the centraliser of each $x \in L \setminus Z$ is conjugate to either $T \times Z$ or $D$. Proposition \ref{conjugateprop}(iii) shows that conjugate subgroups are isomorphic and therefore have the same structure, thus since both $T \times Z$ and $D$ are abelian, $C_L(x)$ is also abelian. Note that in general this does hold for $x \in Z$, since its centraliser is the whole of $L$ which is not abelian unless $L = Z$.
+
+\end{proof}
+
+\section{The Projective Line \& Triple Transitivity}
+
+It is convenient to sometimes take a geometric viewpoint and regard the elements of $L$ as pairs of vectors in the 2-dimensional vector space over $F$, which we will denote $V$. An element of $L$ is thus a linear transformation of $V$. 
+
+\begin{definition-non} Let $\mathscr{L}$ be the set of all 1-dimensional subspaces of $V$. A subset $\mathscr{S}$ of $\mathscr{L}$ is called a \textbf{subspace} of $\mathscr{L}$ if there is a subspace $U$ of $V$ such that $\mathscr{S}$ is the set of all 1-dimensional spaces of $U$. We have dim $U =$ dim $\mathscr{S} + 1$. The set $\mathscr{L}$ on which this concept of subspaces is defined is called the \textbf{projective line} on $V$ and an element of $\mathscr{L}$ is a 0-dimensional subspace of $\mathscr{L}$ and consequently called a \textbf{point}. The projective line can be considered as a straight line in the field, plus a point at infinity.
+\end{definition-non}
+
+Any 1-dimensional subspace of $V$ is a set of vectors of the form $\eta u$, where $u$ is a non-zero vector of $V$ and $\eta \in F^*$. Thus the points of $\mathscr{L}$ are equivalence classes with the following relation defined on the set of vectors of $V$.
+\begin{align*} u = \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} \sim \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = v \iff u = \eta v, \qquad (\text{for $\eta \in F^*$}).
+\end{align*}
+
+Notice that $u$ and $v$ are equivalent if and only if $u_1 v_2 = v_1 u_2$. Importantly each point $P_i$ of $\mathscr{L}$ can be represented by a corresponding equivalence class of vectors of $V$, that is, $P$ corresponds to $u$ if $P = u_1 / u_2$. In the case when $u_2 = 0$, this corresponds to the point at infinity.
+
+\begin{definition-non} Let $S$ be a permutation group which acts on a set $X$ and $\{ x_1, x_2, x_3 \}$ and $\{ x_1', x_2', x_3' \}$ be two subsets of distinct elements of $X$. Then $S$ is said be \textbf{triply transitive} on $X$ if there is an element $\pi \in S$ such that,
+\begin{align*} x^{\pi}_i = x'_i, \qquad(\text{$i$ = 1,2 or 3}).
+\end{align*} 
+\end{definition-non}
+
+\begin{theorem} \label{6.6}
+Let $\mathscr{L}$ be the projective line over the field $F$. Then $L$ is triply transitive on the set of the points of $\mathscr{L}$. \vspace{3mm}
+\end{theorem}
+
+\begin{proof} Let $P_1$, $P_2$ and $P_3$ be distinct points of $\mathscr{L}$ and $p_i$ be a vector in $V$ corresponding to $P_i$. Since each $P_i$ is distinct, $p_1$, $p_2$ and $p_3$ are thus pairwise linearly independent. Thus $p_1$ and $p_2$  form a basis for $V$ and it's clear that there exist $\alpha, \beta \in F^*$ such that,
+\begin{align*} p_3 = \alpha p_1 + \beta p_2.
+\end{align*}
+
+Now, let $Q_1$, $Q_2$ and $Q_3$ be three more distinct points of $\mathscr{L}$ and $q_i$ be a vector in $V$ corresponding to $Q_i$. Similarly, by the above argument, there exist $\gamma, \delta \in F^*$ such that,
+\begin{align*} q_3 = \gamma q_1 + \delta q_2.
+\end{align*}
+
+Let $\pi \in GL(2,F)$ be the linear transformation which sends $\alpha p_1$ to $\gamma q_1$  and $\beta p_2$ to $\delta q_2$. Thus,
+\begin{align*} \pi(p_3) = \pi(\alpha p_1 + \beta p_2) = \pi(\alpha p_1) + \pi(\beta p_2) = \gamma q_1 + \delta q_2 = q_3 
+\end{align*}
+
+Hence we get $P^\pi_1 = Q_1$, $P^\pi_2 = Q_2$ and $P^\pi_3 = Q_3$ and $GL(2,F)$ is triply transitive. Now set,
+\begin{align*} \eta = \sqrt{\frac{1}{\text{det }\pi}}.
+\end{align*}
+
+Consider the mapping $\theta$ which sends $\alpha p_1$ to $\eta \gamma q_1$ and $\beta p_2$ to $\eta \delta q_2$. Observe that,
+\begin{align*} \text{det }\theta = \eta^2 \, \text{det } \pi = 1
+\end{align*}
+
+So $\theta \in SL(2,F) = L$ and since $P^\theta_1 = Q_1$, $P^\theta_2 = Q_2$ and $P^\theta_3 = Q_3$, we have that $L$ is also triply transitive. 
+
+\end{proof}
+
+The following proposition looks at what happens when the group $L$ acts on the projective line $\mathscr{L}$.
+
+\begin{proposition} \label{6.7} (i) Each element of the form $d_\omega$ (with $\omega \neq \pm 1$), fixes the same two points on the projective line $\mathscr{L}$ and fix no other point. \vspace{3mm} \\
+(ii) Each element of the form $\pm t_\lambda$ (with $\lambda \neq 0$), fixes the same point $P$ on $\mathscr{L}$ and fix no other point. Furthermore, \emph{Stab}$(P) = H$. \vspace{3mm} \\
+(iii) All conjugate elements have the same number of fixed points on $\mathscr{L}$. \vspace{3mm} \\
+(iv) Any noncentral element of $L$ has at most 2 fixed points on $\mathscr{L}$.
+\end{proposition}
+
+\begin{proof} 
+(i) Let $P$ be a fixed a point of an arbitrary $d_\omega \in D$, with $\omega \neq \pm 1$ and let $u$ belong to the corresponding equivalence class of vectors of $V$ to $P$. \\
+\begin{align*} d_\omega u = \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} &= \begin{bmatrix} u_1 \omega \\ u_2 \omega^{-1} \end{bmatrix} \sim \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}, 
+\\[1.5ex] u_1 u_2 \omega &= u_1 u_2 \omega^{-1}.
+\end{align*}
+
+Since $\omega \neq \pm 1$, $\omega$ does not equal $\omega^{-1}$, and so either $u_1 = 0$ or $u_2 = 0$. Thus $u$ is equivalent to either the vector $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ or $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$ and these correspond to 2 distinct points of $\mathscr{L}$ which are fixed by $d_\omega$. \\
+\\
+(ii) Let $P$ be a fixed a point of an arbitrary $t_\lambda$, with $\lambda \neq 0$, and let $u$ be the corresponding element of $V$ to $P$. \\
+\begin{align*} t_\lambda u = \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} &= \begin{bmatrix} u_1 \\ u_1 \lambda + u_2 \end{bmatrix} \sim \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}, 
+\\[1.5ex] u_1 u_2 &= {u_1}^2 \lambda + u_1 u_2.
+\end{align*}
+
+This gives ${u_1}^2 \lambda = 0$ and since $\lambda \neq 0$ we have $u_1 = 0$. Thus $t_\lambda$ has just one fixed point, $P$ which corresponds to the equivalence class of $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ in $V$. We show also that $P$ is also the only fixed point of $-t_\lambda$, with $\lambda \neq 0$.
+\begin{align*} -t_\lambda u = \begin{bmatrix} -1 & 0 \\ \lambda & -1 \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} &= \begin{bmatrix} -u_1 \\ u_1 \lambda - u_2 \end{bmatrix} \sim \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}, 
+\\[1.5ex] -u_1 u_2 &= {u_1}^2 \lambda - u_1 u_2.
+\end{align*}
+
+So again $u_1 =0$ and $-t_\lambda$ fixes $P$ and no other point. We now calculate the stabiliser of $P$ in $L$, by considering which $x \in L$ fix $P$. \\
+\begin{align*} x u = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} &= \begin{bmatrix} \beta \\ \delta \end{bmatrix} \sim \begin{bmatrix} 0 \\ 1 \end{bmatrix}.
+\end{align*}
+
+Thus $\beta = 0$ and $x \in H$. Since $x$ was chosen arbitrarily from Stab$(P)$, we have Stab$(P) \subset H$. Now let an arbitrarily chosen $y \in H$ act on $P$. \\
+\begin{align*} y u = \begin{bmatrix} \alpha & 0 \\ \gamma & \alpha^{-1} \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} &= \begin{bmatrix} 0 \\ \alpha^{-1} \end{bmatrix} \sim \begin{bmatrix} 0 \\ 1 \end{bmatrix}.
+\end{align*}
+
+Thus $y$ and indeed $H$ is contained in Stab$(P)$, so Stab$(P) = H$ as desired. \\
+\\
+(iii) Let $P_i$ $(i = 1,2,...)$ be the fixed points of $x\in L$ and let $y$ be conjugate to $x$ in $L$. That is, there exists a $g \in L$ such that $x = gyg^{-1}$.
+\begin{align*} x P_i &= P_i,
+\\ gyg^{-1} P_i &= P_i,
+\\ y(g^{-1} P_i) &= (g^{-1} P_i).
+\end{align*}
+
+This shows that $P_i$ is a fixed point of $x$ if and only if $g^{-1} P_i$ is a fixed point of $y$. Thus conjugate elements have the same number of fixed points. \\
+\\
+(iv) By Proposition \ref{6.3}(i), every  element of $L$ is conjugate to either $d_\omega$ or $\pm t_\lambda$, so since conjugate elements have the same number of fixed points, every element of $L \! \setminus \! Z$ has either the same number of fixed points as $d_\omega$ (with $\omega \neq \pm 1$), namely 2, or the same number as $\pm t_\lambda$, (with $\lambda \neq 0$), namely 1.
+
+\end{proof}
+
+\chapter[The Maximal Abelian Subgroup Class Equation]{The Maximal Abelian Subgroup Class Equation}
+\chaptermark{The Class Equation}
+
+\section[A finite subgroup of $L$]{A Finite Subgroup of $\pmb{L}$}
+
+We now return to the realm of finite groups and consider $G$ to be an arbitrary finite subgroup of $L$. We will still continue to use $Z$ to denote the centre of $L$, and will use $Z(G)$ whenever we refer to the centre of $G$. \\
+\\
+Observe that if $Z$ is not contained in $G$, then $Z$ must contain a non-identity element, thus $|Z| = 2$ and $p \neq 2$ by Lemma \ref{6.2}. Recall that $L$ has a unique element of order 2 by Lemma \ref{6.2b}, $\minus I_L$, which is not in $G$, therefore $G$ has no element of order 2. \\
+\\
+By Cauchy's Theorem, which says that if a prime $p$ divides the order of a finite group, then the group contains an element of order $p$, we deduce that 2 does not divide the order of $G$. \\
+\\
+This means that $|G|$ and $|Z|$ are relatively prime, so $G \cap Z = \{ I_L \}$ and we can use Corollary \ref{directproductZ} to show that $GZ \cong G \times Z$. This shows that regardless of whether $G$ contains $Z$ or not, its structure is uniquely determined by $GZ$, so it suffices to only consider the case when $Z \subset G$. 
+
+\section{Maximal Abelian Subgroups}
+
+\begin{definition-non} Let $H$ and $J$ be subgroups of a group $G$ where $H$ is abelian. $H$ is called \textbf{maximal abelian} if $J$ is not abelian whenever $H \subsetneq J$. \\
+\\
+A group $G$ is said to be \textbf{elementary abelian} if it is abelian and every non-trivial element has order $p$, where $p$ is prime.
+\end{definition-non}
+
+\begin{notation-non} Let $\mathfrak{M}$ denote the set of all maximal abelian subgroups of $G$.
+\end{notation-non}
+\vspace{3mm}
+
+Maximal abelian subgroups play an important role in determining the structure of $G$. In particular, every element in $G$ must be contained in some maximal abelian subgroup, since every element commutes at least with itself and $Z$. This will allow us to decompose $G$ into the conjugacy classes of these maximal abelian subgroups. Note also that unless $G=Z$, $Z$ is not a maximal abelian subgroup, because for each $x \in G \! \setminus \! Z$, $\langle Z,x \rangle$ is clearly a larger abelian subgroup than $Z$. \\
+\\
+We will shortly prove an important theorem regarding the maximal abelian subgroups of $G$, but in order to do so we require the following two lemmas. \\
+
+\begin{lemma}\label{primecentre}
+If $G$ is a finite group of order $p^m$ where $p$ is prime and $m>0$, then $p$ divides $|Z(G)|$. 
+\end{lemma}
+
+\begin{proof}
+Let $C(x)$ be the set of elements of $G$ which are conjugate in $G$ to $x$, we call this the conjugacy class of $x$. Bhattacharya shows that the set of all conjugacy classes form a partition of $G$ \cite[p.112]{bhattacharya}. Now consider the following rearranged class equation of $G$, where $S$ is a subset of $G$ containing exactly one element from each conjugacy class not contained in $Z(G)$. 
+ 
+\begin{equation} \label{cen2}
+|G| - \sum_{x \in S} [G:N_G(x)] = |Z(G)|.
+\end{equation}
+
+Since $|G| = p^m$, each subgroup of $G$ is of order $p^k$ for some $k \leq m$. In particular each $N_G(x)$ has order $p^k$ and is strictly contained in $G$ since $x \not \in Z(G)$ by assumption. Thus each $[G:N_G(x)] > 1$, and are therefore divisible by $p$. Since $p$ divides the left hand side of (\ref{cen2}), it must also divide the right, thus $p$ divides $|Z(G)|$. 
+
+\end{proof}
+
+\begin{lemma}\label{finsubcyc}
+Every finite subgroup of a multiplicative group of a field is cyclic.
+\end{lemma}
+
+\begin{proof} See \cite[p.41]{suzuki}.
+\end{proof}
+
+\begin{theorem}\label{6.8} Let $G$ be an arbitrary finite subgroup of $L$ containing $Z$. \\
+
+(i) If $x \in G \! \setminus \! Z$ then we have $C_G(x) \in \mathfrak{M}$. \vspace{3mm} \\
+(ii) For any two distinct subgroups $A$ and $B$ of $\mathfrak{M}$, we have
+\begin{align*} A \cap B = Z. \end{align*}
+(iii) An element $A$ of $\mathfrak{M}$ is either a cyclic group whose order is relatively prime to $p$, or of the form $Q \times Z$ where $Q$ is an elementary abelian Sylow $p$-subgroup of $G$. \vspace{3mm} \\
+(iv) If $A \in \mathfrak{M}$ and $|A|$ is relatively prime to $p$, then we have $[N_G(A): A] \leq 2$. Furthermore, if $[N_G(A): A] = 2$, then there is an element $y$ of $N_G(A) \! \setminus \! A$ such that, 
+\vspace{-1mm}
+\begin{align*} yxy^{-1} = x^{-1} \qquad \forall x \in A.\end{align*}
+(v) Let $Q$ be a Sylow $p$-subgroup of $G$. If $Q \neq \{I_G\}$, then there is a cyclic subgroup $K$ of $G$ such that $N_G(Q) = QK$. If $|K| > |Z|$, then $K \in \mathfrak{M}$. \\
+\end{theorem}
+
+\begin{proof} (i) Let $x$ be chosen arbitrarily from $G \! \setminus \! Z$. Then by Corollary \ref{6.5}, $C_L(x)$ is abelian. By definition, $C_G(x) = C_L(x) \cap G$, and using the elementary fact that the intersection of 2 groups is itself a group, we have $C_G(x) < C_L(x)$. Now since every subgroup of an abelian group is abelian, $C_G(x)$ is also abelian. \\
+\\
+Now let $J$ be a maximal abelian subgroup of $G$ containing $C_G(x)$. Since $J$ is abelian and $x \in C_G(x) \subset J$, we have $jx=xj$, $\forall j \in J$, thus $J \subset C_G(x)$. Therefore $J=C_G(x)$ and $C_G(x) \in \mathfrak{M}$. \\
+\\
+(ii) Consider $x \in A \cap B$. Since both $A$ and $B$ are abelian, $x$ commutes with each $a \in A$ and $b \in B$ and thus $C_G(x)$ contains both $A$ and $B$.  If $x \in G \setminus Z$, then $C_G(x) \in \mathfrak{M}$ by (i) and because $A$ and $B$ are distinct we have $A \subsetneq A \cup B \subset C_G(x)$. This contradicts the fact that $A$ is maximum abelian and thus $x \in Z$. Finally, note that Z is contained in every maximal abelian subgroup, since otherwise we would have the contradiction that $\langle A, Z \rangle$ would generate a larger abelian subgroup than $A$. Hence $A \cap B = Z$. \\
+\\
+(iii) First consider the trivial case of $G=Z$. Here $G$ is the only element of $\mathfrak{M}$. If $p \neq 2$ then $|G|=2$ and $G$ is a cyclic group whose order is relatively prime to $p$. If $p=2$ then $G = I_G$ which is trivially a $S_p$-subgroup. \\
+\\
+Now assume $G \neq Z$. Since $Z \not \in \mathfrak{M}$, each $A \in \mathfrak{M}$ contains at least one $x \not \in Z$. By Proposition  \ref{6.3} this $x$ is conjugate to either $d_\omega$ or $\pm t_\lambda$ in $L$. It suffices to only consider these cases: \\
+\\
+\textbullet \space $\pmb{x}$ \textbf{conjugate to} $\pmb{d_\omega}$ \textbf{in} $\pmb {L}$. There is a $y \in L$ such that $x = y d_\omega y^{-1}$. Since $x \not \in Z$, we have $d_\omega \not \in Z$, because otherwise we get the contradiction,
+\begin{align*} x =  y d_\omega y^{-1} = d_\omega \in Z.
+\end{align*}
+Thus $\omega \neq \pm 1$. Let $A = C_G(x)$, since $C_G(x) \in \mathfrak{M}$ by part (i). Observe that
+\begin{align*}  C_G(d_\omega) &<  C_L(d_\omega)  \tag{see proof of (i)}
+\\ &= D  \tag{by Lemma \ref{6.4ii}}
+\\ &\cong F^*.  \tag{by Lemma \ref{6.1b}}
+\end{align*}
+
+Since $A$ is conjugate to $C_G(d_\omega)$ by Proposition \ref{conjcent}, we have that $A$ is isomorphic to a finite subgroup of $F^*$ and by Lemma \ref{finsubcyc}, $A$ is cyclic. By Lagrange's Theorem any finite subgroup of $F^*$ has an order which divides $p^m - 1$ for some $m \in \mathbb{Z}^+$, and since $p \nmid (p^m - 1)$, $|A|$ is relatively prime to $p$. \\
+\\
+\textbullet \space $\pmb{x}$ \textbf{conjugate to} $\pmb{\pm t_\lambda}$ \textbf{in} $\pmb{L}$. Again let $A = C_G(x) \in \mathfrak{M}$. $A$ is conjugate to $C_G({\pm t_\lambda})$ in $L$ by Proposition \ref{conjcent}. Since $x \notin Z$, we have $\lambda \neq 0$. Observe that
+\begin{align*}  C_G({\pm t_\lambda}) &<  C_L({\pm t_\lambda})
+\\&= T \times Z  \tag{by Lemma \ref{6.4i}}
+\\&\cong F \times Z. \tag{by Lemma \ref{6.1b}}
+\end{align*}
+
+So $A$ is isomorphic to a finite subgroup of $F \times Z$, call it $Q \times Z$. Now $A = Q \times Z \cong QZ$ by Corollary \ref{directproductZ}, which means that an arbitrary element of $A$ is of the form $q_1z_1$, where $q_1 \in Q$, $z_1 \in Z$.
+\begin{align*} q_1z_1q_2z_2 &= q_2z_2 q_1z_1, \tag{$A \in \mathfrak{M}$}
+\\ q_1q_2z_1z_2 &= q_2q_1z_1z_2, \tag{$z_1$, $z_2 \in Z$}
+\\  q_1q_2z_1z_2(z_1z_2)^{-1} &= q_2q_1z_1z_2(z_1z_2)^{-1},
+\\ q_1q_2 &= q_2q_1.
+\end{align*}
+Thus $Q$ is also abelian. Recall from the proof of Proposition \ref{6.3}(ii) that all non-trivial elements of $T$ have order $p$, so each non-trivial element of $Q$ has order $p$ which means that $Q$ is elementary abelian. Thus $Q$ has order $p^m$, for some $m \in \mathbb{Z}^+$. \\
+\\
+Now let $S$ be a Sylow $p$-subgroup containing $Q$. We apply Lemma \ref{primecentre} to determine that $p$ divides $|Z(S)|$, moreover $|Z(S)| \geq p$. \\
+\\
+If $p=2$, then $Z=I_L$ by Lemma \ref{6.2}. So $|Z| = 1$ and hence $|Z(S)| \geq 2 > |Z|$.\\
+If $p > 2$, then  $Z = \langle \minus I_L \rangle$ also by Lemma \ref{6.2}. So $|Z| = 2$ and again we get $|Z(S)| > 2 = |Z|$. \\
+\\
+So $Z(S)$ must contain at least one element which is not in $Z$, let $y$ be one such element. Let $s_1z_1$ be an arbitrary element of $S \times Z$.
+\begin{align*}
+(s_1z_1)y(s_1z_1)^{-1} &= (s_1z_1)y(z_1^{-1}s_1^{-1})
+\\ &= s_1y(z_1z_1^{-1})s_1^{-1} \tag{since $y \in L$, $z_1 \in Z$}
+\\ &= y(s_1s_1^{-1}) \tag{since $s_1 \in S$, $y \in Z(S)$}
+\\ &= y
+\end{align*}
+
+Thus $s_1z_1 \in C_G(y)$ and since it was chosen arbitrarily, $S \times Z \subset C_G(y)$. Also since $y \in G \! \setminus \! Z$ we have $C_G(y) \in \mathfrak{M}$ by part (i).
+
+\begin{equation*}
+A = Q \times Z \subset S \times Z \subset C_G(y).
+\end{equation*}
+
+Since $A$ and $C_G(y)$ are both in $\mathfrak{M}$ it must be that $A = C_G(y)$. This means $Q = S$ and $Q$ is a Sylow $p$-subgroup of G.\\
+\\
+(iv) If $|A| \leq 2$ then $A=Z=G$. So $A$ is trivially normal in $G$ and $[N_G(A): A] = 1$. \\
+\\
+Now assume that $|A| > 2$. Since $|A|$ is relatively prime to $p$, we have that $A$ is a cyclic group conjugate to a finite subgroup of $D$ in $L$ by the proof of part (iii), call this subgroup ${\widetilde{A}}$. Thus both ${\widetilde{A}}$ and $D$ have orders greater than 2. Applying Proposition \ref{6.4ii} we observe that
+\begin{align}\label{norm1}  N_L({\widetilde{A}}) = \langle D , w \rangle = N_L(D).
+\end{align}
+
+Since $A$ and ${\widetilde{A}}$ are conjugate in $L$, there exists an element $z \in L$ such that $zAz^{-1} = {\widetilde{A}}$. This $z$ determines an inner automorphism of $L$ defined by
+\begin{align*} i_z: L \longrightarrow L,  \qquad \text{where} \quad \!  i_z(t) = z t z^{-1}  \quad \forall \; t \in L.
+\end{align*}
+
+Let $i_z(G) = {\widetilde{G}}$ denote the image of $G$ under $i_z$. Since $A$ is a maximal abelain subgroup of $G$ it's a simple task to show that ${\widetilde{A}}$ is a maximal abelian subgroup of ${\widetilde{G}}$ and I will leave this to the reader to verify. We now show that $i_z(N_G(A)) = N_{\widetilde{G}}({\widetilde{A}})$ . Take an arbitrary $g \in N_G(A)$.
+\begin{align*} (z g z^{-1}) {\widetilde{A}} (z g z^{-1})^{-1} &= z g (z^{-1} {\widetilde{A}} z) g^{-1} z^{-1}
+\\ &=  z (g A g^{-1}) z^{-1} \tag{since $zAz^{-1} = {\widetilde{A}}$ }
+\\ &= z A z^{-1} \tag{since $g \in N_G(A)$}
+\\ &= {\widetilde{A}}.
+\end{align*}
+
+So $z g z^{-1} = i_z(g) \in N_{\widetilde{G}}({\widetilde{A}})$ and since it was chosen arbitrarily, $i_z(N_G(A)) \subset N_{\widetilde{G}}({\widetilde{A}})$. Now take an arbitrary $z h z^{-1} \in N_{\widetilde{G}}({\widetilde{A}})$.
+\begin{align*} {\widetilde{A}} &= (z h z^{-1}) {\widetilde{A}} (z h z^{-1})^{-1}
+\\ &= z h (z^{-1} {\widetilde{A}} z) h^{-1} z^{-1}
+\\ &= z h A h^{-1} z^{-1}. \tag{since $A = z^{-1} {\widetilde{A}} z$}
+\end{align*}
+
+Now multiplication on the left by $z^{-1}$ and right by $z$ gives:
+\begin{align*} A = z^{-1} {\widetilde{A}} z = h A h^{-1},
+\end{align*}
+
+so $h \in N_G(A)$. Furthermore, $z h z^{-1}$ and indeed the whole of $N_{\widetilde{G}}({\widetilde{A}})$ is contained in $i_z(N_G(A))$. Thus $ i_z(N_G(A)) = N_{\widetilde{G}}({\widetilde{A}})$. In particular, we have,
+\begin{align}\label{6.8iv1} [N_G(A): A] = [N_{\widetilde{G}}({\widetilde{A}}): {\widetilde{A}}].
+\end{align}
+
+Since ${\widetilde{G}} < L$, the normaliser of ${\widetilde{A}}$ in ${\widetilde{G}}$ is simply the normaliser of ${\widetilde{A}}$ in $L$ restricted to ${\widetilde{G}}$, thus $N_{\widetilde{G}}({\widetilde{A}}) < N_L({\widetilde{A}}) = N_L(D)$ by (\ref{norm1}). Now since $D \vartriangleleft N_L(D)$, the Second Isomorphism Theorem shows that,
+\begin{align}\label{2iso} N_{\widetilde{G}}({\widetilde{A}})/( N_{\widetilde{G}}({\widetilde{A}}) \cap D) \; \cong \; DN_{\widetilde{G}}({\widetilde{A}}) / D.
+\end{align}
+\\
+Clearly ${\widetilde{A}} \subset {\widetilde{G}} \cap D$. We show that this inclusion is infact an equality. Assume that there exists some $d_\omega \in  {\widetilde{G}} \cap D$ which is not in ${\widetilde{A}}$. The group $\langle d_\omega , {\widetilde{A}} \rangle$ is thus an abelian subgroup of ${\widetilde{G}}$, strictly larger than ${\widetilde{A}}$ and contradicting the fact that ${\widetilde{A}}$ is maximal abelian in ${\widetilde{G}}$. Thus ${\widetilde{A}} =  {\widetilde{G}} \cap D$. It is trivial to see that ${\widetilde{A}} \subset N_{\widetilde{G}}({\widetilde{A}}) \cap D$. Also $N_{\widetilde{G}}({\widetilde{A}}) \cap D \subset {\widetilde{G}} \cap D = {\widetilde{A}}$. So,
+\begin{align}\label{parti} {\widetilde{A}} =  N_{\widetilde{G}}({\widetilde{A}}) \cap D.
+\end{align}
+
+Observe also that, 
+\begin{align}\label{index1or2} DN_{\widetilde{G}}({\widetilde{A}}) = \{ D, \langle D, w \rangle \} \subset \langle D, w \rangle = N_L(D).
+\end{align}
+
+Now we piece the preceding results together to give the desired result.
+\begin{align*}  N_{\widetilde{G}}({\widetilde{A}}) / {\widetilde{A}} \; & \cong \;  N_{\widetilde{G}}({\widetilde{A}})/( N_{\widetilde{G}}({\widetilde{A}}) \cap D) \tag{by (\ref{parti})}
+\\ & \cong \; DN_{\widetilde{G}}({\widetilde{A}}) / D \tag{by (\ref{2iso})}
+\\ & \subset N_L(D) / D \tag{by (\ref{index1or2})}
+\\ &= \langle D, w \rangle / D \; \cong \; \mathbb{Z}_2.
+\end{align*}
+
+We have shown that $N_{\widetilde{G}}({\widetilde{A}}) / {\widetilde{A}}$ is isomorphic to a subset of $\mathbb{Z}_2$. Thus by (\ref{6.8iv1}) we have established that, $$[N_G(A): A] = [N_{\widetilde{G}}({\widetilde{A}}): {\widetilde{A}}] \leq 2.$$
+\vspace{-2mm}
+
+For the second part, if $[N_G(A): A] = 2$, then the above argument shows that $N_{\widetilde{G}}({\widetilde{A}}) / {\widetilde{A}} \; \cong \; \mathbb{Z}_2$. Thus $DN_{\widetilde{G}}({\widetilde{A}}) = N_L(D) = \langle D, w \rangle$. This means that $N_{\widetilde{G}}({\widetilde{A}})$ contains some element $wd_\omega$. In fact, since $w d_\omega \not \in D$, we have $w d_\omega \in N_{\widetilde{G}}({\widetilde{A}}) \! \setminus \! {\widetilde{A}}$. Take any element $x \in A$. Since ${\widetilde{A}} = zAz^{-1}$, $zxz^{-1} \in {\widetilde{A}}$, call it $d_\sigma$. Let $y = z^{-1}w d_\omega z$. Since $wd_\omega \in N_{\widetilde{G}}({\widetilde{A}}) \! \setminus \! {\widetilde{A}}$ it follows that $y \in N_G(A)\! \setminus \! A$. We show that this $y$ inverts $x$:
+\begin{align*} yxy^{-1} &= (z^{-1}w d_\omega z)(z^{-1} d_\sigma z)(z^{-1}d^{-1}_\omega w^{-1} z)
+\\ &= z^{-1} w d_\omega  d_\sigma d^{-1}_\omega w^{-1} z
+\\ &=  z^{-1} w  d_\sigma  w^{-1} z 
+\\ &=  z^{-1}  d^{-1}_\sigma z  \tag{by Lemma \ref{6.1}}
+\\ &= x^{-1}.
+\end{align*}
+
+(v) By part (iii), $Q$ is conjugate to a finite subgroup of $T$ in $L$. In fact, without loss of generality we can assume that $Q \subset T$, moreoever $Q \subset T \cap G$. We show that this is in fact an equality by showing that the reverse inclusion also holds. Let $t_\lambda$ be an arbitrary element of $T \cap G$. Then $\langle t_\lambda, Q \rangle$ is a $p$-group of $G$ which must be equal to $Q$ since it is a Sylow $p$-subgroup of $G$. Thus $t_\lambda \in Q$ and
+\begin{align}\label{Q=TNG} Q = T \cap G.
+\end{align}
+
+Since $|Q| > 1$, Proposition \ref{6.4i} gives that $N_G(Q) \subset N_L(Q) \subset H$. So $N_G(Q) \subset H \cap G$. Now take an arbitrarily chosen $d_\omega t_\lambda \in H \cap G$ and $t_\mu \in Q$.
+\begin{align*} (d_\omega t_\lambda) t_\mu (d_\omega t_\lambda)^{-1} &= d_\omega ( t_\lambda t_\mu  t_{-\lambda}) d^{-1}_\omega
+\\ &=  d_\omega t_\mu d^{-1}_\omega \tag{by Lemma \ref{6.1}}
+\\ &= t_\sigma. \tag{where $\sigma = \mu \omega^{-2}$, by Lemma \ref{6.1}}
+\end{align*}
+
+Since it is a product of elements of $G$, $t_\sigma \in T \cap G = Q$ by (\ref{Q=TNG}). Thus $d_\omega t_\lambda \in N_G(Q)$ and indeed the whole of $H \cap G$ is contained in $N_G(Q)$ and
+\begin{align}\label{normQ=HNG} N_G(Q) = H \cap G.
+\end{align}
+
+We now define a map $\phi$ by,
+\begin{align*} \phi : N_G(Q) \longrightarrow D, \qquad \text{where} \quad \! \phi(d_\omega t_\lambda) = d_\omega \quad \forall \; d_\omega t_\lambda \in N_G(Q).
+\end{align*}
+
+Next we determine the kernel of $\phi$.
+\begin{align*} ker(\phi) &= \{ d_\omega t_\lambda \in N_G(Q) : \phi(d_\omega t_\lambda) = I_G \}
+\\ &= N_G(Q) \cap T
+\\ &= H \cap G \cap T \tag{by (\ref{normQ=HNG})}
+\\ &= T \cap G = Q. \tag{by (\ref{Q=TNG})}
+\end{align*}
+
+We show that $\phi$ is a group homomorphism. Take $d_\omega t_\lambda$, $d_\rho t_\mu$ from $ N_G(Q)$.
+\begin{align*} \phi(d_\omega t_\lambda d_\rho t_\mu) &= \phi(d_\omega d_\rho t_\sigma t_\mu) \tag{where $\sigma = \lambda \rho^2$, by Lemma \ref{6.1}}
+\\ &= d_\omega d_\rho
+\\ &= \phi(d_\omega t_\lambda) \phi(d_\rho t_\mu).
+\end{align*}
+
+Thus by the First Isomorphism Theorem,
+\begin{align}\label{6.8viso} N_G(Q) / Q &\cong \phi(N_G(Q)),
+\end{align}
+
+Since $N_G(Q)$ is a finite group, it's image under $\phi$ is thus a finite subgroup of $D$. Furthermore, since $D \cong F^*$ (by Lemma \ref{6.1b}), $\phi(N_G(Q))$ is a cyclic group whose order divides $p^m-1$ and is therefore relatively prime to $p$, and by \eqref{6.8viso}, so too is $N_G(Q) / Q$. \\
+\\
+Let $r$ be the order of $N_G(Q) / Q$. Since it is cyclic, $N_G(Q)/Q$ is generated by a single element, namely a coset of $Q$ in $N_G(Q)$, call it $kQ$. So $|kQ| = r$. Observe that,
+\begin{align*} (kQ)^r &= Q,
+\\ k^rQ &= Q,
+\\ k^r &\in Q.
+\end{align*}
+Since $Q$ is elementary abelian, each of it's non-trivial elements has order $p$, so $k$ has order $r$ or $rp$. In either case, since gcd$(r,p)=1$, the order of $k^p$ is $r$. Let $K = \langle k^p \rangle$. Now $|K| = r$ and
+\begin{align*} |N_G(Q)| &= r|Q|
+\\ &= |K||Q|
+\\ &= |QK|. \tag{since $Q \cap K = I_G$} 
+\end{align*}
+Thus,
+\begin{align}\label{QK} N_G(Q) &= QK.
+\end{align}
+
+Now assume $|K| > |Z|$. Since $K$ is abelian, it must be contained in some maximal abelian group $A \in \mathfrak{M}$. By part (iii), $A$ must also be a cyclic group whose order is relatively prime to $p$. \\
+\\
+Since $A$ is conjugate in $L$ to a subgroup of $D$, each non-central element of $A$ has exactly 2 fixed points on the projective line $\mathscr{L}$ by Proposition \ref{6.7}. Let $A = \langle x \rangle$ and let $P_1$ and $P_2$ be the points fixed by $x$. We show by induction on $n$ that $x^n$ also fixes $P_1$ and $P_2$, for all $n \in \mathbb{Z^+}$. We do this by assuming first that $x^{n-1}$ fixes $P_i$.
+\begin{align*} x^n P_i = x(x^{n-1} P_i) = x (P_i) = P_i.
+\end{align*}
+
+The importance of this is that since each element of $A$ can be expressed as some power of $x$, they must have the same two fixed points, namely $P_1$ and $P_2$. In other words, 
+\begin{align}\label{stab} A \subset S_L(P_i), \qquad (\text{$i$ = 1 or 2})
+\end{align}
+
+By Proposition \ref{6.7}(ii), each element of $T$ has a common fixed point $P$ and Stab$(P) = H$. Since $K \subset H$, each element in $K$ fixes $P$. Also, since $K \subset A$, this $P$ must be equal to either $P_1$ or $P_2$. Therefore by (\ref{stab}), $A \subset \text{Stab}(P) = H$. We arrive at the following result:
+\begin{align*} A &\subset H \cap G 
+\\ &= N_G(Q) \tag{by (\ref{normQ=HNG})}
+\\ &= QK. \tag{by (\ref{QK})}
+\end {align*}
+
+Furthermore, we get,
+\begin{align*} A &= QK \cap A
+\\ &= QK \cap AK \tag{$K \subset A$ so $A = AK$}
+\\ &= (Q \cap A)K
+\\ &= K \tag{$Q \cap A = I_G$}
+\end{align*}
+
+Thus $K \in \mathfrak{M}$. \\
+\\
+\end{proof}
+
+For the duration of this paper, unless otherwise stated, $Q$ will denote a Sylow $p$-subgroup of $G$ and $K$ will be as described above. 
+
+\section{Conjugacy of Maximal Abelian Subgroups}
+
+\begin{definition-non} The set $\mathcal{C}_i = \{ x A_i x^{-1} : x \in G \}$ is called the \textbf{conjugacy class} of $A_i \in \mathfrak{M}$.
+\end{definition-non}
+
+\begin{notation-non} Let $A_i^*$ be the non-central part of $A_i \in \mathfrak{M}$, let $\mathfrak{M}^*$ be the set of all $A_i^*$ and let $\mathcal{C}_i^*$ be the conjugacy class of $A_i^*$. \\
+\\
+For some $A_i \in \mathfrak{M}$ and $A_i^* \in \mathfrak{M}^*$ let,
+\begin{align*} C_i = \bigcup\limits_{x \in G} x A_i x^{-1}, \quad \text{and} \quad  C_i^* = \bigcup\limits_{x \in G} x A_i^* x^{-1}.
+\end{align*}
+In other words, $C_i$ denotes the set of elements of $G$ which belong to some element of $\mathcal{C}_i$. It's evident that $C_i^* = C_i \setminus Z$ and that there is a $C_i$ corresponding to each $\mathcal{C}_i$. Clearly we have the relation,
+\begin{align}\label{orderorder} |C_i^*| = |A_i^*||\mathcal{C}_i^*|.
+\end{align}
+\end{notation-non}
+
+\begin{theorem} \label{partitiontheorem} Let $G$ be a finite subgroup of $L$ and $S$ be a subset of $\mathfrak{M}^*$  containing exactly one element from each of its conjugacy classes. \vspace{2mm}
+
+(i) The set of $C_i^*$ form a partition of $G \! \setminus \! Z$. That is,
+\begin{align*} G \! \setminus \! Z = \bigcup\limits_{A_i^* \in S} C_i^*,  \qquad \text{and}  \qquad C_i^* \cap C_j^* = \varnothing, \qquad \forall \;  i \neq j.
+\end{align*}
+
+(ii) \: \! $|\mathcal{C}_i^*| = |\mathcal{C}_i|$. \vspace{4mm}
+
+(iii) \: $|\mathcal{C}_i| = [G : N_G(A_i)]$. \vspace{4mm}
+
+(iv) $$|G \! \setminus  \! Z| = \sum_{A_i^* \in S} |A_i^*| [G:N_G(A_i)].$$
+
+\end{theorem}
+
+\begin{proof}
+(i) Define a relation $\sim$ on  $\mathfrak{M}^*$  as follows:
+\begin{align*} A_i^* \sim A_j^* \quad \text{if} \quad A_i^* = xA_j^*x^{-1} \quad \text{for some} \quad x \in G.
+\end{align*}
+
+\textbullet \space If we choose $x \in A_i^*$, then clearly $A_i^* = A_i^*xx^{-1} = xA_i^*x^{-1}$, thus $A_i^* \sim A_i^*$ and $\sim$ is reflexive.\\
+\\
+\textbullet \space If $A_i^* \sim A_j^*$, then $\exists \; x \in G$ such that,
+\begin{align*} A_i^*= xA_j^*x^{-1} \iff x^{-1}A_i^*x = A_j^* \iff A_j^* = yA_i^*y^{-1} \quad \text{for} \; y = x^{-1} \in G.
+\end{align*}
+Thus $A_j^* \sim A_i^*$ and $\sim$ is symmetric.\\
+\\
+\textbullet \space If $A_i^* \sim A_j^*$ and $A_j^* \sim A_k^*$, then $\exists \; x, y \in G$  such that,
+\begin{align*} A_i^* = xA_j^*x^{-1} \; \text{and} \; A_j^* = yA_k^*y^{-1} \Rightarrow A_i^* = xyA_k^*y^{-1}x^{-1} = (xy)A_k^*(xy)^{-1}.
+\end{align*}
+Thus $A_i^* \sim A_k^*$ (since $xy \in G$), which shows that $\sim$ is transitive and moreover an equivalence relation on $\mathfrak{M}^*$. \\
+\\
+The equivalence class of $A_i^*$ in $\mathfrak{M}^*$ therefore coincides with the set $\mathcal{C}_i^* = \{ xA_i^*x^{-1} : x \in G \}$. Furthermore, this tells us that each $A_i^*$ belongs to exactly one conjugacy class. Thus the conjugacy classes $\mathcal{C}_i^*$ form a partition of $\mathfrak{M}^*$,
+\begin{align*} \mathfrak{M}^* = \bigcup\limits_{A_i^* \in S} \mathcal{C}_i^*,  \qquad \text{and}  \qquad \mathcal{C}_i^* \cap \mathcal{C}_j^* = \varnothing, \qquad \forall \; i \neq j.
+\end{align*}
+
+Since the set of $\mathcal{C}_i^*$ are pairwise disjoint, it follows that the set of $C_i^*$ are also pairwise disjoint and we get the desired result,
+
+\begin{align*} G \! \setminus \! Z = \bigcup\limits_{A_i^* \in S} C_i^*,  \qquad \text{and}  \qquad C_i^* \cap C_j^* = \varnothing, \qquad \forall \; i \neq j.
+\end{align*}
+
+(ii) Let $x A_i x^{-1} \in \mathcal{C}_i$ and $x A_i^* x^{-1} \in \mathcal{C}_i^*$. Since $x A_i x^{-1} \! \setminus \! Z = x A_i^* x^{-1}$, it is quite clear that,
+\begin{align*} x A_i x^{-1} \in \mathcal{C}_i \iff x A_i^* x^{-1} \in \mathcal{C}_i^*.
+\end{align*}
+Thus $|\mathcal{C}_i^*| = |\mathcal{C}_i|$ as desired. \\
+\\
+(iii) Now we define a map $\phi$ by:
+\begin{align*} \phi: \mathcal{C}_i &\longrightarrow G / N_G(A_i),
+\\ \phi(xA_ix^{-1}) &= xN_G(A_i). \tag{$\forall \; x \in G, \; A_i \in \mathfrak{M}$}
+\end{align*}
+
+Clearly $\phi$ is trivially surjective. We now show that it is both well-defined and injective.
+\begin{align*} xN_G(A_i) = yN_G(A_i) &\iff y^{-1}xN_G(A_i) = N_G(A_i) \\
+&\iff y^{-1}x \in N_G(A_i) \\
+&\iff (y^{-1}x)A_i(y^{-1}x)^{-1} = A_i \\
+&\iff y^{-1}xA_ix^{-1}y = A_i \\
+&\iff xA_ix^{-1} = yA_iy^{-1}.
+\end{align*}
+
+Hence $\phi$ is well-defined and injective. This shows that $\phi$ is a bijection proving that $|\mathcal{C}_i| = [G:N_G(A_i)]$. This is a crucial result which shows that the number of maximal abelian subgroups conjugate to $A_i$ is equal to the index of the normaliser of $A_i$ in $G$. \\
+\\
+(iv) This follows directly from parts (i), (ii) and (iii) and \eqref{orderorder}.
+\begin{align*} G \! \setminus \! Z &= \bigcup\limits_{A_i^* \in S} C_i^*,  \qquad \text{and}  \qquad C_i^* \cap C_j^* = \varnothing, \qquad \forall \;  i \neq j, \\
+ |G \! \setminus \! Z| &=  \sum_{A_i^* \in S} |C_i^*| = \sum_{A_i^* \in S} |A_i^*||\mathcal{C}_i^*| = \sum_{A_i^* \in S} |A_i^*||\mathcal{C}_i|
+\\ &= \sum_{A_i^* \in S} |A_i^*| [G:N_G(A_i)].
+\end{align*}
+
+\end{proof}
+
+This theorem proves that the non-central parts of the maximal abelian subgroups form a partition of the non-central part of $G$. This will serve as a powerful tool in decomposing $G$ and counting its elements.
+
+\section{Constructing The Class Equation}
+
+It is necessary to prove the following 2 short lemmas before we proceed further.
+ 
+\begin{lemma}\label{unsureifneeded} $N_G(A) =N_G(A^*)$.
+\end{lemma}
+
+\begin{proof}
+(iii) Let $x \in N_G(A^*)$. Take an arbitary $a \in A = A^* \cup Z$. If $a \in A^*$, then since  $x \in N_G(A^*)$, we have $xax^{-1} \in A^* \subset A$. If $a \in Z$, then $xzx^{-1} = zxx^{-1} = z \in A$. Therefore $x$ is in the normaliser of $A$ and $N_G(A^*) \subset N_G(A)$. \\
+\\
+Conversely, take $y \in N_G(A)$ and $a \in A^*$. $yay^{-1} \in A = A^* \cup Z$. If  $yay^{-1} \in Z$, then
+\begin{align*} yay^{-1} &= z, \tag{some $z \in Z$}
+\\ a &= y^{-1}zy =   y^{-1}yz = z \not \in A^*.
+\end{align*}
+This contradicts the fact that $a \in A^*$. Therefore $yay^{-1} \in A^*$ and $y \in N_G(A^*)$. Since $y$ was chosen arbitrarily we get $N_G(A) \subset N_G(A^*)$ and hence $N_G(A) =N_G(A^*)$.
+
+\end{proof}
+
+\begin{lemma}\label{unsure} $N_G(Q \times Z) = N_G(Q)$.
+\end{lemma}
+
+\begin{proof} 
+
+If $p= 2$ then $Z = I_G$ and the result is trivial. Now assume $p \neq 2$. Thus $|Z| = 2$. Let $x$ and $q_1$ be arbitrarily chosen elements of $N_G(Q)$ and $Q$ respectively.
+\begin{align*} xq_1x^{-1} &= q_2, \tag{for some $q_2 \in Q$}
+\\ xq_1x^{-1}z_1 &= q_2z_1,
+\\ xq_1z_1x^{-1} &= q_2z_1 \in Q \times Z.
+\end{align*}
+Thus any element $x$ which is in $N_G(Q)$ is also in $N_G(Q \times Z)$ so we have $N_G(Q) \subset N_G(Q \times Z)$. \\
+\\
+Let $q_1 z_1$ be an arbitrarily chosen element of $Q \times Z$ such that $q_1 \in Q$ and $z_1 \in Z$. Now let $y$ be an arbitrarily chosen element of $N_G(Q \times Z)$.
+\begin{align*} y q_1 z_1 y^{-1} = q_2 z_2 \in Q \times Z. \qquad (\text{where $q_2 \in Q$ and $z_2 \in Z$}) 
+\end{align*}
+
+Consider now the order of $q_1z_1$ in $G$. Since $p \neq 2$, $Q \cap Z = I_G$ and $|q_1 z_1| = |q_1| |z_1|$. Note that $q_1 z_1$ and $q_2 z_2$ are conjugate in $G$, and thus their orders are equal. This means that $|z_1| = |z_2|$, because otherwise 2 would divide one of them and not the other. Thus $z_1 = z_2$ and,
+\begin{align*} y q_1z_1 y^{-1} &=  q_2z_2 = q_2z_1
+\\ y q_1 y^{-1} z_1 &= q_2z_1,
+\\ y q_1 y^{-1} &= q_2 \in Q
+\end{align*}
+Hence $y \in N_G(Q)$. Furthermore, since $y$ was chosen arbitrarily, any element which is in $N_G(Q \times Z)$ is also in $N_G(Q)$, so $N_G(Q \times Z) = N_G(Q)$ as desired.
+
+\end{proof}
+
+We now start to count the elements of the seperate components of $G$ and use the preceeding 2 theorems to construct what will be an invaluable formula in determining the structure of $G$, something we will call the \textbf{Maximal Abelian Subgroup Class Equation} of $G$. \\
+\\
+First we spilt $\mathfrak{M}$ into the conjugacy classes of it's elements. Theorem \ref{6.8}(iii) tells us that every maximal abelian subgroup is either a cyclic subgroup whose order is relatively prime to $p$ or of the form $Q \times Z$ where $Q$ is a Sylow $p$-subgroup. Let $\mathcal{C}_1, \mathcal{C}_2,...,\mathcal{C}_s, \mathcal{C}_{s+1},..., \mathcal{C}_{s+t}$ (where $s, t \in \mathbb{Z}^+$) denote the conjugacy classes of the cyclic subgroups whose order is relatively prime to $p$. Recall that part (iv) of Theorem \ref{6.8} tells us that $[N_G(A): A] = 1$ or 2. Let $A_i$ be a representative from each $\mathcal{C}_i$ such that,
+\begin{align*} [N_G(A_i) : A_i] &= 1, \tag{for  $i \leq s$} \\[2mm]
+[N_G(A_i) : A_i] &= 2. \tag{for  $s < i \leq s+t$}, \end{align*}
+
+Now let $Q_1$ and $Q_2$ be any two Sylow $p$-subgroups of $G$. By the Second Sylow Theorem, $Q_1$ and $Q_2$ are conjugate to each other in $G$. That is, there exists a $g \in G$ such that $gQ_1g^{-1} = Q_2$.
+
+\begin{align*} gQ_1g^{-1} = Q_2 &\iff gQ_1g^{-1}Z = Q_2Z 
+\\ &\iff gQ_1Zg^{-1} = Q_2Z
+\\ &\iff g(Q_1 \times Z)g^{-1} = (Q_2 \times Z). \tag{by Corollary \ref{directproductZ}}
+\end{align*} 
+
+So $Q_1 \times Z$ and $Q_2 \times Z$ belong to the same conjugacy class, furthermore there is thus only 1 conjugacy class of elements of this form in $\mathfrak{M}$. Let $\mathcal{C}_{Q \times Z}$ denote this conjugacy class and let $Q \times Z$ be a representative from it. The following diagram provides a visual representation of $G$ divided into it's maximal abelian subgroups.
+
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.4]
+
+\draw (0,0) ellipse (22pt and 22pt); 
+
+\draw[dashed][rotate around={308:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={318:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+\draw[rotate around={328:(0,0)},red] (3,0) ellipse (108pt and 41pt); 
+\draw[dashed][rotate around={338:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+
+\draw[dashed][rotate around={301:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt); 
+\draw[dashed][rotate around={296:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt); 
+\draw[dashed][rotate around={291:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt);  
+
+\draw[dashed][rotate around={258:(0,0)},orange] (2,0) ellipse (79pt and 37pt);  
+\draw[rotate around={270:(0,0)},orange] (2,0) ellipse (79pt and 37pt);  
+\draw[dashed][rotate around={282:(0,0)},orange] (2,0) ellipse (79pt and 37pt); 
+
+\draw[dashed][rotate around={198:(0,0)},cyan] (3.4,0) ellipse (120pt and 35pt);  
+\draw[rotate around={203:(0,0)},cyan] (3.4,0) ellipse (120pt and 35pt);
+\draw[dashed][rotate around={208:(0,0)},cyan] (3.4,0) ellipse (120pt and 35pt);
+\draw[dashed][rotate around={213:(0,0)},cyan] (3.4,0) ellipse (120pt and 35pt);
+\draw[dashed][rotate around={218:(0,0)},cyan] (3.4,0) ellipse (120pt and 35pt);
+
+\draw[dashed][rotate around={128:(0,0)},blue] (2,0) ellipse (79pt and 37pt);  
+\draw[rotate around={148:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+\draw[dashed][rotate around={168:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+
+\draw[dashed][rotate around={108:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt); 
+\draw[dashed][rotate around={113:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt); 
+\draw[dashed][rotate around={118:(0,0)},lightgray] (3,0) ellipse (94pt and 37pt); 
+
+\draw[dashed][rotate around={82:(0,0)},teal] (3,0) ellipse (108pt and 41pt);  
+\draw[rotate around={86:(0,0)},teal] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={90:(0,0)},teal] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={94:(0,0)},teal] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={98:(0,0)},teal] (3,0) ellipse (108pt and 41pt);  
+
+\draw[dashed][rotate around={18:(0,0)},green] (3.4,0) ellipse (120pt and 35pt);
+\draw[rotate around={26:(0,0)},green] (3.4,0) ellipse (120pt and 35pt);
+\draw[dashed][rotate around={34:(0,0)},green] (3.4,0) ellipse (120pt and 35pt); 
+
+\node[] at (0,-10) {\resizebox{8cm}{!}{Fig 1: $G$ arranged into it's maximal abelian subgroups}};
+\node[] at (0,0) {\resizebox{.3cm}{!}{$Z$}};
+
+\node[] at (6.1,-4.5) {\resizebox{.5cm}{!}{$A_1$}};
+\node[] at (-0.2,-5.6) {\resizebox{.5cm}{!}{$A_s$}};
+\node[] at (-7.8,-4.1) {\resizebox{.9cm}{!}{$A_{s+1}$}};
+\node[] at (-5.0,3.3) {\resizebox{.9cm}{!}{$A_{s+2}$}};
+\node[] at (0.2,7.6) {\resizebox{.9cm}{!}{$A_{s+t}$}};
+\node[] at (8.0,4.0) {\resizebox{1.1cm}{!}{$Q \times Z$}};
+
+\node[] at (7.9,-6.0) {\resizebox{.5cm}{!}{$\mathcal{C}_1$}};
+\node[] at (-0.2,-7.9) {\resizebox{.5cm}{!}{$\mathcal{C}_s$}};
+\node[] at (-10.9,-4.7) {\resizebox{1.0cm}{!}{$\mathcal{C}_{s+1}$}};
+\node[] at (-8.2,4.9) {\resizebox{1.0cm}{!}{$\mathcal{C}_{s+2}$}};
+\node[] at (-0.1,10.0) {\resizebox{1.0cm}{!}{$\mathcal{C}_{s+t}$}};
+\node[] at (11.6,5.1) {\resizebox{1.2cm}{!}{$\mathcal{C}_{Q \times Z}$}};
+
+\node[scale=1.6, rotate=143,gray] at (6.9,-5.1) { $\Bigg\{$ };
+\node[scale=1.1, rotate=90,gray] at (0,-6.6) { $\Bigg\{$ };
+\node[scale=1.3, rotate=28,gray] at (-8.9,-4.8) { $\Bigg\{$ };
+\node[scale=1.4, rotate=328,gray] at (-6.3,3.9) { $\Bigg\{$ };
+\node[scale=1.2, rotate=270,gray] at (0.0,8.7) { $\Bigg\{$ };
+\node[scale=1.2, rotate=206,gray] at (9.6,4.6) { $\Bigg\{$ };
+
+\end{tikzpicture}
+\end{center}
+
+We can reformulate the counting formula in Theorem \ref{partitiontheorem}(iv) using the notation we have introduced to show that it agrees with the intuitive approach that Fig 1 suggests.
+
+\begin{align*} |G \! \setminus \! Z| = \sum_{A_i^* \in S} |A_i^*| [G:N_G(A_i)] = \sum_{A_i^* \in S} |C_i^*| = |C_{Q \times Z}^*| + \sum_{i=1}^{s+t} |C_i^*|.
+\end{align*}
+
+We are now able to begin to evaluate $G$. Firstly, let $|Z| = e$ and $|G| = eg$. We know well by now that $e = 1$ or 2 depending on whether $p$ equals 2 or not, and by Lagrange's Theorem, the order of a subgroup divides the order of the group, so $e$ divides $|G|$ since $Z < G$. \\
+\\
+We consider the cyclic case first. Again, by Lagrange's Theorem, since $Z$ is a subgroup of each $A_i$, $e$ divides $|A_i|$. So set $|A_i| = eg_i$. Since $Z \notin \mathfrak{M}$, each $A_i$ is therefore strictly larger than $Z$ and so each $g_i$ is an integer greater than or equal to 2. \\
+\\
+To determine the order of each $C_i$, we return to the set $\mathfrak{M}^*$. The size of one representative of each class is,
+\begin{align*} |A_i^*| = |A_i \! \setminus \! Z| = eg_i-e = e(g_i-1). \end{align*}
+The number of $A_i^*$ in each conjugacy class $\mathcal{C}_i$ for $i \leq s$ is thus,
+\begin{align*} |\mathcal{C}_i^*| = |\mathcal{C}_i| = [G:N_G(A_i)] = \frac{|G|}{|A_i|} = \frac{eg}{eg_i} = \frac{g}{g_i}. \end{align*}
+\\
+Therefore the total number of elements of $G$ in the noncentral part of $C_i$ for $i \leq s$ is,
+\begin{align} \label{classeq1of3} \sum_{i=1}^{s} |C_i^*| = \sum_{i=1}^{s} |A_i^*| |\mathcal{C}_i^*| = \sum_{i=1}^{s} \frac{eg(g_i-1)}{g_i}.
+\end{align}
+\\
+The number of $A_i^*$ in each conjugacy class $\mathcal{C}_i$ for $s < i \leq s+t$ is thus,
+\begin{align*} |\mathcal{C}_i^*| = |\mathcal{C}_i| = [G:N_G(A_i)] = \frac{|G|}{2|A_i|} = \frac{eg}{2eg_i} = \frac{g}{2g_i}. \end{align*}
+\\
+Therefore the total number of elements of $G$ in the noncentral part of $C_i$ for $s < i \leq s+t$ is,
+\begin{align}\label{classeq2of3} \sum_{i=s+1}^{s+t} |C_i^*| = \sum_{i=s+1}^{s+t} |A_i^*| |\mathcal{C}_i^*| = \sum_{i=s+1}^{s+t} \frac{eg(g_i-1)}{2g_i}.
+\end{align}
+We next determine the order of $C_{Q \times Z}$. Let $|Q| = q$. If $p \nmid |G|$ then $q=1$ and if $p = 0$, then we consider a Sylow $p$-subgroup to simply be $I_G$. So $q$ is always at least 1. Since $Z < K$, we can let $|K| = ek$. Observe that if $K \in \mathfrak{M}$, then by Theorem \ref{6.8}(v), $K = A_i$ for some $0 < i \leq t$ and $k = g_i$. Recall that $N_G(Q) = QK$ and so,
+\begin{align*} |N_G(Q \times Z)^*| &= |N_G(Q \times Z)|  \tag{by Lemma \ref{unsureifneeded}}
+\\ &= |N_G(Q)| \tag{by Lemma \ref{unsure}}
+\\ &= |QK| = eqk.
+\end{align*}
+
+Again we count the size and number of these maximal abelian groups.
+\begin{align*} |(Q \times Z)^*| = |QZ| - |Z| = e(q-1).
+\end{align*}
+
+Since there is only one conjugacy class of $Q \times Z$, the number of $(Q \times Z)^*$ in $\mathfrak{M}^*$ is thus,
+\begin{align*} |\mathcal{C}_{Q \times Z}^*| =  |\mathcal{C}_{Q \times Z}| =  [G: N_G(Q \times Z)] = \frac{|G|}{|N_G(Q \times Z)^*|} = \frac{eg}{eqk} = \frac{g}{qk}.
+\end{align*}
+
+Therefore the total number of elements of $G$ in the noncentral parts of each $Q \times Z$ is,
+\begin{align} \label{classeq3of3} |C_{Q \times Z}^*| = |(Q \times Z)^*| |\mathcal{C}_{Q \times Z}^*| = \frac{eg(q-1)}{qk}.
+\end{align}
+
+We now sum together (\ref{classeq1of3}), (\ref{classeq2of3}) and (\ref{classeq3of3}) to create the \textbf{Maximal Abelian Subgroup Class Equation} of $G$.
+
+\begin{align}\label{classeq} |G \! \setminus \! Z| &= |C_{Q \times Z}^*| + \sum_{i=1}^{s+t} |C_i^*|, \nonumber \\
+|G \! \setminus \! Z| &= |(Q \times Z)^*| |\mathcal{C}_{Q \times Z}^*| + \sum_{i=1}^{s} |A_i^*| |\mathcal{C}_i^*| + \sum_{i=s+1}^{s+t} |A_i^*| |\mathcal{C}_i^*|, \nonumber \\
+eg - e &= \frac{eg(q-1)}{qk} + \sum_{i=1}^{s} \frac{eg(g_i-1)}{g_i} + \sum_{i=s+1}^{s+t} \frac{eg(g_i-1)}{2g_i}, \nonumber \\
+1 &= \frac{1}{g} + \frac{q-1}{qk} + \sum_{i=1}^{s} \frac{g_i-1}{g_i} + \sum_{i=s+1}^{s+t} \frac{g_i-1}{2g_i}.
+\end{align}
+
+Since $g,k,q \in \mathbb{Z}^+$ this implies that,
+\begin{align*} \frac{1}{g} > 0 \quad \text{and} \quad \frac{q-1}{qk} \geq 0.
+\end{align*} 
+
+Also, since $g_i \geq 2$ for $1 \leq i \leq s + t$, we have,
+\begin{align*} \frac{g_i-1}{g_i} \geq \frac{1}{2}, \quad \sum_{i=1}^{s} \frac{g_i-1}{g_i} \geq \frac{s}{2} \quad \text{and} \quad \sum_{i=s+1}^{s+t} \frac{g_i-1}{2g_i} \geq \frac{t}{4}.
+\end{align*}
+
+Thus we can find a lower bound for (\ref{classeq}) which limits the possible number of conjugacy classes somewhat,
+\begin{align*} 1 > \frac{s}{2} + \frac{t}{4}.
+\end{align*}
+
+There are only 6 possible different pairs of values which $s$ and $t$ can take: \vspace{3mm}
+
+\begin{center}
+\centering
+  \begin{tabular}{||P{1.5cm}||P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}||}
+\hline
+Case & I & II & III & IV & V & VI \\ [1ex]
+\hline\hline
+ $s$ & 1 & 1 & 0 & 0 & 0 & 0 \\ [1ex]
+\hline
+$t$ & 0 & 1 & 0 & 1 & 2 & 3 \\ [1ex]
+ \hline
+\end{tabular}
+\end{center}
+\vspace{2mm}
+
+Each case will be examined individually in the next chapter.
+
+\chapter{Dickson's Classification Theorem}
+
+\section{Five Lemmas}
+
+Before we detemine the structure of $G$ in each of the 6 cases, it is necessary to prove a number of lemmas which will be used.
+
+\begin{lemma}\label{case2q}  Let $H$ be a proper subgroup of a $p$-group $G$. Then $H \subsetneq N_G(H)$.
+\end{lemma}
+
+\begin{proof} Let $S$ denote the set of left cosets of $H$ in $G$. That is,
+\begin{align*} S = \{ x H : x \in G \}, \quad \text{and} \;\;\; |S| = [G : H] = p^k. \quad \text{ (for some $k \geq 1$)}
+\end{align*}
+
+Consider the action of $H$ on $S$ by left multiplication. We calculate the stabiliser of $xH \in S$ in $H$.
+\begin{align*} \text{Stab}(xH) &= \{ y \in H : yxH = xH \}
+\\ &= \{ y \in H : x^{-1}yx \in H \}.
+\end{align*}
+
+If $x \in H$ then $x^{-1}yx \in H$ for all $y \in H$. Thus the Stab$(xH) = H$ and by the Orbit-Stabiliser Theorem,
+\begin{align*} |\text{Orb}(xH)| = [H : \text{Stab}(xH)] = 1.
+\end{align*}
+
+Observe that,
+\begin{align*} S = \bigcup\limits_{xH \in S} \text{Orb}(xH),
+\end{align*}
+
+where the orbits are pairwise disjoint. Now since $p$ divides $|S|$, $p$ divides the sum of all the orbit sizes. Furthermore, since each orbit size is 1 or a multiple of $p$, there must be at least $p$ elements of $S$ which have an orbit of 1. In particular, there exists an $x_1 H \in S$ which has an orbit of 1 and $x_1 \not \in H$. That is,
+\begin{align*} y x_1 H &= x_ 1 H, \tag{$\forall y \in H$}
+\\ x_1^{-1} y x_1 &\in H,
+\\ x_1^{-1} H x_1 &\subset H,
+\\ x_1 &\in N_G(H) \! \setminus \! H. \qedhere
+\end{align*} 
+
+\end{proof}
+
+\begin{lemma}\label{caseVlemma}
+Let $Q$ be a Sylow $p$-subgroup and $K$ a maximal abelian subgroup of $G$ such that $N_G(Q) = QK$ and $Q \cap K = \{ I_G \}$. If $[N_G(K) : K] = 2$, then $Q$ is not a normal subgroup of $G$.
+
+\end{lemma}
+
+\begin{proof} The approach here is proof by contradiction, so we begin by assuming that $Q \vartriangleleft G$. Thus $N_G(Q) = G$ and $N_G(K) \subset N_G(Q)$. Consider the natural homomorphism of $N_G(Q)$ onto $N_G(Q)/Q$,
+\begin{align*} \phi : N_G(Q) &\longrightarrow N_G(Q)/Q, \\
+\phi(x) &= xQ, \\
+ker(\phi) &= \{ x \in N_G(Q) : \phi(x) = I_G Q \} = Q.
+\end{align*}
+
+Let $\phi '$ be the restiction of $\phi$ to $N_G(K)$: 
+
+\begin{equation*} \phi ' = \left.\phi\right|_{N_G(K)} : N_G(K) \longrightarrow N_G(Q)/Q.
+\end{equation*}
+
+Thus $ker(\phi ') = ker(\phi) \cap N_G(K) = Q \cap N_G(K)$. By the 1st Isomorphism Theorem,
+\begin{align*} \text{Im}(\phi ') &\cong N_G(K) / ker(\phi '), \\
+N_G(Q)/Q &\cong N_G(K) / (Q \cap N_G(K)), \\
+K &\cong N_G(K) / (Q \cap N_G(K)) \tag{$N_G(Q) = QK$}, \\
+|Q \cap N_G(K)| &= [N_G(K) : K] = 2. \tag{by assumption}
+\end{align*}
+
+So $2$ divides $|Q|$, which implies that $2 \nmid |K|$ since $Q \cap K = \{ I_G \}$. Moreover, $|Q \cap N_G(K)|$ and $|K|$ are relatively prime. \\
+\\
+Take $a \in ker(\phi') = Q \cap N_G(K)$ and $b \in N_G(K)$.
+\begin{align*} \phi'(bab^{-1}) &= \phi'(b)\phi'(a)\phi'(b^{-1}) \\
+&= \phi'(b)(I_G Q) \phi'(b^{-1}) \\
+&=  \phi'(b)\phi'(b^{-1})(I_G Q) =  I_G Q. \end{align*}
+
+Thus $bab^{-1} \in ker(\phi') = Q \cap N_G(K)$ and so $Q \cap N_G(K) \vartriangleleft N_G(K)$. \\
+\\
+Now let $x \in Q \cap N_G(K)$ and $y \in K$. Notice that both $x$ and $y$ are elements of $N_G(K)$,
+
+\begin{align*} xyx^{-1}y^{-1} &=  (xyx^{-1})y^{-1} \in K, \tag{since $K \vartriangleleft N_G(K)$} \\
+xyx^{-1}y^{-1} &= x(yx^{-1}y^{-1}) \in Q \cap N_G(K), \tag{since $Q \cap N_G(K) \vartriangleleft N_G(K)$} \\
+xyx^{-1}y^{-1} &\in K \cap ( Q \cap N_G(K)) \\
+&= I_G, \tag{since gcd$(|Q \cap N_G(K)|,|K|) = 1$} \\
+xy &= yx. \\
+\end{align*}
+
+Therefore $(Q$ $\cap$ $N_G(K)) \times K$ is an abelian subgroup of which $K$ is a proper subgroup. This contradicts the fact that $K$ is a maximal abelian subgroup, thus $Q$ is not a normal subgroup of $G$.
+
+\end{proof}
+
+\begin{lemma}\label{subfield} Let $p$ be the prime characteristic of $F$ and let $q= p^k$ for some $k>0$. Set,
+\begin{align}\label{RRR} R = \{ \lambda \in F : \lambda^q -\lambda = 0 \}.
+\end{align}
+Then $R$ is a subfield of $F$.
+\end{lemma}
+
+\begin{proof} Since $R$ is a subset of $F$ it suffices to show that the following 3 criteria are met: \\
+\\
+(i) $0, 1 \in R$. \\
+(ii) If $\lambda_1, \lambda_2 \in R$, then $\lambda_1 - \lambda_2 \in R$. \\
+(iii) If $\lambda_1, \lambda_2 \in R$ and $\lambda_1 \neq 0 \neq \lambda_2$, then $\lambda_1 \lambda^{-1}_2 \in R$. \\
+\\
+We see immediately that (i) is satified. Since $p$ is the characteristic of $F$, any coeffiecients which are a multiple of $p$ vanish. We get,
+\begin{align*} (\lambda_1 - \lambda_2)^q = (\lambda^p_1 - \lambda^p_2)^{p^{k-1}} = ... = \lambda^q_1 - \lambda^q_2 = \lambda_1 - \lambda_2.
+\end{align*}
+
+Thus $\lambda_1 - \lambda_2 \in R$ and (ii) is also satisifed. Finally observe that if $\lambda_2$ is a non-zero element of $R$, then $\lambda^{-1}_2 = \lambda^{-q}_2$ and,
+\begin{align*} (\lambda_1 \lambda^{-1}_2)^q = \lambda^q_1 \lambda^{-q}_2 = \lambda_1 \lambda^{-1}_2.
+\end{align*}
+
+So $\lambda_1 \lambda^{-1}_2 \in R$ and $R$ is a subfield of $F$.
+
+\end{proof}
+
+Each finite field is uniquely determined up to isomorphism by the number of elements it contains \cite[p.227]{stewart}. Since the $R$ defined in \eqref{RRR} has $q$ elements, from now on when we use the notation $\mathbb{F}_q$ to denote a field of $q$ elements, we shall actually mean,
+\begin{align}\label{subfield} \mathbb{F}_q = R \subset F.
+\end{align}
+
+\begin{lemma}\label{ordersl2q} Let $\mathbb{F}_q$ be the field of $q$ elements, where $q$ is the power of a prime. The order of $GL(2,\mathbb{F}_q)$ is $(q^2-1)(q^2-q)$ and the order of $SL(2,\mathbb{F}_q)$ is $q(q^2-1)$.
+\end{lemma}
+
+\begin{proof} In order to prove this, we again take a geometric viewpoint. Recall that $GL(2,\mathbb{F}_q)$ is the group of 2 x 2 invertible matrices over $\mathbb{F}_q$ under ordinary matrix multiplication. The order of $GL(2,\mathbb{F}_q)$ is thus equal to the number of ordered pairs $\{u,v\}$ of linearly independent vectors in a 2-dimensional vector space over $\mathbb{F}_q$. \\
+\\
+There are clearly $q^2$ different vectors in the 2-dimensional vector space over $\mathbb{F}_q$. The only restriction on the first vector $u$, is that it must be non-zero, so there are $(q^2 - 1)$ choices for $u$. To ensure the second vector $v$ is linearly independent of $u$, it must not be of the form $\alpha u$, where $\alpha \in \mathbb{F}_q$. Since there are $q$ choices for $\alpha$, there are $(q^2-q)$ choices for $v$. \\
+\\
+Thus the order of $GL(2,\mathbb{F}_q)$ is the product of the number of choices of $u$ and the number of choices of $v$, that is, $(q^2-1)(q^2-q)$ as required. Now consider the map $\phi$ defined as,
+\begin{align*} \phi : GL(2,\mathbb{F}_q) \longrightarrow \mathbb{F}^*_q, \qquad \text{where} \quad \! \! \phi(x) = \text{det}(x), \quad \forall \; x \in GL(2,\mathbb{F}_q).
+\end{align*}
+
+Next we determine the kernel of $\phi$.
+\begin{align*} ker(\phi) &= \{  GL(2,\mathbb{F}_q) : \text{det}(x) = 1 \} = SL(2,\mathbb{F}_q).
+\end{align*}
+
+We show that $\phi$ is a group homomorphism. Take $x,y \in GL(2,\mathbb{F}_q)$,
+\begin{align*} \phi(xy) = \text{det}(xy) = \text{det}(x) \text{det}(y) = \phi(x) \phi(y).
+\end{align*}
+
+Clearly $\phi$ is surjective, since $\alpha \in \mathbb{F}^*_q$ is the determinant of $\begin{bmatrix} \alpha & 0 \\ 0 & 1 \end{bmatrix} \in GL(2,\mathbb{F}_q)$. Therefore by the First Isomorphism Theorem,
+\begin{align*} GL(2,\mathbb{F}_q) / SL(2,\mathbb{F}_q) \cong \mathbb{F}^*_q.
+\end{align*}
+Thus,
+\begin{align*} |SL(2,\mathbb{F}_q)| =  \frac{|GL(2,\mathbb{F}_q)|}{|\mathbb{F}^*_q|} = \frac{(q^2-1)(q^2-q)}{q-1} = q(q^2-1).
+\end{align*}
+
+\end{proof}
+
+\begin{lemma}\label{normalquotient} Let $N$ be a normal subgroup of a group $G$ and let $H$ be a subgroup of $G$ which contains $N$.Then,
+\begin{align*} H / N \vartriangleleft G / N \iff H \vartriangleleft G
+\end{align*} 
+\end{lemma}
+
+\begin{proof} If $H \vartriangleleft G$, then it follows from the Third Isomorphism Theorem that $ H / N \vartriangleleft G / N$. Conversely, assume that $H / N$ is normal in $G / N$. Let $x$ be an arbitrary element of $G$ and $h$ be an arbitrary element of $H$. Since $H / N$ is normal in $G / N$ we have,
+\begin{align*} x h x^{-1}N = (xN)(hN)(x^{-1}N) = (xN)(hN)(xN)^{-1} \in H / N.
+\end{align*}
+Thus $x h x^{-1} \in H$. Since $x$ and $h$ were chosen arbitrarily, we have that $H \vartriangleleft G$.
+
+\end{proof}
+
+\section {The Six Cases}
+
+We now address individually the 6 possible combinations of $s$ and $t$ in \eqref{classeq} and determine the structure of $G$ in each case. \\
+\\
+\textbf{Case I}:\\
+\\
+Claim: \textit{In this case, the Sylow $p$-subgroup $Q$ is different from $G$ and is an elementary abelian normal subgroup of $G$. The factor group $G/Q$ is a cyclic group whose order is relatively prime to $p$.} \\
+\\
+\begin{proof} Here, $s = 1$ and $t = 0$. Equation (\ref{classeq}) simplifies to:
+\begin{align}\label{case1a} 1 &= \frac{1}{g} + \frac{q-1}{qk} + \frac{g_1-1}{g_1}, \nonumber
+\\ 1 &= \frac{1}{g} + \frac{1}{k} - \frac{1}{qk}  + 1 - \frac{1}{g_1}, \nonumber
+\\ \frac{1}{qk}  + \frac{1}{g_1} &= \frac{1}{g} + \frac{1}{k}.
+\end{align}
+\textbullet \space \textbf{Case Ia:} $\pmb{q = 1}$. Here we have $Q = I_G$ and is trivially an elementary abelian normal subgroup of $G$. Equation (\ref{case1a}) gives $g=g_1$, thus $G/Q = G = A_1$, which indeed is a cyclic group whose order is relatively prime to $p$. \\
+\\
+\textbullet \space \textbf{Case Ib:} $\pmb{q > 1}$. If $k=1$ then (\ref{case1a}) gives,
+\begin{align*} \frac{1}{q}  + \frac{1}{g_1} &= \frac{1}{g} + 1 \; > \; 1.
+\end{align*}
+But since both $1/q$ and $1/g_i$ are at most $1/2$ each, this is a contradiction. Thus $k > 1$. This means that $|K| = ek > e = |Z|$, so $k = g_1$ by Theorem \ref{6.8}(v). Equation (\ref{case1a}) now gives $qk = g$.
+\begin{align*} |G| = eg = eqk = |N_G(Q)|.
+\end{align*}
+Thus $G = N_G(Q)$ and so $Q \vartriangleleft G$. Therefore $Q \neq G$ and is an elementary abelian normal subgroup of $G$. Also,
+\begin{align*} G/Q = N_G(Q)/Q \cong K = A_1.
+\end{align*}
+Thus $G/Q$ is a cyclic group whose order is relatively prime to $p$.
+
+\end{proof}
+
+\textbf{Case II}:\\
+\\
+Claim: \textit{The order of $G$ is relatively prime to $p$ and either $G \cong SL(2,3)$ or $G$ is the group of order $4n$, where $n$ is odd, defined by the presentation:}
+\begin{align*} \langle \, x,y \, | \, x^n = y^2, \, yxy^{-1} = x^{-1} \, \rangle. \\
+\end{align*}
+\begin{proof} Here, $s = 1 = t$. Equation (\ref{classeq}) simplifies to:
+\begin{align}\label{case2a} 1 &= \frac{1}{g} + \frac{q-1}{qk} + \frac{g_1-1}{g_1} +  \frac{g_2-1}{2g_2}, \nonumber
+\\ 1 &= \frac{1}{g} + \frac{q-1}{qk} + 1 - \frac{1}{g_1} + \frac{1}{2} - \frac{1}{2g_2}, \nonumber
+\\ \frac{1}{g_1}  + \frac{1}{2g_2} &= \frac{1}{2} + \frac{1}{g} + \frac{q-1}{qk}.
+\end{align}
+
+First assume that $q>1$. This means $(q-1)/qk \geq 1/2k$ and consequently we bound (\ref{case2a}) from below:
+\begin{align*} \frac{1}{2g_2} &= \frac{1}{2} - \frac{1}{g_1} + \frac{1}{g} + \frac{q-1}{qk} \; > \; \frac{1}{2k}.
+\end{align*}
+
+Thus $k > g_2 \geq 2$. So $K \in \mathfrak{M}$ and $k=g_i$ for some $i$. Since it is strictly greater than $g_2$, we have $k=g_1$. Equation (\ref{case2a}) now becomes
+\begin{align*} \frac{1}{g_1}  + \frac{1}{2g_2} \; &= \; \frac{1}{2} + \frac{1}{g} + \frac{q-1}{qg_1},
+\\ \frac{1}{g_1}  + \frac{1}{2g_2} \; &> \; \frac{1}{2} + \frac{1}{2g_1},
+\\ \frac{1}{4} + \frac{1}{4} \; \geq \; \frac{1}{2g_1}  + \frac{1}{2g_2} \; &> \; \frac{1}{2}.
+\end{align*}
+
+This contradiction disproves the assumption that $q > 1$, so we have that $q = 1$. This means that $Q$, a Sylow $p$-subgroup of $G$, is simply the identity element and so $|G|$ is relatively prime to $p$. Also, Equation (\ref{case2a}) now reduces to:
+\begin{align}\label{case2b} \frac{1}{g_1}  + \frac{1}{2g_2} &= \frac{1}{2} + \frac{1}{g}.
+\end{align}
+
+If $g_1 \geq 4$ we get
+\begin{align*} \frac{1}{2g_2} &= \frac{1}{2} + \frac{1}{g} - \frac{1}{g_1} \; > \; \frac{1}{4}.
+\end{align*}
+
+Since $g_2 > 1$  this gives a contradiction and thus $g_1 < 4$. We now have two seperate cases to consider.\\
+\\
+\textbullet \space \textbf{Case IIa:} $\pmb{g_1 = 2}$. Equation (\ref{case2b}) becomes
+\begin{align*} \frac{1}{2g_2} &= \frac{1}{g}, \; \; \Longrightarrow \; \; g = 2g_2.
+\end{align*}
+
+If $e=1$, then $p=2$. Also since $q=1$, 2 does not divide $|G|$, but $|G| = eg = e2g_2$ which is a contradiction. So $e=2$ and $p \neq 2$. We now have:
+\begin{align*} |N_G(A_2)| &= 2|A_2|  = 2eg_2 = eg = |G|,  \tag{since $s+t = 2$}
+\\ |N_G(A_1)| &= |A_1| = eg_1 = 4. \tag{since $s=1$} 
+\end{align*}
+Thus $G = N_G(A_2)$, that is $A_2 \vartriangleleft G$.\\
+\\
+By Corollary \ref{5thsylow}, $A_1$ is contained in a Sylow 2-subgroup of $G$, call it $S$. If $S$ is strictly larger than $A_1$, then by Lemma \ref{case2q}, $A_1 \subsetneq N_S(A_1) \subset N_G(A_1)$. Since $A_1 = N_G(A_1)$ we conclude that $A_1$ is a Sylow 2-subgroup of $G$. This means that 8 does not divide $|G| = 4g_2$ and so $g_2 = n$, where $n$ is odd. \\
+\\
+Since $A_2$ is cyclic it is generated by a single element, so let $A_2 = \langle x \rangle$ and thus $x^{2n}= I_G$.  Recall that because $[N_G(A_2): A_2] = 2$, Theorem \ref{6.8}(iv) tells us that there exists a $y \in N_G(A_2) \! \setminus \! A_2$ such that $yxy^{-1} = x^{-1}$. \\
+\\
+Recall from Chapter 2 that the number of $A_i$ in each conjugacy class $\mathcal{C}_i$ is equal to $[G : N_G(A_i)]$ so,
+\begin{align*}  |\mathcal{C}_2| = [G:N_G(A_2)] &= 1.
+\end{align*}
+
+Due to the fact that $y$ belongs to some maximal abelian subgroup of $G$, and since $y \not \in A_2$ and $|\mathcal{C}_2| = 1$, it must be that $y$ belongs to $A_1$ or one of its conjugate subgroups. Thus $y$ has an order which divides $|A_1| = 4$ and since the only elements of order 1 and 2 lie in $Z$, the order of $y$ is 4. Furthermore, both $x^n$ and $y^2$ have order 2. Recalling that $G$ has at most 1 element of order 2, this gives the relation $x^n = y^2$. \\ 
+\\
+Let $H$ be the group generated by $x$ and $y$ and the above relations:
+\begin{align*} H = \langle \, x,y \, | \, x^n = y^2, \, yxy^{-1} = x^{-1} \rangle.
+\end{align*}
+
+Notice that the second relation gives that $y x^n y^{-1} = x^{-n}$, so
+\begin{align*} x^{-n} = y x^n y^{-1} = y y^2 y^{-1} = y^2 = x^n.
+\end{align*}
+
+This shows that $y^4 = x^{2n} = I_G$ and that $H$ is finite. Moreoever,
+\begin{align*} H = \{ x^k, x^ky :  0 < k \leq 2n \}.
+\end{align*}
+
+ Thus $|H| = 4n = |G|$ and $H = G$. \\
+\\
+\textbullet \space \textbf{Case IIb:} $\pmb{g_1 = 3}$.  Equation (\ref{case2b}) becomes
+\begin{align*} \frac{1}{2g_2} &= \frac{1}{6} + \frac{1}{g} \; > \; \frac{1}{6}.
+\end{align*}
+Therefore $g_2 = 2$ and $g = 12$. Again, since $q=1$ and 2 divides $|G|$, we have $p \neq 2$ and so $e = 2$. Thus we have,
+\begin{align*} |G| = eg = 24, \qquad |A_1| = eg_1 = 6, \qquad |A_2| = eg_2 = 4.
+\end{align*}
+Again we determine the number of maximal abelian subgroups in each conjugacy class.
+\begin{align*}  |\mathcal{C}_1| = [G:N_G(A_1)] &= \frac{|G|}{|A_1|} = \frac{24}{6} = 4, 
+\\[1.5ex] |\mathcal{C}_2| = [G:N_G(A_2)] &= \frac{|G|}{2|A_2|} = \frac{24}{8} = 3.
+\end{align*}
+
+\newpage
+The figure below shows $G$ divided into it's maximal abelian subgroups:
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.4]
+
+\draw[dashed][rotate around={0:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={20:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+\draw[rotate around={40:(0,0)},red] (3,0) ellipse (108pt and 41pt); 
+\draw[dashed][rotate around={60:(0,0)},red] (3,0) ellipse (108pt and 41pt);  
+
+\draw[dashed][rotate around={180:(0,0)},blue] (2,0) ellipse (79pt and 37pt);  
+\draw[rotate around={210:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+\draw[dashed][rotate around={240:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+
+\draw (0,0) ellipse (22pt and 22pt); 
+
+\node[] at (0,-8) {\resizebox{9cm}{!}{Fig 2: The elements of $G$ arranged into maximal abelian subgroups.}};
+\node[] at (0,0) {\resizebox{.3cm}{!}{$Z$}};
+\node[] at (5.7,4.9) {\resizebox{.5cm}{!}{$A_1$}};
+\node[] at (-4.6,-2.8) {\resizebox{.5cm}{!}{$A_2$}};
+\node[] at (8.6,5) {\resizebox{.5cm}{!}{$\mathcal{C}_1$}};
+\node[] at (-6.8,-3.6) {\resizebox{.5cm}{!}{$\mathcal{C}_2$}};
+
+\node[scale=1.8, rotate=30,gray] at (-5.4,-3.2) { $\Bigg\{$ };
+\node[scale=2, rotate=210,gray] at (7.3,4) { $\Bigg\{$ };
+
+\node[scale=2, black] at (-.45,0) {.};
+\node[scale=2, black] at (.45,0) {.};
+
+\node[scale=3, red] at (4,4) {.};
+\node[scale=3, red] at (4.7,4.2) {.};
+\node[scale=3, red] at (4.8,3.3) {.};
+\node[scale=3, red] at (3.9, 3.2) {.};
+\node[scale=2, red] at (4.8, 1.7) {.};
+\node[scale=2, red] at (5.2, 2.3) {.};
+\node[scale=2, red] at (5.9, 2.2) {.};
+\node[scale=2, red] at (5.6, 1.5) {.};
+\node[scale=2, red] at (6, 0.2) {.};
+\node[scale=2, red] at (5.5, -0.5) {.};
+\node[scale=2, red] at (4.6, -0.8) {.};
+\node[scale=2, red] at (3.7, -1) {.};
+\node[scale=2, red] at (3, 5.2) {.};
+\node[scale=2, red] at (2.2,4.5) {.};
+\node[scale=2, red] at (1.5, 4.0) {.};
+\node[scale=2, red] at (0.9, 3.3) {.};
+
+\node[scale=3, blue] at (-3.5,-1.6) {.};
+\node[scale=3, blue] at (-3.2,-2.4) {.};
+\node[scale=2, blue] at (-3.6,0.4) {.};
+\node[scale=2, blue] at (-2.4,0.6) {.};
+\node[scale=2, blue] at (-2,-3.3) {.};
+\node[scale=2, blue] at (-1.0,-2.9) {.};
+
+\end{tikzpicture}
+\end{center}
+
+Let $A_2 = \langle x \rangle$. By Theorem \ref{6.8}(iv), there is an element $y \in N_G(A_2) \! \setminus \! A_2$ such that $y x y^{-1} = x^{-1}$. Since $N_G(A_2)$ has order 8, the order of $y$ must divide 8. The order of $y$ cannot be 8 since $N_G(A_2)$ is not cyclic and the only elements with order 1 or 2  are found in $Z$, thus $y$ has order 4. By the uniqueness of the element of order 2, we have $x^2 = y^2$. So
+\begin{align*} N_G(A_2) = \langle x, y \; | \; x^2 = y^2, y x y^{-1} = x^{-1} \rangle.
+\end{align*}
+For simplicity let $N = N_G(A_2)$ . Since $|A_1| = 6$, the only elements in $C_1$ with order $2^k$ are those in $Z$, so every element of $G$ with order $2^k$ must belong to $C_2$. Since $C_2$ has order 8 it is equal to $N$ because each element of $N$ has order $2^k$. Furthermore, $N$ is thus a unique Sylow $2$-subgroup of $G$ and by Corollary \ref{4thsylow}, we have $N \vartriangleleft G$. \\
+\\
+Now consider the quotient group $G / N$, that is the set of left (or right) cosets of $N$ in $G$.
+\begin {align*} G / N = \{ N, rN, r^2N \} \cong \langle r \rangle \cong \mathbb{Z}_3,
+\end{align*}
+where $r$ is some element of $G\! \setminus \! N$ with order 3. Without loss of generality we may regard $r$ to be a generator of $H$, where $H$ is the cyclic subgroup of $A_1$ of order 3. \\
+\\
+Let $H$ act on $N$ by conjugation. Since $|H| = 3$ the orbit of $x \in N$ has size 1 or 3.
+\begin{align*} \text{Orb}(x) =  \{ r^k x r^{-k} : r^k \in H \}.
+\end{align*}
+
+Since $H$ is not contained in the centraliser of $x$ we conclude that the orbit of $x$ has size 3. Let $A_2, A'_2$ and $A''_2$ be the 3 elements of $\mathcal{C}_2$. Without loss of generality we may assume $y \in A'_2$ and consequently $xy \in A''_2$. Using the two relations between $x$ and $y$ we observe that,
+\begin{align*} (xy)^{-1} = y^{-1} x^{-1} = y^{-1} (y x y^{-1}) = x y^{-1} = x^{-1} x^2 y^{-1} = x^{-1} y = yx
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.8]
+
+\draw[rotate around={60:(0,0)},blue] (2,0) ellipse (79pt and 37pt);  
+\draw[rotate around={90:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+\draw[rotate around={120:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+
+\draw (0,0) ellipse (22pt and 22pt); 
+
+\node[] at (0,-2) {\resizebox{9cm}{!}{Fig 3: The elements of $N$ arranged into maximal abelian subgroups.}};
+\node[] at (0,0) {\resizebox{.3cm}{!}{$Z$}};
+\node[] at (-2.5,4.7) {\resizebox{.5cm}{!}{$A_2$}};
+\node[] at (0.0,5.4) {\resizebox{.5cm}{!}{$A'_2$}};
+\node[] at (2.3,4.8) {\resizebox{.5cm}{!}{$A''_2$}};
+
+\node[scale=3, black] at (-.45,0) {.};
+\node[scale=3, black] at (.45,0) {.};
+
+\node[scale=3, blue] at (-1.7, 3.3) {.};
+\node[] at (-1.7,3.6) {\resizebox{.22cm}{!}{$x$}};
+\node[scale=3, blue] at (-2.2, 2.5) {.};
+\node[] at (-2.2,2.9) {\resizebox{.6cm}{!}{$x^{-1}$}};
+\node[scale=3, blue] at (-0.5,3.8) {.};
+\node[] at (0.5,4.2) {\resizebox{.21cm}{!}{$y$}};
+\node[scale=3, blue] at (0.5,3.8) {.};
+\node[] at (-0.25,4.3) {\resizebox{.6cm}{!}{$y^{-1}$}};
+\node[scale=3, blue] at (1.7,3.3) {.};
+\node[] at (1.7,3.6) {\resizebox{.4cm}{!}{$xy$}};
+\node[scale=3, blue] at (2.2,2.5) {.};
+\node[] at (2.2,2.8) {\resizebox{.4cm}{!}{$yx$}};
+
+\end{tikzpicture}
+\end{center}
+
+The elements of $Z$ are fixed points under this group action and the remaining 6 elements of $N$ form 2 orbit cycles of order 3, with each cycle containing exactly one element from the noncentral parts of $A_2, A'_2$ and $A''_2$ in some order. If $y$ inverts $x$, then $y$ inverts all powers of $x$ including $x^{-1}$. Also, if $y$ inverts $x$, then $y^{-1}$ inverts $x^{-1}$ and thus inverts $x$ also. So the 2 relations we have established between $x$ and $y$ actually hold for any pair of elements of $N \! \setminus \! Z$ which belong to different elements of $\mathfrak{M}$. Therefore without loss of generality, we may assume that $x$ and $y$ are in the same orbit cycle and that $r x r^{-1} = y$. Fig 3 shows that there are only 2 elements which could complete this cycle, $xy$ and $yx$. If $r y r^{-1} = xy$, then we have the following 3 relations on $G$.
+\begin{align}\label{3rel} r x r^{-1} = y, \qquad r y r^{-1} = xy, \qquad r xy x^{-1} = x.
+\end{align}
+
+Otherwise $r y r^{-1} = yx$. In this case, consider the orbit of $x$ under conjugation by $r^2$ instead. This gives the same orbit cycle but in the opposite direction:
+\begin{align*} r^2 x r^{-2} = yx, \qquad r^2 yx r^{-2} = y, \qquad r^2 y r^{-2} = x.
+\end{align*}
+Observe that $x(yx) = x (x^{-1} y) = y$. Thus without loss of generality we can rename $r^2$ as $r$, $yx$ as $y$ and $y$ as $xy$. Notice that this now gives the same relations as in \eqref{3rel}. Since $x$ and $y$ generate a group of order 8 and $r$ has order 3, the group given by the following presentation has order at most 24 and is thus a presentation of $G$. 
+\begin{align*} \langle x, y, r \, |  \, x^2= y^2, \, y x y^{-1} = x^{-1}, \, r^3 = I, \, r x r^{-1} = y, \, r y r^{-1} = xy, \, r xy r^{-1} = x \rangle,
+\end{align*}
+
+By Lemma \ref{ordersl2q}, we observe that the order of $SL(2,3)$ is $3(3^2-1) = 24$. Now consider the following the elements of $SL(2,3)$:
+\begin{align*} a = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}, \qquad b = \begin{bmatrix} 0 & 2 \\ 1 & 0 \end{bmatrix}, \qquad c = \begin{bmatrix} 2 & 1 \\ 2 & 0 \end{bmatrix}.
+\end{align*}
+
+One can verify easily that each of the following relations hold:
+\begin{align*} a^2 &= b^2, \qquad b a b^{-1} = a^{-1}, \qquad \quad \; c^3 = I, 
+\\ c a c^{-1} &= b,  \qquad \; \: c b c^{-1} = ab, \qquad \! c ab c^{-1} = a.
+\end{align*}
+
+Since $G$ and $SL(2,3)$ have the same order and since their respective generators satisfy the corresponding relations, there is an isomorphism mapping $x \mapsto a$, $y \mapsto b$ and $r \mapsto c$. Thus,
+\begin{align*} G = \langle x, y, r \rangle \cong \langle a, b, c \rangle = SL(2,3). 
+\end{align*} 
+\end{proof}
+\vspace{-1mm}
+\textbf{Case III}:\\
+\\
+Claim: \textit{We have $G = Q \times Z$.}
+\\
+\begin{proof} Here, $s = 0 = t$. Equation (\ref{classeq}) simplifies to:
+\begin{align}\label{case3a} 1 &= \frac{1}{g} + \frac{q-1}{qk}, \nonumber
+\\ 1 &= \frac{1}{g} + \frac{1}{k} - \frac{1}{qk}, \nonumber
+\\ 1 + \frac{1}{qk} &= \frac{1}{g} + \frac{1}{k}.
+\end{align}
+
+Since $s = 0 = t$, there are no cyclic maximal abelian subgroups whose order is relatively prime to $p$, so $K \not \in \mathfrak{M}$. Then by Theorem \ref{6.8}(v) we have,
+\begin{align*} ek = |K| \leq |Z| = e.
+\end{align*} 
+Thus $k = 1$ and equation (\ref{case3a}) reduces to $1/q = 1/g$, that is $g=q$.
+\begin{align*} |G| =  eg &= eq = |Q \times Z|,
+\\ G &= Q \times Z.
+\end{align*}
+\qedhere
+\end{proof}
+\vspace{-1mm}
+\textbf{Case IV}:\\
+\\
+Claim: \textit{Either $p=2$ and $G$ is isomorphic to the dihedral group of order $2n$, where $n$ is odd, or $p=3$ and $G \cong SL(2,3)$.}
+\\
+\begin{proof} Here, $s = 0$ and $t = 1$. Equation (\ref{classeq}) simplifies to:
+\begin{align}\label{case4a} 1 &= \frac{1}{g} + \frac{q-1}{qk} +  \frac{g_1-1}{2g_1}, \nonumber
+\\ 1 &= \frac{1}{g} + \frac{q-1}{qk} + \frac{1}{2} - \frac{1}{2g_1}, \nonumber
+\\ \frac{1}{2} + \frac{1}{2g_1} &= \frac{1}{g} + \frac{q-1}{qk}.
+\end{align}
+
+Recall that $|A_1|=eg_1$ and $[N_G(A_1): A_1] = 2$ and so,
+\begin{align*} eg = |G| \geq |N_G(A_1)| = 2eg_1.
+\end{align*}
+
+So $g \geq 2g_1$ and $1/2g_1 \geq 1/g$ and hence we can bound Equation (\ref{case4a}):
+\begin{align*} \frac{1}{2} \; \leq \; \frac{1}{2} + \frac{1}{2g_1} - \frac{1}{g} &= \frac{q-1}{qk}.
+\end{align*}
+
+Clearly this forces $k = 1$ and also $q > 1$. We can now simplify and bound Equation (\ref{case4a}) as follows:
+\begin{align*} \frac{1}{q} + \frac{1}{4} \; \geq \; \frac{1}{q} + \frac{1}{2g_1} &= \frac{1}{g} + \frac{1}{2} \; > \; \frac{1}{2}. 
+\end{align*}
+
+This gives $1/q > 1/4$ and so $q$ is equal to either 2 or 3. We examine each case individually. \\
+\\
+\textbullet \space \textbf{Case IVa:} $\pmb{q = 2}$. Equation (\ref{case4a}) becomes
+\begin{align*} \frac{1}{2g_1} &= \frac{1}{g}, \; \; \Longrightarrow \; \; g = 2g_1,
+\end{align*}
+
+and we show that $A_1$ is a normal subgroup of $G$:
+\begin{align*} |G| = eg = e2g_1 = 2|A_1| = |N_G(A_1)|. 
+\end{align*}
+In this case, a Sylow $p$-subgroup has order 2 so we have $p=2$ and also $e=1$. By it's definition, the order of $A_1$ is relatively prime to $p=2$, so we have that $|A_1|= g_1 = n$, where $n$ is odd, and consequently $G$ has order $2n$. \\  
+\\
+We now know enough about the structure of $G$ to establish some relations on it. Let $A_1 = \langle x \rangle$, so $x^n = I_G$. By Theorem \ref{6.8}(iv) there exists a $y \in N_G(A_1) \! \setminus \! A_1$ such that $y x y^{-1} = x^{-1}$.
+\begin{align*} |\mathcal{C}_1| &= [G : N_G(A_1)] = 1.
+\\ |\mathcal{C}_{Q \times Z}| &= [G : N_G(Q \times Z)] = \frac{|G|}{eqk} = \frac{2n}{2} = n.
+\end{align*}
+The only maximal abelian subgroups of $G$ are thus $A_1$ and the $n$ conjugate subgroups of $\mathcal{C}_{Q \times Z}$.
+
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.4]
+
+\draw[rotate around={0:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={20:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={40:(0,0)},green] (3,0) ellipse (108pt and 41pt); 
+\draw[dashed][rotate around={60:(0,0)},lightgray] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={80:(0,0)},lightgray] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={100:(0,0)},lightgray] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={120:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+
+\draw[rotate around={210:(0,0)},blue] (3,0) ellipse (108pt and 41pt);
+
+\draw (0,0) ellipse (22pt and 22pt); 
+
+\node[] at (0,-6) {\resizebox{9cm}{!}{Fig 4: The elements of $G$ arranged into maximal abelian subgroups.}};
+\node[] at (0,0) {\resizebox{.3cm}{!}{$Z$}};
+\node[] at (8.4,0.2) {\resizebox{1cm}{!}{$Q \times Z$}};
+\node[] at (-6.8,-3.1) {\resizebox{.5cm}{!}{$A_1$}};
+\node[] at (4.7,8.3) {\resizebox{1.1cm}{!}{$\mathcal{C}_{Q \times Z}$}};
+
+\node[scale=2.5, rotate=240,gray] at (4.0,6.7) { $\Bigg\{$ };
+
+\node[scale=2, black] at (-.45,0) {.};
+
+\node[scale=3, green] at (5.5, -0.1) {.};
+\node[scale=2, green] at (5.5, 2.0) {.};
+\node[scale=2, green] at (4.5,3.7) {.};
+\node[scale=1.3, gray] at (2.8,5.0) {.};
+\node[scale=1.3, gray] at (1.1,5.7) {.};
+\node[scale=1.3, gray] at (-0.9,5.7) {.};
+\node[scale=2, green] at (-2.8, 4.8) {.};
+
+\node[scale=1.6, blue] at (-5.1,-3.0) {.};
+\node[scale=3, blue] at (-3.4,-2.4) {.};
+\node[scale=1.6, blue] at (-3.6,-1.4) {.};
+\node[scale=1.6, blue] at (-2.4,-0.7) {.};
+\node[scale=1.6, blue] at (-2,-1.9) {.};
+\node[scale=1.6, blue] at (-0.8,-1.2) {.};
+
+\end{tikzpicture}
+\end{center}
+
+Since $y$ belongs to some maximal abelian subgroup and $y \not \in A_1$, $y$ must belong to some element of $\mathcal{C}_{Q \times Z}$. Since $|Q \times Z|$ = 2, the order of $y$ is 2 and $y^2 = I_G$. We have established the following presentation of G.
+\begin{align*} G = \langle x, y \; | \; x^n = I_G = y^2, \; y x y^{-1} = x^{-1} \rangle.
+\end{align*}
+
+Let $D_n$ denote the dihedral group of order $2n$, that is the group of symmetries of a regular polygon wih $n$ vertices. Let $r$ denote a clockwise rotation by $2\theta /n$ radians and $s$ denote a reflection. For $n$ odd, it can easily be verified that $D_n$ has the following presentation.
+\begin{align*} D_n = \langle r, s \; | \; r^n = I = s^2, \; s r s^{-1} = r^{-1} \rangle.
+\end{align*}
+
+Since $G$ and $D_n$ have the same order and since their respective generators satisfy the corresponding relations, there is an isomorphism mapping $x \mapsto r$ and $y \mapsto s$. Thus,
+\begin{align*} G = \langle x, y \rangle \cong \langle r, s \rangle = D_n.
+\end{align*}
+
+\textbullet \space \textbf{Case IVb:} $\pmb{q = 3}$. Now equation (\ref{case4a}) becomes
+\begin{align*} \frac{1}{2g_1} &= \frac{1}{g} + \frac{1}{6} \; > \; \frac{1}{6}.
+\end{align*}
+This means that $g_1 = 2$ and $g = 12$. Since $q=3$ we have $p=3$ and $e=2$. Furthermore we have,
+\begin{align*} |G| = 24, \quad |A_1| &= 4,  \quad |N_G(A_1)| = 8, \quad |Q \times Z| = 6 \quad |N_G(Q \times Z)| = 6
+\end{align*}
+\begin{align*} |\mathcal{C}_1| &= [G : N_G(A_1)] = \frac{24}{8} = 3
+\\ |\mathcal{C}_{Q \times Z}| &= [G : N_G(Q \times Z)] = \frac{24}{6} = 4
+\end{align*}
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.4]
+
+\draw[dashed][rotate around={0:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+\draw[dashed][rotate around={20:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+\draw[rotate around={40:(0,0)},green] (3,0) ellipse (108pt and 41pt); 
+\draw[dashed][rotate around={60:(0,0)},green] (3,0) ellipse (108pt and 41pt);  
+
+\draw[dashed][rotate around={180:(0,0)},blue] (2,0) ellipse (79pt and 37pt);  
+\draw[rotate around={210:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+\draw[dashed][rotate around={240:(0,0)},blue] (2,0) ellipse (79pt and 37pt);
+
+\draw (0,0) ellipse (22pt and 22pt); 
+
+\node[] at (0,-7) {\resizebox{9cm}{!}{Fig 5: The elements of $G$ arranged into maximal abelian subgroups.}};
+\node[] at (0,0) {\resizebox{.3cm}{!}{$Z$}};
+\node[] at (5.4,5.2) {\resizebox{1cm}{!}{$Q \times Z$}};
+\node[] at (-4.6,-2.8) {\resizebox{.5cm}{!}{$A_1$}};
+\node[] at (9.3,5.3) {\resizebox{1.1cm}{!}{$\mathcal{C}_{Q \times Z}$}};
+\node[] at (-6.8,-3.6) {\resizebox{.5cm}{!}{$\mathcal{C}_1$}};
+
+\node[scale=1.8, rotate=30,gray] at (-5.4,-3.2) { $\Bigg\{$ };
+\node[scale=2, rotate=210,gray] at (7.7,4.4) { $\Bigg\{$ };
+
+\node[scale=2, black] at (-.45,0) {.};
+\node[scale=2, black] at (.45,0) {.};
+
+\node[scale=3, green] at (4,4) {.};
+\node[scale=3, green] at (4.7,4.2) {.};
+\node[scale=3, green] at (4.8,3.3) {.};
+\node[scale=3, green] at (3.9, 3.2) {.};
+\node[scale=2, green] at (4.8, 1.7) {.};
+\node[scale=2, green] at (5.2, 2.3) {.};
+\node[scale=2, green] at (5.9, 2.2) {.};
+\node[scale=2, green] at (5.6, 1.5) {.};
+\node[scale=2, green] at (6, 0.2) {.};
+\node[scale=2, green] at (5.5, -0.5) {.};
+\node[scale=2, green] at (4.6, -0.8) {.};
+\node[scale=2, green] at (3.7, -1) {.};
+\node[scale=2, green] at (3, 5.2) {.};
+\node[scale=2, green] at (2.2,4.5) {.};
+\node[scale=2, green] at (1.5, 4.0) {.};
+\node[scale=2, green] at (0.9, 3.3) {.};
+
+\node[scale=3, blue] at (-3.5,-1.6) {.};
+\node[scale=3, blue] at (-3.2,-2.4) {.};
+\node[scale=2, blue] at (-3.6,0.4) {.};
+\node[scale=2, blue] at (-2.4,0.6) {.};
+\node[scale=2, blue] at (-2,-3.3) {.};
+\node[scale=2, blue] at (-1.0,-2.9) {.};
+
+\end{tikzpicture}
+\end{center}
+
+Notice that Fig 5 is almost identical to Fig 2 in the study of Case IIb. This is a strong indication that these 2 cases are isomorphic to each other and hence also to $SL(2,3)$, albeit not a proof. However, an argument analogous to the one outlined in the proof of Case IIb can be directly applied here with a simple renaming of the conjugacy classes and representatives. It would be tedious to repeat this argument again and I will leave it to the reader to verify.
+
+\end{proof}
+
+\textbf{Case V}:\\
+\\
+Claim: \textit{We have one of the following three cases: \\
+\\
+(i) $G \cong SL(2,\mathbb{F}_q)$. \\
+\\
+(ii) $G \cong \langle SL(2,\mathbb{F}_q), d_\pi \rangle$, where $\pi \in \mathbb{F}_{q^2} \setminus \mathbb{F}_q$, $\pi^2 \in \mathbb{F}_q$ and $SL(2,\mathbb{F}_q) \vartriangleleft G$. \\
+\\
+(iii) $G \cong SL(2,5)$ and $p=3=q$.}
+
+\begin{proof} Here, $s = 0$ and $t = 2$. Equation (\ref{classeq}) simplifies to:
+\begin{align} \label{case5a} 1 &= \frac{1}{g} + \frac{q-1}{qk} + \frac{g_1 -1}{2g_1} + \frac{g_2 -1}{2g_2}, \nonumber
+\\ 
+\frac{1}{2g_1} + \frac{1}{2g_2} &= \frac{1}{g} + \frac{q-1}{qk}. \end{align}
+
+Recall that,
+\begin{align*} eg = |G| \geq  |N_G(A_i)| \geq 2eg_i, \qquad \text{thus} \quad \! \frac{1}{g} \leq \frac{1}{2g_i}.
+\end{align*}
+Equation (\ref{case5a}) is therefore bounded from below:
+\begin{align*}  \frac{2}{g} \leq \frac{1}{2g_1} + \frac{1}{2g_2} = \frac{1}{g} + \frac{q-1}{qk}. 
+\end{align*}
+Therefore $q>1$, since if $q=1$ we arrive at the contradiction $2/g \leq 1/g$. With this in mind we have $(q-1)/q \geq 1/2$ and since $g_i \geq 2$ this allows us to bound (\ref{case5a}) on either side.
+
+\begin{align*} \frac{1}{2} &\geq \frac{1}{2g_1} + \frac{1}{2g_2} = \frac{1}{g} + \frac{q-1}{qk} > \frac{q-1}{qk} \geq \frac{1}{2k}.
+\end{align*}
+
+This gives $k > 1$ and so by Theorem \ref{6.8}(v), $k$ must equal $g_1$ or $g_2$ since the inequality $ek = |K| > |Z| = e$ holds. Without loss of generality we let $k=g_1$ and (\ref{case5a}) becomes,
+
+\begin{align} \label{case5b} \frac{1}{2g_1} + \frac{1}{2g_2} &= \frac{1}{g} + \frac{q-1}{qg_1} = \frac{1}{g} + \frac{1}{g_1} - \frac{1}{qg_1}, \nonumber \\[1.5ex]
+ \frac{1}{2g_2} &= \frac{1}{g} + \frac{1}{2g_1} - \frac{1}{qg_1}.
+\end{align}
+\\
+Let $N_G(Q)$ act on $Q \! \setminus \! I_G$ by conjugation and consider the stabiliser in $N_G(Q)$ of an arbitrarily chosen $x \in Q \! \setminus \! I_G$.
+\begin{align*} \text{Stab}(x) &= \{ g \in N_G(Q) : g x g^{-1} = x \}
+\\ &= C_G(x) \cap N_G(Q)
+\\ &= (Q \times Z) \cap N_G(Q) \tag{by Theorem \ref{6.8}(iii)}
+\\ &= Q \times Z. \tag{since $Q \times Z \subset N_G(Q)$}
+\end{align*}
+
+Thus by the Orbit-Stabiliser Theorem,
+\begin{align*} |\text{Orb}(x)| = [N_G(Q) : Q \times Z] = \frac{eqk}{eq} = k
+\end{align*}
+
+Since $x$ was chosen arbitrarily from $Q \! \setminus \! I_G$, each element of $Q \! \setminus \! I_G$ has an orbit in $N_G(Q)$ of size $k$. Considering also the fact that $Q \! \setminus \! I_G$ is equal to the union of the pairwise disjoint orbits of its elements, we conclude that $k = g_1$ divides $|Q \! \setminus \! I_G|$. Thus there exists some $d \in \mathbb{Z^+}$ such that,
+\begin{align}\label{6.14} q-1 = d g_1.
+\end{align}
+
+Now set,
+\begin{align} \label{6.14a} i = \frac{2 g_1 g_2 q}{g} > 0,
+\end{align}
+and multiply \eqref{case5b} by $ig$ to give,
+\begin{align}\label{6.15} g_1 q &= i + (q-2) g_2.
+\end{align}
+Thus $i$ is an integer and since it is greater than zero by definition, \eqref{6.15} gives,
+\begin{align}\label{6.16b} g_1 > \frac{(q-2) g_2}{q}.
+\end{align}
+Also, using \eqref{6.14} and \eqref{6.15} we get,
+\begin{align}\label{6.16a} g_1 q &= i + (q-1) g_2 - g_2 \nonumber
+\\ &= i + d g_1 g_2 - g_2, \nonumber
+\\ g_2 &= i + (d g_2 - q) g_1.
+\end{align}
+
+Applying Lemma \ref{caseVlemma} we observe that $Q$ is not normal in $G$, and so 
+\begin{align*} eg = |G| &> |N_G(Q)| = eqk = eqg_1, \\[1.5ex]
+\frac{1}{qg_1} &> \frac{1}{g}.
+\end{align*}
+And (\ref{case5b}) gives us,
+\begin{align}\label{6.13}  \frac{1}{2g_2} &= \frac{1}{g} - \frac{1}{qg_1} + \frac{1}{2g_1} < \frac{1}{2g_1}, \nonumber
+\\[1.5ex] g_1 &< g_2.
+\end{align}
+
+Consider now,
+\begin{align*} [G : N_G(Q)] = \frac{eg}{e q k} = \frac{g}{q g_1} = \frac{2 g_2}{i} \in \mathbb{Z}. \tag{by \eqref{6.14a}}
+\end{align*}
+Thus $i$ divides $2 g_2$. Recall that the order of $A_2$ is relatively prime to $p$ by Theorem \ref{6.8}(iii), so $g_2$ is also relatively prime to $p$. Therefore if $p \neq 2$, $i$ is relatively prime to $p$ and if $p=2$ then $p$ divides $i$ but $p^2$ does not. Now since $Q$ is a Sylow $p$-subgroup of $G$, this means that greatest common denominator of $i$ and $q$ is either 1 or 2.
+Now consider,
+\begin{align*} [G : N_G(A_2)] = \frac{eg}{2 e g_2} = \frac{g_1 q}{i} \in \mathbb{Z}. \tag{by \eqref{6.14a}}
+\end{align*}
+Thus $i$ divides $g_1 q$ and since gcd$(i, q) = 1$ or 2, i must divide $2 g_1$. So there exists some $m \in \mathbb{Z^+}$ such that,
+\begin{align}\label{6.17} i = \frac{2 g_1}{m}.
+\end{align}
+
+We consider now the separate cases which arise for different values of $q$. \\
+\\
+\textbullet \space \textbf{Cases Va and Vb:} $\pmb{q \geq 4}$. This condition gives us a lower bound for the inequality in \eqref{6.16b},
+\begin{align*} g_1 > \frac{(q-2) g_2}{q} > \frac{g_2}{2}.
+\end{align*}
+Combining this with \eqref{6.13} we have,
+\begin{align}\label{6.18} g_1 < g_2 < 2 g_1.
+\end{align}
+
+Substituting \eqref{6.17} into \eqref{6.16a} gives,
+\begin{align*} g_2 = \left( \frac{2}{m} + d g_2 - q \right) g_1
+\end{align*}
+Thus \eqref{6.18} gives that,
+\begin{align*} 1 < \frac{2}{m} + d g_2 - q < 2.
+\end{align*}
+
+This means that $2/m$ is some fraction between 0 and 1 and $d g_2 - q = 1$. So \eqref{6.16a} becomes,
+\begin{align}\label{6.19} g_2 = g_1 + i.
+\end{align}
+
+Substituting this into \eqref{case5b} we find that,
+\begin{align*} g_1 q &= i + (q - 2)(g_1 + i),
+\\ 2 g_1 &= i(q - 1) = i d g_1, \tag{by \eqref{6.14}}
+\\ 2 &= i d.
+\end{align*}
+
+We remark that since both $i$ and $d$ are positive integers, $i$ (and indeed $d$) must equal 1 or 2. Thus by \eqref{6.19} and \eqref{6.14a},
+\begin{align*} g_1 &= \frac{i(q-1)}{2}, \qquad g_2 = \frac{i(q + 1)}{2}, \qquad g = \frac{2 g_1 g_2 q}{i} = \frac{iq(q^2 - 1)}{2}.
+\end{align*}
+
+Thus we have the following expressions for the orders of $K$ and $G$:
+\begin{align}\label{orderGK} |K| = \frac{ei(q-1)}{2}, \qquad |G| = \frac{eiq(q^2-1)}{2}.
+\end{align}
+
+By Proposition \ref{6.7}, each noncentral element of $Q$ has a unique common fixed point on the projective line $\mathscr{L}$, call it $P_1$. Furthermore, we saw in the proof of Theorem \ref{6.8}(v) that each noncentral element of $K$ also fixes $P_1$ as well as one other point, call it $P_2$. Let $u$ be a noncentral element of $Q$ and set $P_3 = P_2^u$. Clearly $P_3$ is different from $P_1$ and $P_2$ because otherwise a contradiction is reached. By Theorem \ref{6.6}, $PSL(\mathscr{L})$ is triply transitive, so there exists a $v \in L$ such that,
+\begin{align*} P_1^v = R_1 = \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \qquad P_2^v = R_2 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \qquad P_3^v = R_3 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}.
+\end{align*} 
+
+Observe that,
+\begin{align*} vQv^{-1}R_1 &= vQP_1 = vP_1 = R_1,
+\\ vKv^{-1}R_i &= vKP_i = vP_i = R_i. \qquad (i=1,2)
+\end{align*} 
+
+Thus $vQv^{-1}$ fixes $R_1$ whilst $vKv^{-1}$ fixes both $R_1$ and $R_2$. The only elements of $L$ that fix $R_1$ are the lower triangular matrices, thus  $vQv^{-1} \subset H$, whilst the only elements that fix $R_2$ are the upper triangular matrices, thus $vKv^{-1} \subset D$. Furthermore, each noncentral element of $vQv^{-1}$ has order $p$. The only elements of $H$ with order $p$ are those in $T$, thus $vQv^{-1} \subset T$. Since $u \in Q \setminus I_G$, we have that $v u v^{-1} = t_\gamma$ for some $\gamma \in F$.
+\begin{align*} v u v^{-1}R_2 &= v u P_2 = v P_3 = R_3,
+\\[1.5ex] \begin{bmatrix} 1 & 0\\ \gamma & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} &= \begin{bmatrix} 1 \\ \gamma  \end{bmatrix} \sim \begin{bmatrix} 1 \\ 1 \end{bmatrix}. \Longrightarrow \gamma = 1.
+\end{align*}
+
+So $v u v^{-1} = t_1$. If we now consider $\widetilde{G} = vGv^{-1}$ instead of $G$, we can assume without loss of generality that,
+\begin{align*} Q \subset T, \qquad K \subset D, \qquad u = t_1.
+\end{align*}
+
+Let $x$ be a generator of $K$. By Theorem \ref{6.8}(iv) there exists a $y \in N_{\widetilde{G}}(K) \! \setminus \! K$ such that $y x = x^{-1} y$. Since $R_1$ is fixed by both $x$ and $x^{-1}$ we have,
+\begin{align*} x^{-1} y R_1 =  y x R_1 = y R_1.
+\end{align*}
+Thus $x^{-1}$ fixes $y R_1$, that is $y R_1 \in \{ R_1, R_2 \}$. Similarly, $y R_2 \in \{ R_1, R_2 \}$. Assume $y R_1 = R_1$. Since $R_1$ and $R_2$ are distinct points in $\mathscr{L}$ this implies that $y R_2 = R_2$.
+
+\begin{align*} y R_1 = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} &= \begin{bmatrix} \beta \\ \delta \end{bmatrix} \sim \begin{bmatrix} 0 \\ 1 \end{bmatrix} \Longrightarrow \beta = 0.
+\\[1.5ex] y R_2 = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} &= \begin{bmatrix} \alpha \\ \gamma \end{bmatrix} \sim \begin{bmatrix} 1 \\ 0 \end{bmatrix} \Longrightarrow \gamma = 0.
+\end{align*}
+
+Thus $y \in D$, which is a contradiction since elements in $D$ do not invert $x \in D$, hence,
+\begin{align}\label{yinterchange} y R_1 = R_2, \qquad \text{and} \quad y R_2 = R_1.
+\end{align}
+ 
+This allows us to determine more about $y$,
+\begin{align*} y R_1 = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} &= \begin{bmatrix} \beta \\ \delta \end{bmatrix} \sim \begin{bmatrix} 1 \\ 0 \end{bmatrix} \Longrightarrow \delta = 0.
+\\[1.5ex] y R_2 = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} &= \begin{bmatrix} \alpha \\ \gamma \end{bmatrix} \sim \begin{bmatrix} 0 \\ 1 \end{bmatrix} \Longrightarrow \alpha = 0.
+\end{align*}
+
+Thus $y$ is an anti-diagonal matrix. Recalling \eqref{antidiag}, for some $\rho \in F^*$ we have,
+\begin{align*} y = d_\rho w = \begin{bmatrix} 0 & \rho \\ -\rho^{-1} & 0 \end{bmatrix}.
+\end{align*}
+
+Consider now the set of right cosets of $N_{\widetilde{G}}(Q)$ of the form $N_{\widetilde{G}}(Q) y q$, (where $q \in Q$) in $N_{\widetilde{G}}(Q) y Q$. For $q_1, q_2 \in Q$ we have,
+\vspace{2mm}
+\begin{align*} N_{\widetilde{G}}(Q) y q_1 = N_{\widetilde{G}}(Q) y q_2 &\iff y q_2 {q_1}^{-1} y^{-1} \in N_{\widetilde{G}}(Q)
+\\ &\iff q_2 {q_1}^{-1} \in y^{-1} N_{\widetilde{G}}(Q) y
+\\ &\iff (Q \cap y^{-1} N_{\widetilde{G}}(Q) y) q_2 = (Q \cap y^{-1} N_{\widetilde{G}}(Q) y) q_1. \\
+\end{align*}
+
+So the number of right cosets of $N_{\widetilde{G}}(Q)$ in $N_{\widetilde{G}}(Q) y Q$ is equal to the number of right cosets of $Q \cap y^{-1} N_{\widetilde{G}}(Q) y$ in $Q$. That is,
+\vspace{2mm}
+\begin{align}\label{doublecoset} [N_{\widetilde{G}}(Q) y Q : N_{\widetilde{G}}(Q)] = [Q : Q \cap y^{-1} N_{\widetilde{G}}(Q) y]. \\ \nonumber
+\end{align}
+
+Let $g$ be an arbitrary element of $N_{\widetilde{G}}(Q)$. By Theorems \ref{6.4i}(i) and \ref{6.7}(ii) we have $N_{\widetilde{G}}(Q) \subset H = \text{Stab}(R_1)$, thus $g$ fixes $R_1$. Using \eqref{yinterchange} we see that,
+\vspace{2mm}
+\begin{align*} y^{-1} g y R_2 = y^{-1} g R_1 = y^{-1} R_1 = R_2. \\
+\end{align*}
+
+Hence $R_2$ is a fixed point of $y^{-1} g y$. Since $g$ was chosen arbitrarily, we assert that each element of $y^{-1} N_{\widetilde{G}}(Q) y$ fixes $R_2$. On the contrary, the only element of $Q$ which fixes $R_2$ is $I_{\widetilde{G}}$, thus $Q \cap y N_{\widetilde{G}}(Q) y^{-1} = I_{\widetilde{G}}$.
+\vspace{2mm}
+\begin{align}\label{qwed} [N_{\widetilde{G}}(Q) y Q : N_{\widetilde{G}}(Q)] &= [Q : Q \cap y^{-1} N_{\widetilde{G}}(Q) y] = q, \nonumber
+\\[1ex] |N_{\widetilde{G}}(Q) y Q| &= q|N_{\widetilde{G}}(Q)|. \\ \nonumber
+\end{align}
+
+We show next that $N_{\widetilde{G}}(Q) y Q \cap N_{\widetilde{G}}(Q) = \varnothing$. Let $t_\lambda d_\omega$ and $t_\mu$ be arbitrarily chosen from $N_{\widetilde{G}}(Q)$ and $Q$ respectively so that $t_\lambda d_\omega y t_\mu$ is an arbitrary element of $N_{\widetilde{G}}(Q) y Q$.
+\begin{align}\label{onemore} t_\lambda d_\omega y t_\mu &= \begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix} \begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix} \begin{bmatrix} 0 & \rho \\ -\rho^{-1} & 0 \end{bmatrix}  \begin{bmatrix} 1 & 0 \\ \mu & 1 \end{bmatrix} \nonumber
+\\[1.5ex] &= \begin{bmatrix} \omega & 0 \\ \omega \lambda & \omega^{-1} \end{bmatrix} \begin{bmatrix} \rho \mu & \rho \\ -\rho^{-1} & 0 \end{bmatrix} \nonumber
+\\[1.5ex] &= \begin{bmatrix} \omega \rho \mu & \omega \rho  \\ \omega \lambda \rho \mu - \omega^{-1} \rho^{-1} & \omega \rho \lambda \end{bmatrix}.
+\end{align}
+
+Since $\omega$, $\rho \in F^*$, the top right entry of \eqref{onemore} is non-zero. Recall also that $N_{\widetilde{G}}(Q) \subset H$ by Theorem \ref{6.4i}(i) and that $H$ is the set of all lower triangular matrices of $L$. Since $t_\lambda d_\omega d_\rho w t_\mu$ was chosen arbitraily, no element of $N_{\widetilde{G}}(Q) y Q$ is in $H$ whilst the whole of $N_{\widetilde{G}}(Q)$ is contained in $H$, thus they are disjoint. Using \eqref{qwed} and \eqref{orderGK} we also observe that,
+\begin{align*} |N_{\widetilde{G}}(Q) y Q| + |N_{\widetilde{G}}(Q)| = (q+1)|N_{\widetilde{G}}(Q)| = (q+1)eqg_1 = \frac{eiq(q^2-1)}{2} = |{\widetilde{G}}|.
+\end{align*}
+Since $N_{\widetilde{G}}(Q) y Q$ and $N_{\widetilde{G}}(Q)$ are disjoint and the sum of their orders is equal to the order of ${\widetilde{G}}$, they partition ${\widetilde{G}}$ into the set of elements that belong to $H$ and the set that don't.
+\begin{align}\label{gsplit} {\widetilde{G}} = N_{\widetilde{G}}(Q) y Q \cup N_{\widetilde{G}}(Q).
+\end{align}
+
+Let $\mathbb{N} = \{ \lambda : t_\lambda \in Q \}$. We will show that $\mathbb{N} =\mathbb{F}_q$. For each $t_\lambda \in Q \setminus Z$, the element $y t_\lambda y^{-1} \notin H$, so by $\eqref{gsplit}$, $y t_\lambda y^{-1} \in N_{\widetilde{G}}(Q) y Q$. Thus there exists $t_\mu, t_\upsilon \in Q$ and $d_\omega \in K$ such that,
+\begin{align*} y t_\lambda y^{-1} &= t_\mu d_\omega y t_\upsilon,
+\\[1.5ex] \begin{bmatrix} 0 & \rho \\ -\rho^{-1} & 0 \end{bmatrix}\begin{bmatrix} 1 & 0 \\ \lambda & 1 \end{bmatrix}\begin{bmatrix} 0 & -\rho \\ \rho^{-1} & 0 \end{bmatrix} &= \begin{bmatrix} 1 & 0 \\ \mu & 1 \end{bmatrix}\begin{bmatrix} \omega & 0 \\ 0 & \omega^{-1} \end{bmatrix}\begin{bmatrix} 0 & \rho \\ -\rho^{-1} & 0 \end{bmatrix}\begin{bmatrix} 1 & 0 \\ \upsilon & 1 \end{bmatrix},
+\\[1.5ex] \begin{bmatrix} 0 & \rho \\ -\rho^{-1} & 0 \end{bmatrix}\begin{bmatrix} 0 & -\rho \\ \rho^{-1} & -\rho \lambda \end{bmatrix} &= \begin{bmatrix} \omega & 0 \\ \omega \mu & \omega^{-1} \end{bmatrix}\begin{bmatrix} \rho \upsilon & \rho \\ -\rho^{-1} & 0 \end{bmatrix},
+\\[1.5ex] \begin{bmatrix} 1 & -\rho^2 \lambda \\ 0 & 1 \end{bmatrix} &= \begin{bmatrix} \omega \rho \upsilon & \omega \rho \\ \omega \rho \mu \upsilon - \omega^{-1} \rho^{-1} & \omega \rho \mu \end{bmatrix}.
+\end{align*}
+
+Equating the top right entries gives,
+\begin{align}\label{mattr} \omega = -\rho \lambda.
+\end{align}
+
+Since $t_1 \in Q$, so is it's inverse, thus $-1 \in \mathbb{N}$. Letting $\lambda = -1$ in \eqref{mattr} gives $\omega = \rho$, which means that $d_\rho \in K$. Consequently, this shows that $w = d_\rho^{-1} y \in {\widetilde{G}}$ and we may replace $y$ by $w$ in \eqref{gsplit} without it affecting the partition of ${\widetilde{G}}$. This is equivalent to letting $\rho = 1$, and \eqref{mattr} simplifies to,
+\begin{align}\label{mattr2} \omega = -\lambda.
+\end{align}
+
+Let $\mathbb{M} = \{ \omega : d_\omega \in K \}$. Recall from \eqref{orderGK} that $|K| = i(q-1)$. We consider the different cases which arise depending on the values of $i$ and $e$. \\
+\\
+Let \textbf{Case Va} be the case when $e=1$ or $i = 1$. Observe that $i$ and $e$ cannot both equal 1, since this would imply that 2 divides $q-1$ (by \eqref{orderGK}), but if $e=1$ it follows that $q-1$ is even. Hence $ei = 2$ and $K$ has order $q-1$. Furthermore, the order of each element of $K$ divides $q-1$, so for each $\omega \in \mathbb{M}$,
+\begin{align}\label{roots} \omega^{q-1} = 1.
+\end{align}
+Also, the following polynomial has at most $q-1$ roots in $F$.
+\begin{align}\label{rootsx} x^{q-1} = 1.
+\end{align}
+By \eqref{subfield}, $\mathbb{F}_q \subset F$ and each element of $\mathbb{F}^*_q$ is a root of \eqref{rootsx}. Thus each $\omega$ of $\mathbb{M}$ is in $\mathbb{F}^*_q$ and since they have the same cardinality, $\mathbb{M} = \mathbb{F}^*_q$. By \eqref{mattr2}, $\lambda$ also ranges over $\mathbb{F}^*_q$ and considering also that $\lambda$ can be 0, we have $\mathbb{N} =\mathbb{F}_q$. \\
+\\
+Observe that each element of ${\widetilde{G}}$ is either of the form $t_\lambda d_\omega$ or $t_\lambda d_\omega w t_\mu$ (where $\lambda, \mu \in \mathbb{F}_q$, $\omega \in \mathbb{F}^*_q$), so ${\widetilde{G}} \subset SL(2,\mathbb{F}_q)$. Also, Propostion \ref{ordersl2q} gives that, $|SL(2,\mathbb{F}_q)| = q(q^2-1) = |{\widetilde{G}}|$, so ${\widetilde{G}} = SL(2,\mathbb{F}_q)$. Since ${\widetilde{G}}$ is conjugate in $L$ to $G$, we have $G \cong SL(2,\mathbb{F}_q)$  as desired. \\
+\\
+Let \textbf{Case Vb} be the case when $i = 2 = e$. This time the order of each element of $K$ divides $2(q-1)$, so for each $\omega \in \mathbb{M}$,
+\begin{align}\label{roots} \omega^{2(q-1)} = 1.
+\end{align}
+As in the case of $i=1$, each element of $\mathbb{F}^*_q$ is a root of the polynomial in \eqref{rootsx}, as are each $\omega^2$. Thus $\omega^2$ ranges over $\mathbb{F}^*_q$ and by \eqref{subfield}, $\omega \in \mathbb{F}_{q^2} \setminus \mathbb{F}_q$. Simple matrix multiplication shows that, \\
+\begin{align*} d_\omega^{-1} t_\lambda d_\omega = t_{\omega^2 \lambda}.
+\end{align*}
+Hence since $t_0, t_1 \in Q$, it follows that $t_{\omega^2} \in Q$ for each $\omega^2 \in \mathbb{F}^*_q$, thus $\mathbb{N} = \mathbb{F}_q$. Since $K$ is a cyclic group of order $2(q-1)$, so too is $\mathbb{M}$. Let $\pi$ be a generator of $\mathbb{M}$. It follows that $\pi^2$ has order $q-1$ and is therefore a generator of $\mathbb{F}^*_q$. Since $K = \langle d_\pi \rangle$, we have:
+\begin{align*} {\widetilde{G}} = \langle t_\lambda, d_\pi, w : \lambda \in \mathbb{F}_q \rangle = \langle SL(2,\mathbb{F}_q), d_\pi \rangle.
+\end{align*}
+Again, since ${\widetilde{G}}$ is conjugate in $L$ to $G$, we have $G \cong \langle SL(2,\mathbb{F}_q), d_\pi \rangle$ as desired. Now we take an arbitrary $x$ from $SL(2,\mathbb{F}_q)$ and conjugate it by $d_\pi$.
+\begin{align*} d_\pi x d_\pi^{-1} &= \begin{bmatrix} \pi & 0 \\ 0 & \pi^{-1} \end{bmatrix} \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix}\begin{bmatrix} \pi^{-1} & 0 \\ 0 & \pi \end{bmatrix}
+\\[1.5ex] &=  \begin{bmatrix} \pi & 0 \\ 0 & \pi^{-1} \end{bmatrix}  \begin{bmatrix} \alpha \pi^{-1} & \beta \pi \\ \gamma \pi^{-1} & \delta \pi \end{bmatrix}
+\\[1.5ex] &= \begin{bmatrix} \alpha & \beta \pi^{-2} \\ \gamma \pi^{2} & \delta \end{bmatrix}. 
+\end{align*}
+Since $\pi^2 \in \mathbb{F}_q$, we have that $d_\pi x d_\pi^{-1} \in SL(2,\mathbb{F}_q)$ and since $x$ was chosen arbitrarily, $d_\pi$ belongs to the normaliser of $SL(2,\mathbb{F}_q)$ in $\langle SL(2,\mathbb{F}_q), d_\pi \rangle$. This shows that $SL(2,\mathbb{F}_q) \vartriangleleft \langle SL(2,\mathbb{F}_q), d_\pi \rangle$ as desired. \\
+\\
+\textbullet \space \textbf{Cases Vc and Vd:} $\pmb{q \leq 3}$. Since $q - 1 = d g_1 \geq 2$ by \eqref{6.14}, $q$ cannot equal 2. So $q = 3 = p$, $e = 2$ and thus $g_1 = 2$. The inequalities in \eqref{6.13} and \eqref{6.16b} give,
+\begin{align*} 2 < g_2 < 6.
+\end{align*}
+Also, since $g_2$ is relatively prime to $p=3$, we have $g_2 = 4$ or 5. Let \textbf{Case Vc} be the case when $g_2 = 4$. \eqref{case5b} becomes,
+\begin{align*} \frac{1}{8} = \frac{1}{g} + \frac{1}{4} - \frac{1}{6},
+\end{align*}
+
+which gives $g = 24$. Observe that,
+\begin{align*} |K| = 4 = i(q-1), \qquad |G| = 48 = iq(q^2-1),
+\end{align*}
+where $i=2$, thus we have the situation as described in Case Vb. That is, $G \cong \langle SL(2,\mathbb{F}_q), d_\pi \rangle$ with $q=3$.\\
+\\
+Alternatively, \textbf{Case Vd} occurs when $g_2 = 5$. \eqref{case5b} becomes,
+\begin{align*} \frac{1}{10} = \frac{1}{g} + \frac{1}{4} - \frac{1}{6}.
+\end{align*}
+
+Thus $g = 60 $ and $|G| = 120$. We verify, using Proposition \ref{ordersl2q}, that $SL(2,5)$ has the same order as $G$, that is $|SL(2,5)| = 5(5^2-1) =120$. Observe that,
+\begin{align*} |\mathcal{C}_1| &= [G : N_G(A_1)] = \frac{eg}{2eg_1} = 15,
+\\[1ex] |\mathcal{C}_2| &= [G : N_G(A_2)] = \frac{eg}{2eg_2} = 6,
+\\[1ex] |\mathcal{C}_{Q \times Z}| &= [G : N_G(Q \times Z)] = \frac{eg}{ekq} = 10.
+\end{align*}
+
+Now consider the quotient group $G / Z$ of order 60. It's trivial that for all $A_i, A_j \in \mathfrak{M}$, $A_i / Z$ belongs to the same conjugacy class as $A_j / Z$ if and only $A_i$ and $A_j$ belong to the same conjugacy class. So the number of subgroups conjugate to $A_i / Z$ is $|\mathcal{C}_i|$. Similarly, the number of subgroups conjugate to $(Q\times Z) / Z$ is $|\mathcal{C}_{Q \times Z}|$. \\
+\\
+We now calculate the order of each maximal abelian subgroup of $G$ when we quotient out $Z$.
+\begin{align*} |A_1 / Z| = 2, \qquad |A_2 / Z| = 5, \qquad |(Q \times Z) / Z| = 3.
+\end{align*}
+
+We now know enough about $G / Z$ to determine the order of each of it's elements: \\
+\\
+\textbullet \space The identity has order 1. \\
+\textbullet \space The non-central element of $A_1 / Z$ has order 2, as does the non-central element in each of the $|\mathcal{C}_1| = 15$ subgroups conjugate to $A_1 / Z$. So there are $15$ elements of order 2. \\
+\textbullet \space The 4 non-central elements of $A_2 / Z$ have order 5, as do the non-central elements in each of the $|\mathcal{C}_2| = 6$ subgroups conjugate to $A_2 / Z$. Thus there are $24$ elements of order 5. \\
+\textbullet \space  The 2 non-central elements of $(Q \times Z) / Z$ have order 3, as do the non-central elements in each of the $|\mathcal{C}_{Q \times Z}| = 10$ subgroups conjugate to $(Q \times Z) / Z$. Thus there are $20$ elements of order 3. \\
+\\
+Since $1+15+24+20=60$, all elements of $G / Z$ are accounted for. \\
+\\
+Let $N$ be a normal subgroup of $G / Z$. Observe that each non-central element of $A_2 / Z$ is a generator of it, so if $N$ contains one non-central element of $A_2 / Z$, then it contains the whole of it, due to the closure of the group under multiplication and the fact that each element of $A_2 / Z$ is a power of any non-central element. Also, it can easily be seen that normal subgroups are composed of whole conjugacy classes, so since $N$ is normal in $G$, if it contains $A_2 / Z$, it must contain all subgroups conjugate to $A_2 / Z$. The consequence of this is that if $N$ has an element of order 5, then it contains all 24 elements of $G / Z$ of order 5. Similarly, if it contains an element of order 2, it contains all 15 of them and if it contains an element of order 3, it contains all 20 of them. This means that $|N|$ is partitioned by some or all of the elements in $\{ 1, 15, 20, 24 \}$. Bearing in mind that the order of $N$ divides 60 and that $N$ contains the identity element, this means that $N$ is equal to either the identity element or it is the whole of $G / Z$, since it's easy to see that no other partition of those numbers divides 60. Thus $G / Z$ has no non-trivial normal subgroups and is simple. \\
+\\
+By \cite[p.145]{dummit}, the only simple groups of order 60 are those isomorphic to the alternating group $A_5$ (not to be confused with an element of $\mathfrak{M}$), thus $G / Z \cong A_5$. Since $Z \cong \mathbb{Z}_2$, we have that $G$ is isomorphic to a central extension of $A_5$ which, according to Schur \cite{schur}, is unique and isomorphic to $SL(2,5)$ as desired. The proofs of these 2 claims are beyond the scope of this thesis. \qedhere
+
+\end{proof}
+
+\textbf{Case VI}:\\
+\\
+Claim: \textit{We have one of the following three cases: \\
+\\
+(i) $G = \langle \, x,y \, | \, x^n = y^2, \, yxy^{-1} = x^{-1} \, \rangle$, where $n$ is even. \\
+\\
+(ii) $G = \widehat{S}_4$. \\
+\\
+(iii) $G \cong SL(2,5)$ and $p$ does not divide $|G|$. \\
+\\
+Where $\widehat{S}_4$ is one of the representation groups of the symmetric group $S_4$ in which the transpositions correspond to the elements of order 4.} \\
+
+\begin{proof} Here, $s = 0$ and $t = 3$. Equation \eqref{classeq} simplifies to:
+\begin{align} \label{case6a} 1 &= \frac{1}{g} + \frac{q-1}{qk} + \frac{g_1 -1}{2g_1} + \frac{g_2 -1}{2g_2} + \frac{g_3 -1}{2g_3}, \nonumber
+\\[1ex] \frac{1}{2g_1} + \frac{1}{2g_2} + \frac{1}{2g_3} &= \frac{1}{g} + \frac{q-1}{qk} + \frac{1}{2}.
+\end{align}
+
+First assume that $q > 1$ and $k=1$. \eqref{case6a} is thus bounded as follows,
+\begin{align*} \frac{3}{4} > \frac{1}{2g_1} + \frac{1}{2g_2} + \frac{1}{2g_3} &= \frac{1}{g} + \frac{q-1}{qk} + \frac{1}{2} > 1,
+\end{align*}
+which is a contradiction. Now assume that $q > 1$ and $k > 1$. This means that $k=g_i$ for some $i$. Without loss of generality we can assume that $k=g_1$. Now \eqref{case6a} becomes,
+\begin{align*} \frac{1}{2} \geq \frac{1}{2g_2} + \frac{1}{2g_3} &\geq \frac{1}{g} + \frac{1}{2} > \frac{1}{2},
+\end{align*}
+which again is a contradiction, thus we conclude that $q=1$. \eqref{case6a} simplifies and we can now determine the possible values of each $g_i$.
+ \begin{align} \label{case6b} \frac{1}{2g_1} + \frac{1}{2g_2} + \frac{1}{2g_3} &= \frac{1}{g} + \frac{1}{2}.
+\end{align}
+
+Without loss of generality we may assume that $2 \leq g_1 \leq g_2 \leq g_3$. If $g_1 \neq 2$ we arrive at the following contradiction
+\begin{align*} \frac{1}{6} + \frac{1}{6} + \frac{1}{6} \geq \frac{1}{2g_1} + \frac{1}{2g_2} + \frac{1}{2g_3} &= \frac{1}{g} + \frac{1}{2}.
+\end{align*}
+Thus $g_1 = 2$ and we have,
+\begin{align}\label{case6c} \frac{1}{2g_2} + \frac{1}{2g_3} > \frac{1}{4}.
+\end{align}
+\newpage
+Clearly $g_2$ must equal either 2 or 3. If $g_2 = 2$ it is easily shown that $g=2 g_3$. If $g_2 = 3$ we see that $g_3 \in \{ 3,4,5 \}$. Assume that $g_2$ and $g_3 = 3$. Notice that since  $g_1 = 2$, 2 must divide the order of $G$. Recall also that a Sylow $p$-subgroup of $G$ has order 1, so we assert that $p \neq 2$ and $e=2$. We see from \eqref{case6b} that $|G| = 24$ and thus a Sylow $3$-subgroup has order 3. The maximal abelian subgroups conjugate to $A_2$ or $A_3$ have order 6 and therefore each contains a Sylow $3$-subgroup of $G$. Let $B_2$ and $B_3$ be the Sylow $3$-subgroups contained in $A_2$ and $A_3$ respectively. Observe that for $i = 2$ or 3,
+\begin{align}\label{case6d} A_i \cong \mathbb{Z}_6 \cong \mathbb{Z}_3 \times \mathbb{Z}_2 \cong B_i \times Z \cong B_i Z. 
+\end{align}
+Let $b_2 \in B_2$, $b_3 \in B_3$ and $z \in Z$. Recall that $B_2$ and $B_3$ are conjugate in $G$ by Sylow's Second Theorem, so there exists an $x \in G$ such that,
+\begin{align*} x b_2 x^{-1} &= b_3,
+\\ x b_2 x^{-1} z &= b_3 z,
+\\ x b_2 z x^{-1} &= b_3 z.
+\end{align*} 
+Since $b_2$, $b_3$ and $z$ were chosen arbitrarily, we observe that $B_2 Z$ is conjuagate to $B_3 Z$ and thus by \eqref{case6d}, $A_2 \cong A_3$. This contradicts the fact that $A_2$ and $A_3$ are representatives of different conjugacy classes of maximal abelian subgroups of $G$, which means that $g_2$ and $g_3$ cannot both equal 3. Thus we are left with the following three cases:
+\begin{align*} g_1 = 2, \qquad g_2&=2, \qquad g=2 g_3.
+\\[1ex] g_1 = 2, \qquad g_2&=3, \qquad g_3 = 4.
+\\[1ex] g_1 = 2, \qquad g_2&=3, \qquad g_3 = 5.
+\end{align*}
+\\
+\textbullet \space \textbf{Case VIa:} $\pmb{g_1 = 2, g_2 = 2, g=2 g_3}$. First observe that,
+\begin{align*} [G : N_G(A_1)] = \frac{eg}{2eg_1} = \frac{g_3}{2}.
+\end{align*}
+Thus $g_3/2$ is an integer which means that $g_3$ must be even, call it $n$. Now let $A_3 = \langle x \rangle$. Since $|A_3| = eg_3$, the order of $x$ is $2n$ and $x^n$ has order 2. By Theorem \eqref{6.8}(iv) there exists a $y \in N_G(A_3) \! \setminus \! A_3$ such that $y x y^{-1} = x^{-1}$. Also,
+\begin{align*} |\mathcal{C}_3| = [G : N_G(A_3)] = 1.
+\end{align*}
+Since $y \not \in A_3$ and $A_3$ has no conjugate subgroups (aside from itself), $y$ must lie in a maximal abelian subgroup conjugate to either $A_1$ or $A_2$. This means that since $|A_1| = 4 = |A_2|$ and $y \not \in Z$, the order of $y$ must be 4. By the uniqueness of the element of order 2, we have the relation $x^n = y^2$ and $G$ is given by the presentation,
+\begin{align*} G = \langle \, x,y \, | \, x^n = y^2, \, yxy^{-1} = x^{-1} \, \rangle. \qquad \text{(where $n$ is even)}
+\end{align*}
+
+\textbullet \space \textbf{Case VIb:} $\pmb{g_1 = 2, g_2 = 3, g_3 = 4}$. In this case \eqref{case6b} becomes,
+\begin{align*} \frac{1}{4} + \frac{1}{6} + \frac{1}{8} &= \frac{1}{g} + \frac{1}{2}.
+\end{align*}
+Thus $g = 24$ and $|G| = 48$. Consider the quotient group $G / Z$ of order 24 and the quotient group $N_G(A_2) / Z$ which, for convenience, we will call $H$.
+\begin{align*} |H| = \frac{2eg_2}{e} = 6.
+\end{align*}
+
+Let $x$ be an element of order 6 from $A_2$. By Theorem \ref{6.8}(iv) there exists a $y \in N_G(A_2) \! \setminus \! A_2$ such that $y x = x^{-1} y$. Thus for $xZ, yZ, x^{-1}Z \in H$ we have,
+\begin{align*} yZ xZ = yxZ =  x^{-1}yZ = x^{-1}Z yZ.
+\end{align*}
+If $H$ is abelian, then $xZ = x^{-1}Z$ and thus $x^2 \in Z$. Also, since $x$ has order 6, $x^2$ has order 3. This is contradiction since there is no element of order 3 in $Z$. Thus $H$ is non-abelian and is therefore isomorphic to the symmetric group $S_3$. \\
+\\
+Now we determine the normal subgroups of $H$. The identity and $H$ itself are trivially normal. Furthermore, the elementary result that any subgroup of index 2 is normal implies that $A_2 / Z$, the subgroup of $H$ of order 3, is normal. It remains to check the subgroups of order 2. Let r be a generator of one of the subgroups of order 2 and let $x$ be an arbitrary element of $H$. If $\langle r \rangle$ is normal in $H$, then $x r x^{-1} \in \{ I , r \}$. Since $r \neq I$ it follows that $x r x^{-1} \neq I$. Alternatively if $x r x^{-1} = r$, then $r \in Z(H)$. By the elementary result that $Z(S_n) = \{ I \}$ for $n > 2$, we have that $Z(H) = \{ I \}$ and the contradiction $r=I$. Thus $x r x^{-1} \not \in \langle r \rangle$ and $H$ has no normal subgroup of order 2. We conclude that the only normal subgroups of $H$ are those of order 1, 3 or 6. \\
+\\
+Note that the index of $H$ in $G / Z$ is 4. Let $G / Z$ act by left multiplication on the set of left cosets of $H$. By Theorem \ref{symhomoker}, this action induces a homomorphism $\phi : G / Z \longrightarrow S_4$ with kernel,
+\begin{align*} ker(\phi) = \bigcap\limits_{x \in G / Z} x H x^{-1}  \subset H.
+\end{align*}
+
+Recall the elementary result that the kernel of a homomorphism is a normal subgroup of it's domain. Thus the kernel of $\phi$ is normal in $G / Z$ and consequently in $H$ as well, that is $ker(\phi) \in\{ I , A_2 / Z, H \}$. \\
+\\
+If $ker(\phi) = A_2 / Z$, then $A_2 / Z \vartriangleleft G / Z$ and by Lemma \ref{normalquotient} $A_2 \vartriangleleft G$. This is a contradiction since the normaliser in $G$ of $A_2$ is a proper subgroup of $G$, thus $ker(\phi) \neq A_2 / Z$. \\
+\\
+If $ker(\phi) = H$, then $H \vartriangleleft G / Z$. Take an arbitrary $x \in G / Z$. Since $A_2 / Z$ is a subgroup of $H$ we get,
+\begin{align*} x (A_2 / Z) x^{-1} \subset H.
+\end{align*}
+Furthermore, since $A_2 / Z$ has order 3, any subgroup conjugate to it has order 3. Since the only subgroup of $H$ of order 3 is $A_2 / Z$, and since $x$ was chosen arbitrarily, $A_2 / Z \vartriangleleft G / Z$. We have already shown that this leads to a contradiction, thus $ker(\phi) \neq H$. \\
+\\
+We conclude that $ker(\phi) = \{ I \}$ and so $\phi$ is injective. Since $G / Z$ has 24 elements, it's image under $\phi$ is the whole of $S_4$, that is $G / Z \cong S_4$. Thus $G$ is a \textit{representation group} of $S_4$, denoted by $\widehat{S}_4$ (for a full defintion of this, see \cite{suzuki}). Suzuki proves that $S_4$ has 2 distinct representation groups up to isomorphism \cite[p.301]{suzuki}, which are distinguished by the property that the elements corresponding to transpositions have either order 2 or order 4. Since $G$ has a unique element of order 2, it must be isomorphic to the representation group of $S_4$ in which the transpositions correspond to the elements of order 4, as desired.\\
+\\
+\textbullet \space \textbf{Case VIc:} $\pmb{g_1 = 2, g_2 = 3, g_3 = 5}$.  In this case \eqref{case6b} becomes,
+\begin{align*} \frac{1}{4} + \frac{1}{6} + \frac{1}{10} &= \frac{1}{g} + \frac{1}{2}.
+\end{align*}
+Thus $|g| = 60$ and $|G| = 120$. Observe that a simple relabelling of the maximal abelian subgroups gives the same situation as described in \textbf{Case Vd:}. Thus $G \cong SL(2,5)$, however in this case $p$ does not divide $|G|$.
+
+\end{proof}
+
+\section{Dickson's Classification Theorem}
+
+We now state the main result of this paper, Dickson's classification of finite subgroups of $SL(2,F)$. Observe that it is not the focus of this paper to determine whether the following groups actually exist, rather that this theorem can be regarded as an \textit{upper bound}, so to speak, of the only possible subgroups of $SL(2,F)$.\\
+
+\begin{theorem}\label{mainresult} Let $F$ be an arbitary algebraically closed field of characteristic $p$. Any finite subgroup $G$ of $SL(2,F)$ is isomorphic to one of the following groups. \vspace{3mm} \\
+\textbf{Class I}: When $p=0$ or $|G|$ is relatively prime to $p$: \vspace{1mm} \\
+(i) A cyclic group. \vspace{3mm} \\
+(ii) The group defined by the presentation:
+\begin{equation*} \langle \, x,y \, | \, x^n = y^2, \, yxy^{-1} = x^{-1} \, \rangle.
+\end{equation*}
+(iii) The Special Linear Group $SL(2,3)$. \vspace{3mm} \\
+(iv) The Special Linear Group $SL(2,5)$. \vspace{3mm} \\
+(v) $\widehat{S}_4$, the representation group of $S_4$ in which the transpositions correspond to the elements of order $4$. \\
+\\
+\textbf{Class II}: When $|G|$ is divisible by $p$: \vspace{1mm} \\
+(vi) $Q$ is elementary abelian, $Q \vartriangleleft G$ and $G/Q$ is a cyclic group whose order is relatively prime to $p$. \vspace{3mm} \\
+(vii) $p=2$ and $G$ is a dihedral group of order $2n$, where $n$ is odd. \vspace{3mm} \\
+(viii) The Special Linear Group $SL(2,5)$, where $p=3=q$. \vspace{3mm} \\
+(ix) The Special Linear Group $SL(2,\mathbb{F}_q)$. \vspace{3mm} \\
+(x) The group $\langle SL(2,\mathbb{F}_q), d_\pi \rangle$, where $SL(2,\mathbb{F}_q) \vartriangleleft \langle SL(2,\mathbb{F}_q), d_\pi \rangle$. \vspace{3mm} \\
+
+Here, $Q$ is a Sylow $p$-subgroup of $G$ of order $q$, $\mathbb{F}_q$ is a field of $q$ elements, $\mathbb{F}_{q^2}$ is a field of $q^2$ elements, $\pi \in \mathbb{F}_{q^2} \setminus \mathbb{F}_q$ and $\pi^2 \in \mathbb{F}_q$. \vspace{3mm}
+\end{theorem}
+
+\begin{proof}
+
+If $Z \not \subset G$, then $G$ has no element of order 2 and $|G|$ is therefore odd. Observe that in Cases II, IV, V and VI, $|G|$ is always even, thus we have either Case I or III. These correspond to Class I (i) or Class II (vi). \\
+\\
+If $Z \subset G$, then $G$ has the same structure as one of the 6 cases previously discussed. We match the separate cases to the above classes. \\
+\\
+Case Ia: This leads to Class I (i). \\
+Case Ib: This leads to Class II (vi). \\
+Case IIa: This leads to Class I (ii) where $n$ is odd. \\
+Case IIb: This leads to Class I (iii). \\
+Case III: If $G=Z$ this leads to Class I (i), otherwise to Class II (vi). \\
+Case IVa: This leads to Class II (vii). \\
+Case IVb: This leads to Class II (ix) with $q=3$. \\
+Case Va: This leads to Class II (ix). \\
+Case Vb: This leads to Class II (x). \\
+Case Vc: This leads to Class II (x) with $q=3$. \\
+Case Vd: This leads to Class II (viii). \\
+Case VIa: This leads to Class I (ii) where $n$ is even. \\
+Case VIb: This leads to Class I (v). \\
+Case VIc: This leads to Class I (iv). \\
+
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{alperin} 
+Alperin, J.L., Bell, R.B. 
+\textit{Groups and Representations}. 
+Springer,
+(1995).
+
+\bibitem{bhattacharya} 
+Bhattacharya, P.B., Jain, S.K., Nagpaul, S.R. 
+\textit{Basic Abstract Algebra, Second Edition}. 
+Cambridge University Press,
+(1994).
+
+\bibitem{dickson} 
+Dickson, L.E. 
+\textit{Linear Groups, with an Exposition of the Galois Field Theory}. 
+B.G.Teubner, Leipzig,
+(1901).
+
+\bibitem{dummit} 
+Dummit, D.S., Foote, R.M. 
+\textit{Abstract Algebra}. 
+Wiley,
+(2004).
+
+\bibitem{matrix} 
+Holst, A., Ufnarovski, V. 
+\textit{Matrix Theory}. 
+Studentlitteratur,
+(2014).
+
+\bibitem{hungerford} 
+Hungerford, T.W. 
+\textit{Abstract Algebra: An Introduction, Third Edition}. 
+Brooks/Cole, Cengage Learning,
+(2014).
+
+\bibitem{schur} 
+Schur, I. 
+\textit{Über die Darstellung der symmetrischen und der alternierenden Gruppe durch gebrochene lineare Substitutionen.} Journal für die reine und angewandte Mathematik (Crelles Journal) (139), p.155-250. 
+De Gruyter,
+(1911).
+
+\bibitem{stewart} 
+Stewart, I. 
+\textit{Galois Theory, Third Edition}. 
+Chapman \& Hall/CRC,
+(2003).
+
+\bibitem{suzuki}
+Suzuki, M. 
+\textit{Group Theory I}. 
+Spinger-Verlag, Berlin, Heidelberg, New York, 
+(1982).
+
+\end{thebibliography}
+\end{document}

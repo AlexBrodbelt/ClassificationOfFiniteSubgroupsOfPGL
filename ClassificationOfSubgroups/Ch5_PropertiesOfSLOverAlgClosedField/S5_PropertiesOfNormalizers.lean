@@ -163,7 +163,7 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
         group
         nth_rewrite 1 [d_eq_inv_d_inv,  ← w_mul_d_eq_d_inv_w]
         rw [_root_.zpow_neg, _root_.zpow_neg, zpow_one, zpow_one,
-          w_inv, mul_neg, neg_mul, inv_d_eq_d_inv,
+          inv_w_eq_neg_w, mul_neg, neg_mul, inv_d_eq_d_inv,
           show -(w * d δ⁻¹ * y * w * d δ⁻¹) = -(w * d δ⁻¹ * y * (w * d δ⁻¹)) by group]
         nth_rewrite 2 [w_mul_d_eq_d_inv_w δ⁻¹]
         rw [← d_eq_inv_d_inv]
@@ -177,7 +177,7 @@ lemma normalizer_subgroup_D_eq_DW { D₀ : Subgroup (SL(2,F)) }
       · intro conj_mem_D₀
         obtain ⟨δ₀, hδ₀⟩ := D₀_le_D conj_mem_D₀
         rw [eq_mul_inv_iff_mul_eq, ← inv_mul_eq_iff_eq_mul] at hδ₀
-        rw [_root_.mul_inv_rev, w_inv, inv_d_eq_d_inv, ← mul_assoc (d δ₀),
+        rw [_root_.mul_inv_rev, inv_w_eq_neg_w, inv_d_eq_d_inv, ← mul_assoc (d δ₀),
           d_mul_d_eq_d_mul, mul_assoc, ← mul_assoc (d δ⁻¹), d_mul_d_eq_d_mul, ← mul_assoc δ⁻¹,
           inv_mul_cancel_comm, neg_mul, ← mul_assoc, w_mul_d_eq_d_inv_w, mul_assoc,
           w_mul_w_eq_neg_one, mul_neg_one, neg_neg, inv_d_eq_d_inv] at hδ₀

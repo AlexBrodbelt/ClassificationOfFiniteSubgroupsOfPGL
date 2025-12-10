@@ -7,6 +7,17 @@ open scoped MatrixGroups
 #check A_subgroupOf_normalizer_MulEquiv_conj_A_subgroupOf_conj_quot_eq
 
 #check normalizer_inf_le_eq_normalizer_subgroupOf
+
+lemma Nonempty_normalizer_A'_inf_G_diff_A' {F : Type*} [Field F] (A' G' : Subgroup SL(2,F)) (hA' : A' ∈ MaximalAbelianSubgroupsOf G')
+  (A'_le_D : A' ≤ D F) : Set.Nonempty ((A'.normalizer ⊓ G').carrier \ A') := by
+  by_contra! h
+  rw [Set.diff_eq_empty] at h
+  have : A'.normalizer ⊓ G' ≤ D F := by
+    rw [normalizer_subgroup_D_eq_DW sorry sorry]
+    sorry
+
+
+  sorry
 /-
 Theorem 2.3 (iv b) Furthermore, if [NG (A) : A] = 2,
 then there is an element y of NG (A)\A such that, yxy⁻¹ = x⁻¹  for all x ∈ A.
@@ -91,7 +102,23 @@ theorem of_index_normalizer_eq_two {F : Type*} [Field F] [IsAlgClosed F] [Decida
           rw [← Set.mem_inv_smul_set_iff, ← map_inv, A_eq_conj_A',
             map_inv, coe_pointwise_smul, inv_smul_smul, SetLike.mem_coe] at contr
           contradiction
-      · sorry
+      · have conj_x_mem_A' : conj c⁻¹ • x.val ∈ A' := by
+          rw [← mem_inv_pointwise_smul_iff, map_inv, inv_inv, ← A_eq_conj_A']
+          exact x.prop
+        have conj_x_mem_D := A'_le_D conj_x_mem_A'
+        obtain ⟨δ', hδ'⟩ := conj_x_mem_D
+        symm at hδ'
+        rw [smul_eq_iff_eq_inv_smul, map_inv, inv_inv] at hδ'
+        simp only [smul_mul', MulAut.smul_def, conj_apply, conj_mul, hδ', mul_inv_rev, inv_inv,
+          inv_w_eq_neg_w, inv_d_eq_d_inv, neg_mul, w_mul_d_eq_d_inv_w, neg_d_mul_w, InvMemClass.coe_inv]
+        group
+        simp only [Int.reduceNeg, zpow_neg, zpow_one, mul_left_inj]
+        rw [← neg_d_eq_d_neg, show (c * d δ * w * d δ') * -d δ * w = (c * d δ * w * d δ') * d δ * -w by simp [- neg_d_eq_d_neg],
+          ← inv_w_eq_neg_w, show c * d δ * w * d δ' * d δ * w⁻¹ = c * d δ * w * (d δ' * d δ) * w⁻¹ by group, d_mul_d_eq_d_mul,
+          show c * d δ * w * d (δ' * δ) * w⁻¹ = c * d δ * (w * d (δ' * δ) * w⁻¹) by group, w_mul_d_mul_inv_w_eq_inv_d,  ← d_mul_d_eq_d_mul,
+          show c * d δ * (d δ' * d δ)⁻¹ = c * (d δ * (d δ' * d δ)⁻¹) by group]
+        congr
+        simp
     sorry
   sorry
 
@@ -106,7 +133,7 @@ theorem of_index_normalizer_eq_two {F : Type*} [Field F] [IsAlgClosed F] [Decida
 
 
 
-
+-- tactic which uses associativity before rewriting
 
 
 
